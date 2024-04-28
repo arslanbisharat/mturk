@@ -155,9 +155,23 @@
             padding: 0px; 
           }
           
+          #header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #f9f9f9;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+          }
+          
           .instructions {
             padding: 20px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-height: 70vh; /* Add a maximum height to make it scrollable */
+            overflow-y: auto; /* Enable vertical scrolling */
+            margin-top: 60px; /* Add some margin to prevent overlap with the header */
           }
           .instructions h1 {
             font-size: 24px;
@@ -239,8 +253,10 @@
             </head>
         <body>
         
-        <div class="instructions">
+  <div class="instructions">
+  <div id="header">
   <button class="toggle-button">Hide Instructions</button>
+  </div>
   <div class="content box" >
     <h1>Annotator Instructions</h1>
     <p style = "color: blue;">Your tasks involves selecting if an Instagram comment has cyberbullying, the severity of cyberbullying, the topic of cyberbullying, and the role the user had in the bullying.</p>
@@ -11655,16 +11671,16 @@
         questionContainer.classList.remove('invalid-question-container');
       }
 
-      const toggleButton = document.querySelector('.toggle-button');
+const toggleButton = document.querySelector('.toggle-button');
 const content = document.querySelector('.content');
-
-// Add this line to show the content by default
+const header = document.getElementById('header');
 content.classList.add('show');
 
 toggleButton.addEventListener('click', () => {
   content.classList.toggle('show');
   if (content.classList.contains('show')) {
     toggleButton.textContent = 'Hide Instructions';
+    window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to the top of the page
   } else {
     toggleButton.textContent = 'Show Instructions';
   }
