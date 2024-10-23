@@ -1,0 +1,2695 @@
+
+    <HTMLQuestion xmlns="http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2011-11-11/HTMLQuestion.xsd">
+  <HTMLContent><![CDATA[
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>MTurk Task</title>
+            <style>
+
+            * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  width: 100%;
+  font-family: Arial, Helvetica, sans-serif !important;
+  min-height: 100%;
+  background-color: #f9f9f9;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.9);
+}
+
+.modal-content {
+  margin: auto;
+  display: block;
+  max-width: 50%;
+}
+
+.invalid-question-container {
+  border: 2px solid red;
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.modal-close:hover,
+.modal-close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#fixed-post {
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+}
+
+#fixed-post .post-text,
+#fixed-post img {
+  flex-basis: 50%;
+}
+
+#fixed-post img {
+  max-width: 100%;
+  object-fit: cover;
+}
+
+.comment {
+  margin-top: 5px;
+  padding: 2px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.question-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #fff;
+}
+
+.question {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.question label {
+  margin-right: 10px;
+}
+
+.question button,
+.question select {
+  padding: 8px;
+  background-color: white;
+  color: black;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-radius: 4px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12);
+}
+
+.question button:hover {
+  background-color: #45a049;
+}
+
+.checkbox-dropdown {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  width: calc(100% - 20px);
+  z-index: 100;
+}
+
+.checkbox-option {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.checkbox-option label {
+  margin-left: 5px;
+  user-select: none;
+}
+
+.selected-options-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 0px;
+}
+
+.instructions {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #f9f9f9;
+  z-index: 1000;
+  padding: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.instructions h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.instructions .toggle-button {
+  width: 20%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.instructions .toggle-button:hover {
+  background-color: #45a049;
+}
+
+.instructions .content {
+  display: none;
+  background-color: white;
+  border-radius: 5px;
+  padding: 15px;
+}
+
+.instructions .content.show {
+  display: block;
+  max-height: calc(100vh - 150px);
+  overflow-y: auto;
+}
+
+.instructions ol {
+  margin-left: 20px;
+}
+
+.instructions ul {
+  margin-left: 30px;
+}
+
+.instructions li {
+  margin-bottom: 5px;
+}
+
+.box {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+}
+
+.selected-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.selected-options span {
+  padding: 5px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+}
+
+.selected-options-container span {
+  padding: 3px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  margin-bottom: 2px;
+  font-size: 0.8em;
+}
+
+.instructio margin-bottom: 10px;
+}
+
+@media (max-height: 800px) {
+  .instructions .content.show {
+    max-height: 60vh;
+  }
+}
+
+@media (max-height: 600px) {
+  .instructions .content.show {
+    max-height: 50vh;
+  }
+}
+
+            </style>
+            <script src="https://assets.crowd.aws/crowd-html-elements.js"></script>
+            </head>
+        <body>
+        
+        <div class="instructions">
+  <button class="toggle-button">Hide Instructions</button>
+  <div class="content box" >
+    <h1>Annotator Instructions</h1>
+    <p style = "color: blue;">Your tasks involves selecting if an Instagram comment has cyberbullying, the severity of cyberbullying, the topic of cyberbullying, and the role the user had in the bullying.</p>
+    <hr>
+    <br>
+
+    <p  style = "color: blue;">
+    Select the severity of the cyberbullying present in the comment.
+    </p>
+    <p><strong>Mild:</strong> Using mildly offensive language to attack or embarrass another person
+                    <ul>
+                        <li>Example: "You're an idiot, why would you do that?"</li>
+                    </ul>
+                </p>
+                <p><strong>Moderate:</strong> Intense, offensive language which includes attacking personal beliefs or core values
+                    <ul>
+                        <li>Example: "I bet you voted Trump you stupid asshole"</li>
+                    </ul>
+                </p>
+                <p><strong>Severe:</strong> Communicating physical threats, self-harm, blackmail, sexual assault, stalking, etc.
+                    <ul>
+                        <li>Example: "You should kill yourself before I find you and slash your throat in front of your kids"</li>
+                    </ul>
+                    </p>
+    <hr>
+    <br>
+            <p style = "color: blue;">Select the cyberbullying topic being discussed in the comment. If none of these apply, then select Other.</p>
+            <p><strong>Topics and Examples</strong></p>
+            <ul>
+                <li><strong>Sexual but not Gender Identity:</strong> "Girl I would do unspeakable things to you"</li>
+                <li><strong>Gender Identity and Sexual Orientation:</strong> "Good job representing gay pride faggot"</li>
+                <li><strong>Physical Appearance:</strong> "Wow I didn't know whales could wear bikinis!"</li>
+                <li><strong>Disability and Neurodiversity:</strong> "Just stop being a depressed, anxious mess"</li>
+                <li><strong>Social Status/Popularity:</strong> "Maybe you'd have friends if you weren't on welfare"</li>
+                <li><strong>Race and Ethnicity:</strong> "Another lazy piece of shit wet back"</li>
+                <li><strong>Intellectual and Academic:</strong> "How did you get past the 4th grade, dumb ass"</li>
+                <li><strong>Religious:</strong> "Jesus sentenced nations to be destroyed and beat people"</li>
+                <li><strong>Political:</strong> "You love the US? its a 2 party shithole"</li>
+                <li><strong>Other:</strong> "Stop being yourself. Nobody wants that."</li>
+            </ul>            
+            <hr>
+            <br>
+            <p style = "color: blue;">Select the role that best describes the person who wrote this comment.</p>
+            <ul>
+                <p><strong>Passive Bystander:</strong> This person has not seen any bullying or if they saw any bullying related comments, they ignored them.
+                    <ul>
+                        <li>Example: "That looks awesome! I wish I was there!"</li>
+                    </ul>
+                </p>
+                <p><strong>Bully:</strong> Someone who attacks, harasses, humiliates or threatens other people in the Instagram post.
+                    <ul>
+                        <li>Example: "Another example of Stephanine making an ass out of herself again."</li>
+                    </ul>
+                </p>
+                <p><strong>Bully Assistant:</strong> Someone who sees bullying and begins to attack others in the comments.
+                    <ul>
+                        <li>Example: "What can you expect? Stephanine's dad never came back with the milk."</li>
+                    </ul>
+                </p>
+                <p><strong>Aggressive Victim:</strong> A person being attacked who responds aggressively to their attacker.
+                    <ul>
+                        <li>Example: "Guys go fuck yourselves. You're just jealous that you weren't there."</li>
+                    </ul>
+                </p>
+                <p><strong>Aggressive Defender of Victim:</strong> A person who attempts to help someone being attacked, but they respond aggressively towards the attacker.
+                    <ul>
+                        <li>Example: "Are you guys retarded? At least Stephanie goes out. GET SOME FRIENDS"</li>
+                    </ul>
+                </p>
+                <p><strong>Non-Aggressive Victim:</strong> A person being attacked who either ignores the attack or responds non-aggressively to it.
+                    <ul>
+                        <li>Example: "Leave me alone, man. I'm sorry if that bothers you."</li>
+                    </ul>
+                </p>
+                <p><strong>Non-Aggressive Defender of Victim:</strong> A person who attempts to help someone being attacked through non-aggressive support
+                </ul>
+                <hr>
+                <p style = "color: blue;">
+                If you selected Non-Aggressive Defender of Victim, select the type of support they are providing.
+                </p>
+                <ul>
+                        <p><strong>Direct:</strong> Defender is communicating directly to the attacker to tell them what they did is wrong.
+                            <ul>
+                                <li>Example: "Do you realize how problematic what you just said is?"</li>
+                            </ul>
+                        </li>
+                        <p><strong>Support:</strong> Defender is providing empathy and support to the person(s) being attacked
+                            <ul>
+                                <li>Example: "I'm here for you and I've got your back."</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </p>
+  </div>
+</div>
+
+<crowd-form onsubmit="return validateForm()">
+                <div id="fixed-post">
+                  <div class="post-text">
+                  <strong>
+                    <p><span style="color: grey;">@undefined</span>: Dialed photo of @ak633 #cultcrew #mystic</p>
+                    <strong>
+                  </div>
+                  <a id="imgModalOpener"><img src="../found_pictures/../found_pictures/710797973880320396_12853339.jpg" alt="Post Image" style="width:100%;max-width:300px"></a>
+                  </div>
+                  <div id="myModal" class="modal">
+  <span class="modal-close">&times;</span>
+  <img class="modal-content" id="img01">
+</div>
+                
+  <div class="comment">
+    <h3><span style="color: #99e88b;">@henry56_360216</span>: Omg😄!!!! Who fuckin cares!^</h3>
+    <div class="question-container" id="question1_235d31c1-41f4-467a-a12f-feee888d03e2" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="Cyberbullying_235d31c1-41f4-467a-a12f-feee888d03e2">Is there cyberbullying (even if in defense of the victim)?</label>
+        <select id="Cyberbullying_235d31c1-41f4-467a-a12f-feee888d03e2" name="Cyberbullying_235d31c1-41f4-467a-a12f-feee888d03e2" onChange="toggleQuestions(this.value, '235d31c1-41f4-467a-a12f-feee888d03e2')">
+          <option value="">Select an option</option>
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="question-container" id="question2_235d31c1-41f4-467a-a12f-feee888d03e2" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="severityOfCyberbullying_235d31c1-41f4-467a-a12f-feee888d03e2">What is the severity?</label>
+        <select id="severityOfCyberbullying_235d31c1-41f4-467a-a12f-feee888d03e2" name="severityOfCyberbullying_235d31c1-41f4-467a-a12f-feee888d03e2">
+          <option value="">Select an option</option>
+          <option value="mild">Mild</option>
+          <option value="moderate">Moderate</option>
+          <option value="severe">Severe</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="selected-options-container" id="selectedOptionsContainer_235d31c1-41f4-467a-a12f-feee888d03e2">
+      <div class="question-container" id="question3_235d31c1-41f4-467a-a12f-feee888d03e2">
+        <div class="question">
+          <label for="topic_235d31c1-41f4-467a-a12f-feee888d03e2">What is the topic?</label>
+          <button type="button" onclick="toggleDropdown('dropdown_235d31c1-41f4-467a-a12f-feee888d03e2')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
+        </div>
+        <div id="dropdown_235d31c1-41f4-467a-a12f-feee888d03e2" class="checkbox-dropdown" style="display: none; position: absolute; background-color: #f9f9f9; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: calc(100% - 20px); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">
+          <div class="checkbox-option">
+            <input type="checkbox" id="sexual_235d31c1-41f4-467a-a12f-feee888d03e2" name="topicOfCyberbullying_235d31c1-41f4-467a-a12f-feee888d03e2[]" value="sexual" onchange="updateSelections('sexual', '235d31c1-41f4-467a-a12f-feee888d03e2')">
+            <label for="sexualharrasment_235d31c1-41f4-467a-a12f-feee888d03e2">Sexual but not Gender Identity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="physical_235d31c1-41f4-467a-a12f-feee888d03e2" name="topicOfCyberbullying_235d31c1-41f4-467a-a12f-feee888d03e2[]" value="physical" onchange="updateSelections('physical', '235d31c1-41f4-467a-a12f-feee888d03e2')">
+            <label for="physical_235d31c1-41f4-467a-a12f-feee888d03e2">Physical Appearance</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="gender_235d31c1-41f4-467a-a12f-feee888d03e2" name="topicOfCyberbullying_235d31c1-41f4-467a-a12f-feee888d03e2[]" value="gender" onchange="updateSelections('gender', '235d31c1-41f4-467a-a12f-feee888d03e2')">
+            <label for="genderidentity_235d31c1-41f4-467a-a12f-feee888d03e2">Gender Identity and Sexual Orientation</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="disability_235d31c1-41f4-467a-a12f-feee888d03e2" name="topicOfCyberbullying_235d31c1-41f4-467a-a12f-feee888d03e2[]" value="disability" onchange="updateSelections('disability', '235d31c1-41f4-467a-a12f-feee888d03e2')">
+            <label for="disability_235d31c1-41f4-467a-a12f-feee888d03e2">Disability and Neurodiversity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="social_status_235d31c1-41f4-467a-a12f-feee888d03e2" name="topicOfCyberbullying_235d31c1-41f4-467a-a12f-feee888d03e2[]" value="social_status" onchange="updateSelections('social_status', '235d31c1-41f4-467a-a12f-feee888d03e2')">
+            <label for="social_status_235d31c1-41f4-467a-a12f-feee888d03e2">Social Status/Popularity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="race_235d31c1-41f4-467a-a12f-feee888d03e2" name="topicOfCyberbullying_235d31c1-41f4-467a-a12f-feee888d03e2[]" value="race" onchange="updateSelections('race', '235d31c1-41f4-467a-a12f-feee888d03e2')">
+            <label for="race_235d31c1-41f4-467a-a12f-feee888d03e2">Race and Ethnicity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="intellectual_235d31c1-41f4-467a-a12f-feee888d03e2" name="topicOfCyberbullying_235d31c1-41f4-467a-a12f-feee888d03e2[]" value="intellectual" onchange="updateSelections('intellectual', '235d31c1-41f4-467a-a12f-feee888d03e2')">
+            <label for="intellectual_235d31c1-41f4-467a-a12f-feee888d03e2">Intellectual and Academic</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="religious_235d31c1-41f4-467a-a12f-feee888d03e2" name="topicOfCyberbullying_235d31c1-41f4-467a-a12f-feee888d03e2[]" value="religious" onchange="updateSelections('religious', '235d31c1-41f4-467a-a12f-feee888d03e2')">
+            <label for="religious_235d31c1-41f4-467a-a12f-feee888d03e2">Religious</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="political_235d31c1-41f4-467a-a12f-feee888d03e2" name="topicOfCyberbullying_235d31c1-41f4-467a-a12f-feee888d03e2[]" value="political" onchange="updateSelections('political', '235d31c1-41f4-467a-a12f-feee888d03e2')">
+            <label for="political_235d31c1-41f4-467a-a12f-feee888d03e2">Political</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="none_235d31c1-41f4-467a-a12f-feee888d03e2" name="topicOfCyberbullying_235d31c1-41f4-467a-a12f-feee888d03e2[]" value="none" onchange="updateSelections('none', '235d31c1-41f4-467a-a12f-feee888d03e2')">
+            <label for="none_235d31c1-41f4-467a-a12f-feee888d03e2">Other</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="question-container" id="question4_235d31c1-41f4-467a-a12f-feee888d03e2" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 1; margin-right: 10px;">
+          <label for="commentWriterRole_235d31c1-41f4-467a-a12f-feee888d03e2">What is the role of <span style="color: #99e88b;">@henry56_360216</span> in this comment?</label>
+          <select id="commentWriterRole_235d31c1-41f4-467a-a12f-feee888d03e2" name="commentWriterRole_235d31c1-41f4-467a-a12f-feee888d03e2" onChange="updateQuestion4Options(this.value, '235d31c1-41f4-467a-a12f-feee888d03e2')">
+            <option value="">Select an option</option>
+          </select>
+        </div>
+        <div id="severityContainer_235d31c1-41f4-467a-a12f-feee888d03e2" style="flex: 1; display:none;">
+          <label id="severityLabel_235d31c1-41f4-467a-a12f-feee888d03e2" for="severityOfRole_235d31c1-41f4-467a-a12f-feee888d03e2">How is the victim being defended?</label>
+          <select id="severityOfRole_235d31c1-41f4-467a-a12f-feee888d03e2" name="severityOfRole_235d31c1-41f4-467a-a12f-feee888d03e2">
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <h3><span style="color: #f993cd;">@kaylataylor_872779</span>: <span style="color: #2afc1b;">@smithzachary_833473</span> you're so fucking gay. Delete your ig.</h3>
+    <div class="question-container" id="question1_c231d9f7-c150-48f5-b3a4-488b54abfcf6" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="Cyberbullying_c231d9f7-c150-48f5-b3a4-488b54abfcf6">Is there cyberbullying (even if in defense of the victim)?</label>
+        <select id="Cyberbullying_c231d9f7-c150-48f5-b3a4-488b54abfcf6" name="Cyberbullying_c231d9f7-c150-48f5-b3a4-488b54abfcf6" onChange="toggleQuestions(this.value, 'c231d9f7-c150-48f5-b3a4-488b54abfcf6')">
+          <option value="">Select an option</option>
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="question-container" id="question2_c231d9f7-c150-48f5-b3a4-488b54abfcf6" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="severityOfCyberbullying_c231d9f7-c150-48f5-b3a4-488b54abfcf6">What is the severity?</label>
+        <select id="severityOfCyberbullying_c231d9f7-c150-48f5-b3a4-488b54abfcf6" name="severityOfCyberbullying_c231d9f7-c150-48f5-b3a4-488b54abfcf6">
+          <option value="">Select an option</option>
+          <option value="mild">Mild</option>
+          <option value="moderate">Moderate</option>
+          <option value="severe">Severe</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="selected-options-container" id="selectedOptionsContainer_c231d9f7-c150-48f5-b3a4-488b54abfcf6">
+      <div class="question-container" id="question3_c231d9f7-c150-48f5-b3a4-488b54abfcf6">
+        <div class="question">
+          <label for="topic_c231d9f7-c150-48f5-b3a4-488b54abfcf6">What is the topic?</label>
+          <button type="button" onclick="toggleDropdown('dropdown_c231d9f7-c150-48f5-b3a4-488b54abfcf6')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
+        </div>
+        <div id="dropdown_c231d9f7-c150-48f5-b3a4-488b54abfcf6" class="checkbox-dropdown" style="display: none; position: absolute; background-color: #f9f9f9; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: calc(100% - 20px); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">
+          <div class="checkbox-option">
+            <input type="checkbox" id="sexual_c231d9f7-c150-48f5-b3a4-488b54abfcf6" name="topicOfCyberbullying_c231d9f7-c150-48f5-b3a4-488b54abfcf6[]" value="sexual" onchange="updateSelections('sexual', 'c231d9f7-c150-48f5-b3a4-488b54abfcf6')">
+            <label for="sexualharrasment_c231d9f7-c150-48f5-b3a4-488b54abfcf6">Sexual but not Gender Identity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="physical_c231d9f7-c150-48f5-b3a4-488b54abfcf6" name="topicOfCyberbullying_c231d9f7-c150-48f5-b3a4-488b54abfcf6[]" value="physical" onchange="updateSelections('physical', 'c231d9f7-c150-48f5-b3a4-488b54abfcf6')">
+            <label for="physical_c231d9f7-c150-48f5-b3a4-488b54abfcf6">Physical Appearance</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="gender_c231d9f7-c150-48f5-b3a4-488b54abfcf6" name="topicOfCyberbullying_c231d9f7-c150-48f5-b3a4-488b54abfcf6[]" value="gender" onchange="updateSelections('gender', 'c231d9f7-c150-48f5-b3a4-488b54abfcf6')">
+            <label for="genderidentity_c231d9f7-c150-48f5-b3a4-488b54abfcf6">Gender Identity and Sexual Orientation</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="disability_c231d9f7-c150-48f5-b3a4-488b54abfcf6" name="topicOfCyberbullying_c231d9f7-c150-48f5-b3a4-488b54abfcf6[]" value="disability" onchange="updateSelections('disability', 'c231d9f7-c150-48f5-b3a4-488b54abfcf6')">
+            <label for="disability_c231d9f7-c150-48f5-b3a4-488b54abfcf6">Disability and Neurodiversity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="social_status_c231d9f7-c150-48f5-b3a4-488b54abfcf6" name="topicOfCyberbullying_c231d9f7-c150-48f5-b3a4-488b54abfcf6[]" value="social_status" onchange="updateSelections('social_status', 'c231d9f7-c150-48f5-b3a4-488b54abfcf6')">
+            <label for="social_status_c231d9f7-c150-48f5-b3a4-488b54abfcf6">Social Status/Popularity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="race_c231d9f7-c150-48f5-b3a4-488b54abfcf6" name="topicOfCyberbullying_c231d9f7-c150-48f5-b3a4-488b54abfcf6[]" value="race" onchange="updateSelections('race', 'c231d9f7-c150-48f5-b3a4-488b54abfcf6')">
+            <label for="race_c231d9f7-c150-48f5-b3a4-488b54abfcf6">Race and Ethnicity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="intellectual_c231d9f7-c150-48f5-b3a4-488b54abfcf6" name="topicOfCyberbullying_c231d9f7-c150-48f5-b3a4-488b54abfcf6[]" value="intellectual" onchange="updateSelections('intellectual', 'c231d9f7-c150-48f5-b3a4-488b54abfcf6')">
+            <label for="intellectual_c231d9f7-c150-48f5-b3a4-488b54abfcf6">Intellectual and Academic</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="religious_c231d9f7-c150-48f5-b3a4-488b54abfcf6" name="topicOfCyberbullying_c231d9f7-c150-48f5-b3a4-488b54abfcf6[]" value="religious" onchange="updateSelections('religious', 'c231d9f7-c150-48f5-b3a4-488b54abfcf6')">
+            <label for="religious_c231d9f7-c150-48f5-b3a4-488b54abfcf6">Religious</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="political_c231d9f7-c150-48f5-b3a4-488b54abfcf6" name="topicOfCyberbullying_c231d9f7-c150-48f5-b3a4-488b54abfcf6[]" value="political" onchange="updateSelections('political', 'c231d9f7-c150-48f5-b3a4-488b54abfcf6')">
+            <label for="political_c231d9f7-c150-48f5-b3a4-488b54abfcf6">Political</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="none_c231d9f7-c150-48f5-b3a4-488b54abfcf6" name="topicOfCyberbullying_c231d9f7-c150-48f5-b3a4-488b54abfcf6[]" value="none" onchange="updateSelections('none', 'c231d9f7-c150-48f5-b3a4-488b54abfcf6')">
+            <label for="none_c231d9f7-c150-48f5-b3a4-488b54abfcf6">Other</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="question-container" id="question4_c231d9f7-c150-48f5-b3a4-488b54abfcf6" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 1; margin-right: 10px;">
+          <label for="commentWriterRole_c231d9f7-c150-48f5-b3a4-488b54abfcf6">What is the role of <span style="color: #f993cd;">@kaylataylor_872779</span> in this comment?</label>
+          <select id="commentWriterRole_c231d9f7-c150-48f5-b3a4-488b54abfcf6" name="commentWriterRole_c231d9f7-c150-48f5-b3a4-488b54abfcf6" onChange="updateQuestion4Options(this.value, 'c231d9f7-c150-48f5-b3a4-488b54abfcf6')">
+            <option value="">Select an option</option>
+          </select>
+        </div>
+        <div id="severityContainer_c231d9f7-c150-48f5-b3a4-488b54abfcf6" style="flex: 1; display:none;">
+          <label id="severityLabel_c231d9f7-c150-48f5-b3a4-488b54abfcf6" for="severityOfRole_c231d9f7-c150-48f5-b3a4-488b54abfcf6">How is the victim being defended?</label>
+          <select id="severityOfRole_c231d9f7-c150-48f5-b3a4-488b54abfcf6" name="severityOfRole_c231d9f7-c150-48f5-b3a4-488b54abfcf6">
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <h3><span style="color: #428fed;">@michaela73_202371</span>: Hahahaha <span style="color: #99e88b;">@henry56_360216</span> <span style="color: #01bc8a;">@karawilson_311002</span></h3>
+    <div class="question-container" id="question1_e75f462e-68de-4c5d-a0d0-62f7620f0262" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="Cyberbullying_e75f462e-68de-4c5d-a0d0-62f7620f0262">Is there cyberbullying (even if in defense of the victim)?</label>
+        <select id="Cyberbullying_e75f462e-68de-4c5d-a0d0-62f7620f0262" name="Cyberbullying_e75f462e-68de-4c5d-a0d0-62f7620f0262" onChange="toggleQuestions(this.value, 'e75f462e-68de-4c5d-a0d0-62f7620f0262')">
+          <option value="">Select an option</option>
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="question-container" id="question2_e75f462e-68de-4c5d-a0d0-62f7620f0262" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="severityOfCyberbullying_e75f462e-68de-4c5d-a0d0-62f7620f0262">What is the severity?</label>
+        <select id="severityOfCyberbullying_e75f462e-68de-4c5d-a0d0-62f7620f0262" name="severityOfCyberbullying_e75f462e-68de-4c5d-a0d0-62f7620f0262">
+          <option value="">Select an option</option>
+          <option value="mild">Mild</option>
+          <option value="moderate">Moderate</option>
+          <option value="severe">Severe</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="selected-options-container" id="selectedOptionsContainer_e75f462e-68de-4c5d-a0d0-62f7620f0262">
+      <div class="question-container" id="question3_e75f462e-68de-4c5d-a0d0-62f7620f0262">
+        <div class="question">
+          <label for="topic_e75f462e-68de-4c5d-a0d0-62f7620f0262">What is the topic?</label>
+          <button type="button" onclick="toggleDropdown('dropdown_e75f462e-68de-4c5d-a0d0-62f7620f0262')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
+        </div>
+        <div id="dropdown_e75f462e-68de-4c5d-a0d0-62f7620f0262" class="checkbox-dropdown" style="display: none; position: absolute; background-color: #f9f9f9; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: calc(100% - 20px); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">
+          <div class="checkbox-option">
+            <input type="checkbox" id="sexual_e75f462e-68de-4c5d-a0d0-62f7620f0262" name="topicOfCyberbullying_e75f462e-68de-4c5d-a0d0-62f7620f0262[]" value="sexual" onchange="updateSelections('sexual', 'e75f462e-68de-4c5d-a0d0-62f7620f0262')">
+            <label for="sexualharrasment_e75f462e-68de-4c5d-a0d0-62f7620f0262">Sexual but not Gender Identity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="physical_e75f462e-68de-4c5d-a0d0-62f7620f0262" name="topicOfCyberbullying_e75f462e-68de-4c5d-a0d0-62f7620f0262[]" value="physical" onchange="updateSelections('physical', 'e75f462e-68de-4c5d-a0d0-62f7620f0262')">
+            <label for="physical_e75f462e-68de-4c5d-a0d0-62f7620f0262">Physical Appearance</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="gender_e75f462e-68de-4c5d-a0d0-62f7620f0262" name="topicOfCyberbullying_e75f462e-68de-4c5d-a0d0-62f7620f0262[]" value="gender" onchange="updateSelections('gender', 'e75f462e-68de-4c5d-a0d0-62f7620f0262')">
+            <label for="genderidentity_e75f462e-68de-4c5d-a0d0-62f7620f0262">Gender Identity and Sexual Orientation</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="disability_e75f462e-68de-4c5d-a0d0-62f7620f0262" name="topicOfCyberbullying_e75f462e-68de-4c5d-a0d0-62f7620f0262[]" value="disability" onchange="updateSelections('disability', 'e75f462e-68de-4c5d-a0d0-62f7620f0262')">
+            <label for="disability_e75f462e-68de-4c5d-a0d0-62f7620f0262">Disability and Neurodiversity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="social_status_e75f462e-68de-4c5d-a0d0-62f7620f0262" name="topicOfCyberbullying_e75f462e-68de-4c5d-a0d0-62f7620f0262[]" value="social_status" onchange="updateSelections('social_status', 'e75f462e-68de-4c5d-a0d0-62f7620f0262')">
+            <label for="social_status_e75f462e-68de-4c5d-a0d0-62f7620f0262">Social Status/Popularity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="race_e75f462e-68de-4c5d-a0d0-62f7620f0262" name="topicOfCyberbullying_e75f462e-68de-4c5d-a0d0-62f7620f0262[]" value="race" onchange="updateSelections('race', 'e75f462e-68de-4c5d-a0d0-62f7620f0262')">
+            <label for="race_e75f462e-68de-4c5d-a0d0-62f7620f0262">Race and Ethnicity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="intellectual_e75f462e-68de-4c5d-a0d0-62f7620f0262" name="topicOfCyberbullying_e75f462e-68de-4c5d-a0d0-62f7620f0262[]" value="intellectual" onchange="updateSelections('intellectual', 'e75f462e-68de-4c5d-a0d0-62f7620f0262')">
+            <label for="intellectual_e75f462e-68de-4c5d-a0d0-62f7620f0262">Intellectual and Academic</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="religious_e75f462e-68de-4c5d-a0d0-62f7620f0262" name="topicOfCyberbullying_e75f462e-68de-4c5d-a0d0-62f7620f0262[]" value="religious" onchange="updateSelections('religious', 'e75f462e-68de-4c5d-a0d0-62f7620f0262')">
+            <label for="religious_e75f462e-68de-4c5d-a0d0-62f7620f0262">Religious</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="political_e75f462e-68de-4c5d-a0d0-62f7620f0262" name="topicOfCyberbullying_e75f462e-68de-4c5d-a0d0-62f7620f0262[]" value="political" onchange="updateSelections('political', 'e75f462e-68de-4c5d-a0d0-62f7620f0262')">
+            <label for="political_e75f462e-68de-4c5d-a0d0-62f7620f0262">Political</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="none_e75f462e-68de-4c5d-a0d0-62f7620f0262" name="topicOfCyberbullying_e75f462e-68de-4c5d-a0d0-62f7620f0262[]" value="none" onchange="updateSelections('none', 'e75f462e-68de-4c5d-a0d0-62f7620f0262')">
+            <label for="none_e75f462e-68de-4c5d-a0d0-62f7620f0262">Other</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="question-container" id="question4_e75f462e-68de-4c5d-a0d0-62f7620f0262" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 1; margin-right: 10px;">
+          <label for="commentWriterRole_e75f462e-68de-4c5d-a0d0-62f7620f0262">What is the role of <span style="color: #428fed;">@michaela73_202371</span> in this comment?</label>
+          <select id="commentWriterRole_e75f462e-68de-4c5d-a0d0-62f7620f0262" name="commentWriterRole_e75f462e-68de-4c5d-a0d0-62f7620f0262" onChange="updateQuestion4Options(this.value, 'e75f462e-68de-4c5d-a0d0-62f7620f0262')">
+            <option value="">Select an option</option>
+          </select>
+        </div>
+        <div id="severityContainer_e75f462e-68de-4c5d-a0d0-62f7620f0262" style="flex: 1; display:none;">
+          <label id="severityLabel_e75f462e-68de-4c5d-a0d0-62f7620f0262" for="severityOfRole_e75f462e-68de-4c5d-a0d0-62f7620f0262">How is the victim being defended?</label>
+          <select id="severityOfRole_e75f462e-68de-4c5d-a0d0-62f7620f0262" name="severityOfRole_e75f462e-68de-4c5d-a0d0-62f7620f0262">
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <h3><span style="color: #2cea2c;">@adam93_646867</span>: Shut the fuck up <span style="color: #2afc1b;">@smithzachary_833473</span></h3>
+    <div class="question-container" id="question1_7cb1612c-7c07-42cd-9629-a0edaac489f6" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="Cyberbullying_7cb1612c-7c07-42cd-9629-a0edaac489f6">Is there cyberbullying (even if in defense of the victim)?</label>
+        <select id="Cyberbullying_7cb1612c-7c07-42cd-9629-a0edaac489f6" name="Cyberbullying_7cb1612c-7c07-42cd-9629-a0edaac489f6" onChange="toggleQuestions(this.value, '7cb1612c-7c07-42cd-9629-a0edaac489f6')">
+          <option value="">Select an option</option>
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="question-container" id="question2_7cb1612c-7c07-42cd-9629-a0edaac489f6" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="severityOfCyberbullying_7cb1612c-7c07-42cd-9629-a0edaac489f6">What is the severity?</label>
+        <select id="severityOfCyberbullying_7cb1612c-7c07-42cd-9629-a0edaac489f6" name="severityOfCyberbullying_7cb1612c-7c07-42cd-9629-a0edaac489f6">
+          <option value="">Select an option</option>
+          <option value="mild">Mild</option>
+          <option value="moderate">Moderate</option>
+          <option value="severe">Severe</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="selected-options-container" id="selectedOptionsContainer_7cb1612c-7c07-42cd-9629-a0edaac489f6">
+      <div class="question-container" id="question3_7cb1612c-7c07-42cd-9629-a0edaac489f6">
+        <div class="question">
+          <label for="topic_7cb1612c-7c07-42cd-9629-a0edaac489f6">What is the topic?</label>
+          <button type="button" onclick="toggleDropdown('dropdown_7cb1612c-7c07-42cd-9629-a0edaac489f6')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
+        </div>
+        <div id="dropdown_7cb1612c-7c07-42cd-9629-a0edaac489f6" class="checkbox-dropdown" style="display: none; position: absolute; background-color: #f9f9f9; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: calc(100% - 20px); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">
+          <div class="checkbox-option">
+            <input type="checkbox" id="sexual_7cb1612c-7c07-42cd-9629-a0edaac489f6" name="topicOfCyberbullying_7cb1612c-7c07-42cd-9629-a0edaac489f6[]" value="sexual" onchange="updateSelections('sexual', '7cb1612c-7c07-42cd-9629-a0edaac489f6')">
+            <label for="sexualharrasment_7cb1612c-7c07-42cd-9629-a0edaac489f6">Sexual but not Gender Identity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="physical_7cb1612c-7c07-42cd-9629-a0edaac489f6" name="topicOfCyberbullying_7cb1612c-7c07-42cd-9629-a0edaac489f6[]" value="physical" onchange="updateSelections('physical', '7cb1612c-7c07-42cd-9629-a0edaac489f6')">
+            <label for="physical_7cb1612c-7c07-42cd-9629-a0edaac489f6">Physical Appearance</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="gender_7cb1612c-7c07-42cd-9629-a0edaac489f6" name="topicOfCyberbullying_7cb1612c-7c07-42cd-9629-a0edaac489f6[]" value="gender" onchange="updateSelections('gender', '7cb1612c-7c07-42cd-9629-a0edaac489f6')">
+            <label for="genderidentity_7cb1612c-7c07-42cd-9629-a0edaac489f6">Gender Identity and Sexual Orientation</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="disability_7cb1612c-7c07-42cd-9629-a0edaac489f6" name="topicOfCyberbullying_7cb1612c-7c07-42cd-9629-a0edaac489f6[]" value="disability" onchange="updateSelections('disability', '7cb1612c-7c07-42cd-9629-a0edaac489f6')">
+            <label for="disability_7cb1612c-7c07-42cd-9629-a0edaac489f6">Disability and Neurodiversity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="social_status_7cb1612c-7c07-42cd-9629-a0edaac489f6" name="topicOfCyberbullying_7cb1612c-7c07-42cd-9629-a0edaac489f6[]" value="social_status" onchange="updateSelections('social_status', '7cb1612c-7c07-42cd-9629-a0edaac489f6')">
+            <label for="social_status_7cb1612c-7c07-42cd-9629-a0edaac489f6">Social Status/Popularity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="race_7cb1612c-7c07-42cd-9629-a0edaac489f6" name="topicOfCyberbullying_7cb1612c-7c07-42cd-9629-a0edaac489f6[]" value="race" onchange="updateSelections('race', '7cb1612c-7c07-42cd-9629-a0edaac489f6')">
+            <label for="race_7cb1612c-7c07-42cd-9629-a0edaac489f6">Race and Ethnicity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="intellectual_7cb1612c-7c07-42cd-9629-a0edaac489f6" name="topicOfCyberbullying_7cb1612c-7c07-42cd-9629-a0edaac489f6[]" value="intellectual" onchange="updateSelections('intellectual', '7cb1612c-7c07-42cd-9629-a0edaac489f6')">
+            <label for="intellectual_7cb1612c-7c07-42cd-9629-a0edaac489f6">Intellectual and Academic</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="religious_7cb1612c-7c07-42cd-9629-a0edaac489f6" name="topicOfCyberbullying_7cb1612c-7c07-42cd-9629-a0edaac489f6[]" value="religious" onchange="updateSelections('religious', '7cb1612c-7c07-42cd-9629-a0edaac489f6')">
+            <label for="religious_7cb1612c-7c07-42cd-9629-a0edaac489f6">Religious</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="political_7cb1612c-7c07-42cd-9629-a0edaac489f6" name="topicOfCyberbullying_7cb1612c-7c07-42cd-9629-a0edaac489f6[]" value="political" onchange="updateSelections('political', '7cb1612c-7c07-42cd-9629-a0edaac489f6')">
+            <label for="political_7cb1612c-7c07-42cd-9629-a0edaac489f6">Political</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="none_7cb1612c-7c07-42cd-9629-a0edaac489f6" name="topicOfCyberbullying_7cb1612c-7c07-42cd-9629-a0edaac489f6[]" value="none" onchange="updateSelections('none', '7cb1612c-7c07-42cd-9629-a0edaac489f6')">
+            <label for="none_7cb1612c-7c07-42cd-9629-a0edaac489f6">Other</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="question-container" id="question4_7cb1612c-7c07-42cd-9629-a0edaac489f6" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 1; margin-right: 10px;">
+          <label for="commentWriterRole_7cb1612c-7c07-42cd-9629-a0edaac489f6">What is the role of <span style="color: #2cea2c;">@adam93_646867</span> in this comment?</label>
+          <select id="commentWriterRole_7cb1612c-7c07-42cd-9629-a0edaac489f6" name="commentWriterRole_7cb1612c-7c07-42cd-9629-a0edaac489f6" onChange="updateQuestion4Options(this.value, '7cb1612c-7c07-42cd-9629-a0edaac489f6')">
+            <option value="">Select an option</option>
+          </select>
+        </div>
+        <div id="severityContainer_7cb1612c-7c07-42cd-9629-a0edaac489f6" style="flex: 1; display:none;">
+          <label id="severityLabel_7cb1612c-7c07-42cd-9629-a0edaac489f6" for="severityOfRole_7cb1612c-7c07-42cd-9629-a0edaac489f6">How is the victim being defended?</label>
+          <select id="severityOfRole_7cb1612c-7c07-42cd-9629-a0edaac489f6" name="severityOfRole_7cb1612c-7c07-42cd-9629-a0edaac489f6">
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <h3><span style="color: #68f9e8;">@jenniferkeller_152290</span>: Alex Kennedy os awo</h3>
+    <div class="question-container" id="question1_c288f79b-ddf8-41aa-b233-62b554038437" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="Cyberbullying_c288f79b-ddf8-41aa-b233-62b554038437">Is there cyberbullying (even if in defense of the victim)?</label>
+        <select id="Cyberbullying_c288f79b-ddf8-41aa-b233-62b554038437" name="Cyberbullying_c288f79b-ddf8-41aa-b233-62b554038437" onChange="toggleQuestions(this.value, 'c288f79b-ddf8-41aa-b233-62b554038437')">
+          <option value="">Select an option</option>
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="question-container" id="question2_c288f79b-ddf8-41aa-b233-62b554038437" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="severityOfCyberbullying_c288f79b-ddf8-41aa-b233-62b554038437">What is the severity?</label>
+        <select id="severityOfCyberbullying_c288f79b-ddf8-41aa-b233-62b554038437" name="severityOfCyberbullying_c288f79b-ddf8-41aa-b233-62b554038437">
+          <option value="">Select an option</option>
+          <option value="mild">Mild</option>
+          <option value="moderate">Moderate</option>
+          <option value="severe">Severe</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="selected-options-container" id="selectedOptionsContainer_c288f79b-ddf8-41aa-b233-62b554038437">
+      <div class="question-container" id="question3_c288f79b-ddf8-41aa-b233-62b554038437">
+        <div class="question">
+          <label for="topic_c288f79b-ddf8-41aa-b233-62b554038437">What is the topic?</label>
+          <button type="button" onclick="toggleDropdown('dropdown_c288f79b-ddf8-41aa-b233-62b554038437')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
+        </div>
+        <div id="dropdown_c288f79b-ddf8-41aa-b233-62b554038437" class="checkbox-dropdown" style="display: none; position: absolute; background-color: #f9f9f9; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: calc(100% - 20px); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">
+          <div class="checkbox-option">
+            <input type="checkbox" id="sexual_c288f79b-ddf8-41aa-b233-62b554038437" name="topicOfCyberbullying_c288f79b-ddf8-41aa-b233-62b554038437[]" value="sexual" onchange="updateSelections('sexual', 'c288f79b-ddf8-41aa-b233-62b554038437')">
+            <label for="sexualharrasment_c288f79b-ddf8-41aa-b233-62b554038437">Sexual but not Gender Identity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="physical_c288f79b-ddf8-41aa-b233-62b554038437" name="topicOfCyberbullying_c288f79b-ddf8-41aa-b233-62b554038437[]" value="physical" onchange="updateSelections('physical', 'c288f79b-ddf8-41aa-b233-62b554038437')">
+            <label for="physical_c288f79b-ddf8-41aa-b233-62b554038437">Physical Appearance</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="gender_c288f79b-ddf8-41aa-b233-62b554038437" name="topicOfCyberbullying_c288f79b-ddf8-41aa-b233-62b554038437[]" value="gender" onchange="updateSelections('gender', 'c288f79b-ddf8-41aa-b233-62b554038437')">
+            <label for="genderidentity_c288f79b-ddf8-41aa-b233-62b554038437">Gender Identity and Sexual Orientation</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="disability_c288f79b-ddf8-41aa-b233-62b554038437" name="topicOfCyberbullying_c288f79b-ddf8-41aa-b233-62b554038437[]" value="disability" onchange="updateSelections('disability', 'c288f79b-ddf8-41aa-b233-62b554038437')">
+            <label for="disability_c288f79b-ddf8-41aa-b233-62b554038437">Disability and Neurodiversity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="social_status_c288f79b-ddf8-41aa-b233-62b554038437" name="topicOfCyberbullying_c288f79b-ddf8-41aa-b233-62b554038437[]" value="social_status" onchange="updateSelections('social_status', 'c288f79b-ddf8-41aa-b233-62b554038437')">
+            <label for="social_status_c288f79b-ddf8-41aa-b233-62b554038437">Social Status/Popularity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="race_c288f79b-ddf8-41aa-b233-62b554038437" name="topicOfCyberbullying_c288f79b-ddf8-41aa-b233-62b554038437[]" value="race" onchange="updateSelections('race', 'c288f79b-ddf8-41aa-b233-62b554038437')">
+            <label for="race_c288f79b-ddf8-41aa-b233-62b554038437">Race and Ethnicity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="intellectual_c288f79b-ddf8-41aa-b233-62b554038437" name="topicOfCyberbullying_c288f79b-ddf8-41aa-b233-62b554038437[]" value="intellectual" onchange="updateSelections('intellectual', 'c288f79b-ddf8-41aa-b233-62b554038437')">
+            <label for="intellectual_c288f79b-ddf8-41aa-b233-62b554038437">Intellectual and Academic</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="religious_c288f79b-ddf8-41aa-b233-62b554038437" name="topicOfCyberbullying_c288f79b-ddf8-41aa-b233-62b554038437[]" value="religious" onchange="updateSelections('religious', 'c288f79b-ddf8-41aa-b233-62b554038437')">
+            <label for="religious_c288f79b-ddf8-41aa-b233-62b554038437">Religious</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="political_c288f79b-ddf8-41aa-b233-62b554038437" name="topicOfCyberbullying_c288f79b-ddf8-41aa-b233-62b554038437[]" value="political" onchange="updateSelections('political', 'c288f79b-ddf8-41aa-b233-62b554038437')">
+            <label for="political_c288f79b-ddf8-41aa-b233-62b554038437">Political</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="none_c288f79b-ddf8-41aa-b233-62b554038437" name="topicOfCyberbullying_c288f79b-ddf8-41aa-b233-62b554038437[]" value="none" onchange="updateSelections('none', 'c288f79b-ddf8-41aa-b233-62b554038437')">
+            <label for="none_c288f79b-ddf8-41aa-b233-62b554038437">Other</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="question-container" id="question4_c288f79b-ddf8-41aa-b233-62b554038437" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 1; margin-right: 10px;">
+          <label for="commentWriterRole_c288f79b-ddf8-41aa-b233-62b554038437">What is the role of <span style="color: #68f9e8;">@jenniferkeller_152290</span> in this comment?</label>
+          <select id="commentWriterRole_c288f79b-ddf8-41aa-b233-62b554038437" name="commentWriterRole_c288f79b-ddf8-41aa-b233-62b554038437" onChange="updateQuestion4Options(this.value, 'c288f79b-ddf8-41aa-b233-62b554038437')">
+            <option value="">Select an option</option>
+          </select>
+        </div>
+        <div id="severityContainer_c288f79b-ddf8-41aa-b233-62b554038437" style="flex: 1; display:none;">
+          <label id="severityLabel_c288f79b-ddf8-41aa-b233-62b554038437" for="severityOfRole_c288f79b-ddf8-41aa-b233-62b554038437">How is the victim being defended?</label>
+          <select id="severityOfRole_c288f79b-ddf8-41aa-b233-62b554038437" name="severityOfRole_c288f79b-ddf8-41aa-b233-62b554038437">
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <h3><span style="color: #68f9e8;">@jenniferkeller_152290</span>: Is awesome</h3>
+    <div class="question-container" id="question1_d452a6fc-14fa-49c1-abf5-d278d962d574" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="Cyberbullying_d452a6fc-14fa-49c1-abf5-d278d962d574">Is there cyberbullying (even if in defense of the victim)?</label>
+        <select id="Cyberbullying_d452a6fc-14fa-49c1-abf5-d278d962d574" name="Cyberbullying_d452a6fc-14fa-49c1-abf5-d278d962d574" onChange="toggleQuestions(this.value, 'd452a6fc-14fa-49c1-abf5-d278d962d574')">
+          <option value="">Select an option</option>
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="question-container" id="question2_d452a6fc-14fa-49c1-abf5-d278d962d574" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="severityOfCyberbullying_d452a6fc-14fa-49c1-abf5-d278d962d574">What is the severity?</label>
+        <select id="severityOfCyberbullying_d452a6fc-14fa-49c1-abf5-d278d962d574" name="severityOfCyberbullying_d452a6fc-14fa-49c1-abf5-d278d962d574">
+          <option value="">Select an option</option>
+          <option value="mild">Mild</option>
+          <option value="moderate">Moderate</option>
+          <option value="severe">Severe</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="selected-options-container" id="selectedOptionsContainer_d452a6fc-14fa-49c1-abf5-d278d962d574">
+      <div class="question-container" id="question3_d452a6fc-14fa-49c1-abf5-d278d962d574">
+        <div class="question">
+          <label for="topic_d452a6fc-14fa-49c1-abf5-d278d962d574">What is the topic?</label>
+          <button type="button" onclick="toggleDropdown('dropdown_d452a6fc-14fa-49c1-abf5-d278d962d574')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
+        </div>
+        <div id="dropdown_d452a6fc-14fa-49c1-abf5-d278d962d574" class="checkbox-dropdown" style="display: none; position: absolute; background-color: #f9f9f9; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: calc(100% - 20px); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">
+          <div class="checkbox-option">
+            <input type="checkbox" id="sexual_d452a6fc-14fa-49c1-abf5-d278d962d574" name="topicOfCyberbullying_d452a6fc-14fa-49c1-abf5-d278d962d574[]" value="sexual" onchange="updateSelections('sexual', 'd452a6fc-14fa-49c1-abf5-d278d962d574')">
+            <label for="sexualharrasment_d452a6fc-14fa-49c1-abf5-d278d962d574">Sexual but not Gender Identity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="physical_d452a6fc-14fa-49c1-abf5-d278d962d574" name="topicOfCyberbullying_d452a6fc-14fa-49c1-abf5-d278d962d574[]" value="physical" onchange="updateSelections('physical', 'd452a6fc-14fa-49c1-abf5-d278d962d574')">
+            <label for="physical_d452a6fc-14fa-49c1-abf5-d278d962d574">Physical Appearance</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="gender_d452a6fc-14fa-49c1-abf5-d278d962d574" name="topicOfCyberbullying_d452a6fc-14fa-49c1-abf5-d278d962d574[]" value="gender" onchange="updateSelections('gender', 'd452a6fc-14fa-49c1-abf5-d278d962d574')">
+            <label for="genderidentity_d452a6fc-14fa-49c1-abf5-d278d962d574">Gender Identity and Sexual Orientation</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="disability_d452a6fc-14fa-49c1-abf5-d278d962d574" name="topicOfCyberbullying_d452a6fc-14fa-49c1-abf5-d278d962d574[]" value="disability" onchange="updateSelections('disability', 'd452a6fc-14fa-49c1-abf5-d278d962d574')">
+            <label for="disability_d452a6fc-14fa-49c1-abf5-d278d962d574">Disability and Neurodiversity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="social_status_d452a6fc-14fa-49c1-abf5-d278d962d574" name="topicOfCyberbullying_d452a6fc-14fa-49c1-abf5-d278d962d574[]" value="social_status" onchange="updateSelections('social_status', 'd452a6fc-14fa-49c1-abf5-d278d962d574')">
+            <label for="social_status_d452a6fc-14fa-49c1-abf5-d278d962d574">Social Status/Popularity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="race_d452a6fc-14fa-49c1-abf5-d278d962d574" name="topicOfCyberbullying_d452a6fc-14fa-49c1-abf5-d278d962d574[]" value="race" onchange="updateSelections('race', 'd452a6fc-14fa-49c1-abf5-d278d962d574')">
+            <label for="race_d452a6fc-14fa-49c1-abf5-d278d962d574">Race and Ethnicity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="intellectual_d452a6fc-14fa-49c1-abf5-d278d962d574" name="topicOfCyberbullying_d452a6fc-14fa-49c1-abf5-d278d962d574[]" value="intellectual" onchange="updateSelections('intellectual', 'd452a6fc-14fa-49c1-abf5-d278d962d574')">
+            <label for="intellectual_d452a6fc-14fa-49c1-abf5-d278d962d574">Intellectual and Academic</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="religious_d452a6fc-14fa-49c1-abf5-d278d962d574" name="topicOfCyberbullying_d452a6fc-14fa-49c1-abf5-d278d962d574[]" value="religious" onchange="updateSelections('religious', 'd452a6fc-14fa-49c1-abf5-d278d962d574')">
+            <label for="religious_d452a6fc-14fa-49c1-abf5-d278d962d574">Religious</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="political_d452a6fc-14fa-49c1-abf5-d278d962d574" name="topicOfCyberbullying_d452a6fc-14fa-49c1-abf5-d278d962d574[]" value="political" onchange="updateSelections('political', 'd452a6fc-14fa-49c1-abf5-d278d962d574')">
+            <label for="political_d452a6fc-14fa-49c1-abf5-d278d962d574">Political</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="none_d452a6fc-14fa-49c1-abf5-d278d962d574" name="topicOfCyberbullying_d452a6fc-14fa-49c1-abf5-d278d962d574[]" value="none" onchange="updateSelections('none', 'd452a6fc-14fa-49c1-abf5-d278d962d574')">
+            <label for="none_d452a6fc-14fa-49c1-abf5-d278d962d574">Other</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="question-container" id="question4_d452a6fc-14fa-49c1-abf5-d278d962d574" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 1; margin-right: 10px;">
+          <label for="commentWriterRole_d452a6fc-14fa-49c1-abf5-d278d962d574">What is the role of <span style="color: #68f9e8;">@jenniferkeller_152290</span> in this comment?</label>
+          <select id="commentWriterRole_d452a6fc-14fa-49c1-abf5-d278d962d574" name="commentWriterRole_d452a6fc-14fa-49c1-abf5-d278d962d574" onChange="updateQuestion4Options(this.value, 'd452a6fc-14fa-49c1-abf5-d278d962d574')">
+            <option value="">Select an option</option>
+          </select>
+        </div>
+        <div id="severityContainer_d452a6fc-14fa-49c1-abf5-d278d962d574" style="flex: 1; display:none;">
+          <label id="severityLabel_d452a6fc-14fa-49c1-abf5-d278d962d574" for="severityOfRole_d452a6fc-14fa-49c1-abf5-d278d962d574">How is the victim being defended?</label>
+          <select id="severityOfRole_d452a6fc-14fa-49c1-abf5-d278d962d574" name="severityOfRole_d452a6fc-14fa-49c1-abf5-d278d962d574">
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <h3><span style="color: #a89bdd;">@bponce_382858</span>: <span style="color: #aaea69;">@jason90_442185</span> you could draw a better one</h3>
+    <div class="question-container" id="question1_a0c40631-693c-4900-8869-3506b354688d" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="Cyberbullying_a0c40631-693c-4900-8869-3506b354688d">Is there cyberbullying (even if in defense of the victim)?</label>
+        <select id="Cyberbullying_a0c40631-693c-4900-8869-3506b354688d" name="Cyberbullying_a0c40631-693c-4900-8869-3506b354688d" onChange="toggleQuestions(this.value, 'a0c40631-693c-4900-8869-3506b354688d')">
+          <option value="">Select an option</option>
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="question-container" id="question2_a0c40631-693c-4900-8869-3506b354688d" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="severityOfCyberbullying_a0c40631-693c-4900-8869-3506b354688d">What is the severity?</label>
+        <select id="severityOfCyberbullying_a0c40631-693c-4900-8869-3506b354688d" name="severityOfCyberbullying_a0c40631-693c-4900-8869-3506b354688d">
+          <option value="">Select an option</option>
+          <option value="mild">Mild</option>
+          <option value="moderate">Moderate</option>
+          <option value="severe">Severe</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="selected-options-container" id="selectedOptionsContainer_a0c40631-693c-4900-8869-3506b354688d">
+      <div class="question-container" id="question3_a0c40631-693c-4900-8869-3506b354688d">
+        <div class="question">
+          <label for="topic_a0c40631-693c-4900-8869-3506b354688d">What is the topic?</label>
+          <button type="button" onclick="toggleDropdown('dropdown_a0c40631-693c-4900-8869-3506b354688d')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
+        </div>
+        <div id="dropdown_a0c40631-693c-4900-8869-3506b354688d" class="checkbox-dropdown" style="display: none; position: absolute; background-color: #f9f9f9; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: calc(100% - 20px); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">
+          <div class="checkbox-option">
+            <input type="checkbox" id="sexual_a0c40631-693c-4900-8869-3506b354688d" name="topicOfCyberbullying_a0c40631-693c-4900-8869-3506b354688d[]" value="sexual" onchange="updateSelections('sexual', 'a0c40631-693c-4900-8869-3506b354688d')">
+            <label for="sexualharrasment_a0c40631-693c-4900-8869-3506b354688d">Sexual but not Gender Identity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="physical_a0c40631-693c-4900-8869-3506b354688d" name="topicOfCyberbullying_a0c40631-693c-4900-8869-3506b354688d[]" value="physical" onchange="updateSelections('physical', 'a0c40631-693c-4900-8869-3506b354688d')">
+            <label for="physical_a0c40631-693c-4900-8869-3506b354688d">Physical Appearance</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="gender_a0c40631-693c-4900-8869-3506b354688d" name="topicOfCyberbullying_a0c40631-693c-4900-8869-3506b354688d[]" value="gender" onchange="updateSelections('gender', 'a0c40631-693c-4900-8869-3506b354688d')">
+            <label for="genderidentity_a0c40631-693c-4900-8869-3506b354688d">Gender Identity and Sexual Orientation</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="disability_a0c40631-693c-4900-8869-3506b354688d" name="topicOfCyberbullying_a0c40631-693c-4900-8869-3506b354688d[]" value="disability" onchange="updateSelections('disability', 'a0c40631-693c-4900-8869-3506b354688d')">
+            <label for="disability_a0c40631-693c-4900-8869-3506b354688d">Disability and Neurodiversity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="social_status_a0c40631-693c-4900-8869-3506b354688d" name="topicOfCyberbullying_a0c40631-693c-4900-8869-3506b354688d[]" value="social_status" onchange="updateSelections('social_status', 'a0c40631-693c-4900-8869-3506b354688d')">
+            <label for="social_status_a0c40631-693c-4900-8869-3506b354688d">Social Status/Popularity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="race_a0c40631-693c-4900-8869-3506b354688d" name="topicOfCyberbullying_a0c40631-693c-4900-8869-3506b354688d[]" value="race" onchange="updateSelections('race', 'a0c40631-693c-4900-8869-3506b354688d')">
+            <label for="race_a0c40631-693c-4900-8869-3506b354688d">Race and Ethnicity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="intellectual_a0c40631-693c-4900-8869-3506b354688d" name="topicOfCyberbullying_a0c40631-693c-4900-8869-3506b354688d[]" value="intellectual" onchange="updateSelections('intellectual', 'a0c40631-693c-4900-8869-3506b354688d')">
+            <label for="intellectual_a0c40631-693c-4900-8869-3506b354688d">Intellectual and Academic</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="religious_a0c40631-693c-4900-8869-3506b354688d" name="topicOfCyberbullying_a0c40631-693c-4900-8869-3506b354688d[]" value="religious" onchange="updateSelections('religious', 'a0c40631-693c-4900-8869-3506b354688d')">
+            <label for="religious_a0c40631-693c-4900-8869-3506b354688d">Religious</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="political_a0c40631-693c-4900-8869-3506b354688d" name="topicOfCyberbullying_a0c40631-693c-4900-8869-3506b354688d[]" value="political" onchange="updateSelections('political', 'a0c40631-693c-4900-8869-3506b354688d')">
+            <label for="political_a0c40631-693c-4900-8869-3506b354688d">Political</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="none_a0c40631-693c-4900-8869-3506b354688d" name="topicOfCyberbullying_a0c40631-693c-4900-8869-3506b354688d[]" value="none" onchange="updateSelections('none', 'a0c40631-693c-4900-8869-3506b354688d')">
+            <label for="none_a0c40631-693c-4900-8869-3506b354688d">Other</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="question-container" id="question4_a0c40631-693c-4900-8869-3506b354688d" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 1; margin-right: 10px;">
+          <label for="commentWriterRole_a0c40631-693c-4900-8869-3506b354688d">What is the role of <span style="color: #a89bdd;">@bponce_382858</span> in this comment?</label>
+          <select id="commentWriterRole_a0c40631-693c-4900-8869-3506b354688d" name="commentWriterRole_a0c40631-693c-4900-8869-3506b354688d" onChange="updateQuestion4Options(this.value, 'a0c40631-693c-4900-8869-3506b354688d')">
+            <option value="">Select an option</option>
+          </select>
+        </div>
+        <div id="severityContainer_a0c40631-693c-4900-8869-3506b354688d" style="flex: 1; display:none;">
+          <label id="severityLabel_a0c40631-693c-4900-8869-3506b354688d" for="severityOfRole_a0c40631-693c-4900-8869-3506b354688d">How is the victim being defended?</label>
+          <select id="severityOfRole_a0c40631-693c-4900-8869-3506b354688d" name="severityOfRole_a0c40631-693c-4900-8869-3506b354688d">
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <h3><span style="color: #d136a5;">@aimee34_210384</span>: <span style="color: #2afc1b;">@smithzachary_833473</span> seems pretty tough guys i wouldn't mess with him</h3>
+    <div class="question-container" id="question1_6cc6a605-a674-4ce7-ae12-0eab030253f6" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="Cyberbullying_6cc6a605-a674-4ce7-ae12-0eab030253f6">Is there cyberbullying (even if in defense of the victim)?</label>
+        <select id="Cyberbullying_6cc6a605-a674-4ce7-ae12-0eab030253f6" name="Cyberbullying_6cc6a605-a674-4ce7-ae12-0eab030253f6" onChange="toggleQuestions(this.value, '6cc6a605-a674-4ce7-ae12-0eab030253f6')">
+          <option value="">Select an option</option>
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="question-container" id="question2_6cc6a605-a674-4ce7-ae12-0eab030253f6" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="severityOfCyberbullying_6cc6a605-a674-4ce7-ae12-0eab030253f6">What is the severity?</label>
+        <select id="severityOfCyberbullying_6cc6a605-a674-4ce7-ae12-0eab030253f6" name="severityOfCyberbullying_6cc6a605-a674-4ce7-ae12-0eab030253f6">
+          <option value="">Select an option</option>
+          <option value="mild">Mild</option>
+          <option value="moderate">Moderate</option>
+          <option value="severe">Severe</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="selected-options-container" id="selectedOptionsContainer_6cc6a605-a674-4ce7-ae12-0eab030253f6">
+      <div class="question-container" id="question3_6cc6a605-a674-4ce7-ae12-0eab030253f6">
+        <div class="question">
+          <label for="topic_6cc6a605-a674-4ce7-ae12-0eab030253f6">What is the topic?</label>
+          <button type="button" onclick="toggleDropdown('dropdown_6cc6a605-a674-4ce7-ae12-0eab030253f6')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
+        </div>
+        <div id="dropdown_6cc6a605-a674-4ce7-ae12-0eab030253f6" class="checkbox-dropdown" style="display: none; position: absolute; background-color: #f9f9f9; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: calc(100% - 20px); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">
+          <div class="checkbox-option">
+            <input type="checkbox" id="sexual_6cc6a605-a674-4ce7-ae12-0eab030253f6" name="topicOfCyberbullying_6cc6a605-a674-4ce7-ae12-0eab030253f6[]" value="sexual" onchange="updateSelections('sexual', '6cc6a605-a674-4ce7-ae12-0eab030253f6')">
+            <label for="sexualharrasment_6cc6a605-a674-4ce7-ae12-0eab030253f6">Sexual but not Gender Identity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="physical_6cc6a605-a674-4ce7-ae12-0eab030253f6" name="topicOfCyberbullying_6cc6a605-a674-4ce7-ae12-0eab030253f6[]" value="physical" onchange="updateSelections('physical', '6cc6a605-a674-4ce7-ae12-0eab030253f6')">
+            <label for="physical_6cc6a605-a674-4ce7-ae12-0eab030253f6">Physical Appearance</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="gender_6cc6a605-a674-4ce7-ae12-0eab030253f6" name="topicOfCyberbullying_6cc6a605-a674-4ce7-ae12-0eab030253f6[]" value="gender" onchange="updateSelections('gender', '6cc6a605-a674-4ce7-ae12-0eab030253f6')">
+            <label for="genderidentity_6cc6a605-a674-4ce7-ae12-0eab030253f6">Gender Identity and Sexual Orientation</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="disability_6cc6a605-a674-4ce7-ae12-0eab030253f6" name="topicOfCyberbullying_6cc6a605-a674-4ce7-ae12-0eab030253f6[]" value="disability" onchange="updateSelections('disability', '6cc6a605-a674-4ce7-ae12-0eab030253f6')">
+            <label for="disability_6cc6a605-a674-4ce7-ae12-0eab030253f6">Disability and Neurodiversity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="social_status_6cc6a605-a674-4ce7-ae12-0eab030253f6" name="topicOfCyberbullying_6cc6a605-a674-4ce7-ae12-0eab030253f6[]" value="social_status" onchange="updateSelections('social_status', '6cc6a605-a674-4ce7-ae12-0eab030253f6')">
+            <label for="social_status_6cc6a605-a674-4ce7-ae12-0eab030253f6">Social Status/Popularity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="race_6cc6a605-a674-4ce7-ae12-0eab030253f6" name="topicOfCyberbullying_6cc6a605-a674-4ce7-ae12-0eab030253f6[]" value="race" onchange="updateSelections('race', '6cc6a605-a674-4ce7-ae12-0eab030253f6')">
+            <label for="race_6cc6a605-a674-4ce7-ae12-0eab030253f6">Race and Ethnicity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="intellectual_6cc6a605-a674-4ce7-ae12-0eab030253f6" name="topicOfCyberbullying_6cc6a605-a674-4ce7-ae12-0eab030253f6[]" value="intellectual" onchange="updateSelections('intellectual', '6cc6a605-a674-4ce7-ae12-0eab030253f6')">
+            <label for="intellectual_6cc6a605-a674-4ce7-ae12-0eab030253f6">Intellectual and Academic</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="religious_6cc6a605-a674-4ce7-ae12-0eab030253f6" name="topicOfCyberbullying_6cc6a605-a674-4ce7-ae12-0eab030253f6[]" value="religious" onchange="updateSelections('religious', '6cc6a605-a674-4ce7-ae12-0eab030253f6')">
+            <label for="religious_6cc6a605-a674-4ce7-ae12-0eab030253f6">Religious</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="political_6cc6a605-a674-4ce7-ae12-0eab030253f6" name="topicOfCyberbullying_6cc6a605-a674-4ce7-ae12-0eab030253f6[]" value="political" onchange="updateSelections('political', '6cc6a605-a674-4ce7-ae12-0eab030253f6')">
+            <label for="political_6cc6a605-a674-4ce7-ae12-0eab030253f6">Political</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="none_6cc6a605-a674-4ce7-ae12-0eab030253f6" name="topicOfCyberbullying_6cc6a605-a674-4ce7-ae12-0eab030253f6[]" value="none" onchange="updateSelections('none', '6cc6a605-a674-4ce7-ae12-0eab030253f6')">
+            <label for="none_6cc6a605-a674-4ce7-ae12-0eab030253f6">Other</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="question-container" id="question4_6cc6a605-a674-4ce7-ae12-0eab030253f6" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 1; margin-right: 10px;">
+          <label for="commentWriterRole_6cc6a605-a674-4ce7-ae12-0eab030253f6">What is the role of <span style="color: #d136a5;">@aimee34_210384</span> in this comment?</label>
+          <select id="commentWriterRole_6cc6a605-a674-4ce7-ae12-0eab030253f6" name="commentWriterRole_6cc6a605-a674-4ce7-ae12-0eab030253f6" onChange="updateQuestion4Options(this.value, '6cc6a605-a674-4ce7-ae12-0eab030253f6')">
+            <option value="">Select an option</option>
+          </select>
+        </div>
+        <div id="severityContainer_6cc6a605-a674-4ce7-ae12-0eab030253f6" style="flex: 1; display:none;">
+          <label id="severityLabel_6cc6a605-a674-4ce7-ae12-0eab030253f6" for="severityOfRole_6cc6a605-a674-4ce7-ae12-0eab030253f6">How is the victim being defended?</label>
+          <select id="severityOfRole_6cc6a605-a674-4ce7-ae12-0eab030253f6" name="severityOfRole_6cc6a605-a674-4ce7-ae12-0eab030253f6">
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <h3><span style="color: #d136a5;">@aimee34_210384</span>: let's all just kill ourselves for being mad about the internet</h3>
+    <div class="question-container" id="question1_dc92af47-eee1-400f-b0f6-da0852533f2c" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="Cyberbullying_dc92af47-eee1-400f-b0f6-da0852533f2c">Is there cyberbullying (even if in defense of the victim)?</label>
+        <select id="Cyberbullying_dc92af47-eee1-400f-b0f6-da0852533f2c" name="Cyberbullying_dc92af47-eee1-400f-b0f6-da0852533f2c" onChange="toggleQuestions(this.value, 'dc92af47-eee1-400f-b0f6-da0852533f2c')">
+          <option value="">Select an option</option>
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="question-container" id="question2_dc92af47-eee1-400f-b0f6-da0852533f2c" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="severityOfCyberbullying_dc92af47-eee1-400f-b0f6-da0852533f2c">What is the severity?</label>
+        <select id="severityOfCyberbullying_dc92af47-eee1-400f-b0f6-da0852533f2c" name="severityOfCyberbullying_dc92af47-eee1-400f-b0f6-da0852533f2c">
+          <option value="">Select an option</option>
+          <option value="mild">Mild</option>
+          <option value="moderate">Moderate</option>
+          <option value="severe">Severe</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="selected-options-container" id="selectedOptionsContainer_dc92af47-eee1-400f-b0f6-da0852533f2c">
+      <div class="question-container" id="question3_dc92af47-eee1-400f-b0f6-da0852533f2c">
+        <div class="question">
+          <label for="topic_dc92af47-eee1-400f-b0f6-da0852533f2c">What is the topic?</label>
+          <button type="button" onclick="toggleDropdown('dropdown_dc92af47-eee1-400f-b0f6-da0852533f2c')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
+        </div>
+        <div id="dropdown_dc92af47-eee1-400f-b0f6-da0852533f2c" class="checkbox-dropdown" style="display: none; position: absolute; background-color: #f9f9f9; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: calc(100% - 20px); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">
+          <div class="checkbox-option">
+            <input type="checkbox" id="sexual_dc92af47-eee1-400f-b0f6-da0852533f2c" name="topicOfCyberbullying_dc92af47-eee1-400f-b0f6-da0852533f2c[]" value="sexual" onchange="updateSelections('sexual', 'dc92af47-eee1-400f-b0f6-da0852533f2c')">
+            <label for="sexualharrasment_dc92af47-eee1-400f-b0f6-da0852533f2c">Sexual but not Gender Identity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="physical_dc92af47-eee1-400f-b0f6-da0852533f2c" name="topicOfCyberbullying_dc92af47-eee1-400f-b0f6-da0852533f2c[]" value="physical" onchange="updateSelections('physical', 'dc92af47-eee1-400f-b0f6-da0852533f2c')">
+            <label for="physical_dc92af47-eee1-400f-b0f6-da0852533f2c">Physical Appearance</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="gender_dc92af47-eee1-400f-b0f6-da0852533f2c" name="topicOfCyberbullying_dc92af47-eee1-400f-b0f6-da0852533f2c[]" value="gender" onchange="updateSelections('gender', 'dc92af47-eee1-400f-b0f6-da0852533f2c')">
+            <label for="genderidentity_dc92af47-eee1-400f-b0f6-da0852533f2c">Gender Identity and Sexual Orientation</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="disability_dc92af47-eee1-400f-b0f6-da0852533f2c" name="topicOfCyberbullying_dc92af47-eee1-400f-b0f6-da0852533f2c[]" value="disability" onchange="updateSelections('disability', 'dc92af47-eee1-400f-b0f6-da0852533f2c')">
+            <label for="disability_dc92af47-eee1-400f-b0f6-da0852533f2c">Disability and Neurodiversity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="social_status_dc92af47-eee1-400f-b0f6-da0852533f2c" name="topicOfCyberbullying_dc92af47-eee1-400f-b0f6-da0852533f2c[]" value="social_status" onchange="updateSelections('social_status', 'dc92af47-eee1-400f-b0f6-da0852533f2c')">
+            <label for="social_status_dc92af47-eee1-400f-b0f6-da0852533f2c">Social Status/Popularity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="race_dc92af47-eee1-400f-b0f6-da0852533f2c" name="topicOfCyberbullying_dc92af47-eee1-400f-b0f6-da0852533f2c[]" value="race" onchange="updateSelections('race', 'dc92af47-eee1-400f-b0f6-da0852533f2c')">
+            <label for="race_dc92af47-eee1-400f-b0f6-da0852533f2c">Race and Ethnicity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="intellectual_dc92af47-eee1-400f-b0f6-da0852533f2c" name="topicOfCyberbullying_dc92af47-eee1-400f-b0f6-da0852533f2c[]" value="intellectual" onchange="updateSelections('intellectual', 'dc92af47-eee1-400f-b0f6-da0852533f2c')">
+            <label for="intellectual_dc92af47-eee1-400f-b0f6-da0852533f2c">Intellectual and Academic</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="religious_dc92af47-eee1-400f-b0f6-da0852533f2c" name="topicOfCyberbullying_dc92af47-eee1-400f-b0f6-da0852533f2c[]" value="religious" onchange="updateSelections('religious', 'dc92af47-eee1-400f-b0f6-da0852533f2c')">
+            <label for="religious_dc92af47-eee1-400f-b0f6-da0852533f2c">Religious</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="political_dc92af47-eee1-400f-b0f6-da0852533f2c" name="topicOfCyberbullying_dc92af47-eee1-400f-b0f6-da0852533f2c[]" value="political" onchange="updateSelections('political', 'dc92af47-eee1-400f-b0f6-da0852533f2c')">
+            <label for="political_dc92af47-eee1-400f-b0f6-da0852533f2c">Political</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="none_dc92af47-eee1-400f-b0f6-da0852533f2c" name="topicOfCyberbullying_dc92af47-eee1-400f-b0f6-da0852533f2c[]" value="none" onchange="updateSelections('none', 'dc92af47-eee1-400f-b0f6-da0852533f2c')">
+            <label for="none_dc92af47-eee1-400f-b0f6-da0852533f2c">Other</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="question-container" id="question4_dc92af47-eee1-400f-b0f6-da0852533f2c" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 1; margin-right: 10px;">
+          <label for="commentWriterRole_dc92af47-eee1-400f-b0f6-da0852533f2c">What is the role of <span style="color: #d136a5;">@aimee34_210384</span> in this comment?</label>
+          <select id="commentWriterRole_dc92af47-eee1-400f-b0f6-da0852533f2c" name="commentWriterRole_dc92af47-eee1-400f-b0f6-da0852533f2c" onChange="updateQuestion4Options(this.value, 'dc92af47-eee1-400f-b0f6-da0852533f2c')">
+            <option value="">Select an option</option>
+          </select>
+        </div>
+        <div id="severityContainer_dc92af47-eee1-400f-b0f6-da0852533f2c" style="flex: 1; display:none;">
+          <label id="severityLabel_dc92af47-eee1-400f-b0f6-da0852533f2c" for="severityOfRole_dc92af47-eee1-400f-b0f6-da0852533f2c">How is the victim being defended?</label>
+          <select id="severityOfRole_dc92af47-eee1-400f-b0f6-da0852533f2c" name="severityOfRole_dc92af47-eee1-400f-b0f6-da0852533f2c">
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <h3><span style="color: #71e275;">@justinmay_550506</span>: so dope</h3>
+    <div class="question-container" id="question1_161dddcb-5d71-4771-bfc0-69fad0d8a221" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="Cyberbullying_161dddcb-5d71-4771-bfc0-69fad0d8a221">Is there cyberbullying (even if in defense of the victim)?</label>
+        <select id="Cyberbullying_161dddcb-5d71-4771-bfc0-69fad0d8a221" name="Cyberbullying_161dddcb-5d71-4771-bfc0-69fad0d8a221" onChange="toggleQuestions(this.value, '161dddcb-5d71-4771-bfc0-69fad0d8a221')">
+          <option value="">Select an option</option>
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="question-container" id="question2_161dddcb-5d71-4771-bfc0-69fad0d8a221" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="severityOfCyberbullying_161dddcb-5d71-4771-bfc0-69fad0d8a221">What is the severity?</label>
+        <select id="severityOfCyberbullying_161dddcb-5d71-4771-bfc0-69fad0d8a221" name="severityOfCyberbullying_161dddcb-5d71-4771-bfc0-69fad0d8a221">
+          <option value="">Select an option</option>
+          <option value="mild">Mild</option>
+          <option value="moderate">Moderate</option>
+          <option value="severe">Severe</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="selected-options-container" id="selectedOptionsContainer_161dddcb-5d71-4771-bfc0-69fad0d8a221">
+      <div class="question-container" id="question3_161dddcb-5d71-4771-bfc0-69fad0d8a221">
+        <div class="question">
+          <label for="topic_161dddcb-5d71-4771-bfc0-69fad0d8a221">What is the topic?</label>
+          <button type="button" onclick="toggleDropdown('dropdown_161dddcb-5d71-4771-bfc0-69fad0d8a221')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
+        </div>
+        <div id="dropdown_161dddcb-5d71-4771-bfc0-69fad0d8a221" class="checkbox-dropdown" style="display: none; position: absolute; background-color: #f9f9f9; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: calc(100% - 20px); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">
+          <div class="checkbox-option">
+            <input type="checkbox" id="sexual_161dddcb-5d71-4771-bfc0-69fad0d8a221" name="topicOfCyberbullying_161dddcb-5d71-4771-bfc0-69fad0d8a221[]" value="sexual" onchange="updateSelections('sexual', '161dddcb-5d71-4771-bfc0-69fad0d8a221')">
+            <label for="sexualharrasment_161dddcb-5d71-4771-bfc0-69fad0d8a221">Sexual but not Gender Identity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="physical_161dddcb-5d71-4771-bfc0-69fad0d8a221" name="topicOfCyberbullying_161dddcb-5d71-4771-bfc0-69fad0d8a221[]" value="physical" onchange="updateSelections('physical', '161dddcb-5d71-4771-bfc0-69fad0d8a221')">
+            <label for="physical_161dddcb-5d71-4771-bfc0-69fad0d8a221">Physical Appearance</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="gender_161dddcb-5d71-4771-bfc0-69fad0d8a221" name="topicOfCyberbullying_161dddcb-5d71-4771-bfc0-69fad0d8a221[]" value="gender" onchange="updateSelections('gender', '161dddcb-5d71-4771-bfc0-69fad0d8a221')">
+            <label for="genderidentity_161dddcb-5d71-4771-bfc0-69fad0d8a221">Gender Identity and Sexual Orientation</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="disability_161dddcb-5d71-4771-bfc0-69fad0d8a221" name="topicOfCyberbullying_161dddcb-5d71-4771-bfc0-69fad0d8a221[]" value="disability" onchange="updateSelections('disability', '161dddcb-5d71-4771-bfc0-69fad0d8a221')">
+            <label for="disability_161dddcb-5d71-4771-bfc0-69fad0d8a221">Disability and Neurodiversity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="social_status_161dddcb-5d71-4771-bfc0-69fad0d8a221" name="topicOfCyberbullying_161dddcb-5d71-4771-bfc0-69fad0d8a221[]" value="social_status" onchange="updateSelections('social_status', '161dddcb-5d71-4771-bfc0-69fad0d8a221')">
+            <label for="social_status_161dddcb-5d71-4771-bfc0-69fad0d8a221">Social Status/Popularity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="race_161dddcb-5d71-4771-bfc0-69fad0d8a221" name="topicOfCyberbullying_161dddcb-5d71-4771-bfc0-69fad0d8a221[]" value="race" onchange="updateSelections('race', '161dddcb-5d71-4771-bfc0-69fad0d8a221')">
+            <label for="race_161dddcb-5d71-4771-bfc0-69fad0d8a221">Race and Ethnicity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="intellectual_161dddcb-5d71-4771-bfc0-69fad0d8a221" name="topicOfCyberbullying_161dddcb-5d71-4771-bfc0-69fad0d8a221[]" value="intellectual" onchange="updateSelections('intellectual', '161dddcb-5d71-4771-bfc0-69fad0d8a221')">
+            <label for="intellectual_161dddcb-5d71-4771-bfc0-69fad0d8a221">Intellectual and Academic</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="religious_161dddcb-5d71-4771-bfc0-69fad0d8a221" name="topicOfCyberbullying_161dddcb-5d71-4771-bfc0-69fad0d8a221[]" value="religious" onchange="updateSelections('religious', '161dddcb-5d71-4771-bfc0-69fad0d8a221')">
+            <label for="religious_161dddcb-5d71-4771-bfc0-69fad0d8a221">Religious</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="political_161dddcb-5d71-4771-bfc0-69fad0d8a221" name="topicOfCyberbullying_161dddcb-5d71-4771-bfc0-69fad0d8a221[]" value="political" onchange="updateSelections('political', '161dddcb-5d71-4771-bfc0-69fad0d8a221')">
+            <label for="political_161dddcb-5d71-4771-bfc0-69fad0d8a221">Political</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="none_161dddcb-5d71-4771-bfc0-69fad0d8a221" name="topicOfCyberbullying_161dddcb-5d71-4771-bfc0-69fad0d8a221[]" value="none" onchange="updateSelections('none', '161dddcb-5d71-4771-bfc0-69fad0d8a221')">
+            <label for="none_161dddcb-5d71-4771-bfc0-69fad0d8a221">Other</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="question-container" id="question4_161dddcb-5d71-4771-bfc0-69fad0d8a221" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 1; margin-right: 10px;">
+          <label for="commentWriterRole_161dddcb-5d71-4771-bfc0-69fad0d8a221">What is the role of <span style="color: #71e275;">@justinmay_550506</span> in this comment?</label>
+          <select id="commentWriterRole_161dddcb-5d71-4771-bfc0-69fad0d8a221" name="commentWriterRole_161dddcb-5d71-4771-bfc0-69fad0d8a221" onChange="updateQuestion4Options(this.value, '161dddcb-5d71-4771-bfc0-69fad0d8a221')">
+            <option value="">Select an option</option>
+          </select>
+        </div>
+        <div id="severityContainer_161dddcb-5d71-4771-bfc0-69fad0d8a221" style="flex: 1; display:none;">
+          <label id="severityLabel_161dddcb-5d71-4771-bfc0-69fad0d8a221" for="severityOfRole_161dddcb-5d71-4771-bfc0-69fad0d8a221">How is the victim being defended?</label>
+          <select id="severityOfRole_161dddcb-5d71-4771-bfc0-69fad0d8a221" name="severityOfRole_161dddcb-5d71-4771-bfc0-69fad0d8a221">
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <h3><span style="color: #93f945;">@eileenbarnett_225991</span>: My friend Keoni Aspera drew that shout out to him only if he had a instagram.</h3>
+    <div class="question-container" id="question1_55cf312c-c76f-4485-bdf0-0dbaeb442a1b" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="Cyberbullying_55cf312c-c76f-4485-bdf0-0dbaeb442a1b">Is there cyberbullying (even if in defense of the victim)?</label>
+        <select id="Cyberbullying_55cf312c-c76f-4485-bdf0-0dbaeb442a1b" name="Cyberbullying_55cf312c-c76f-4485-bdf0-0dbaeb442a1b" onChange="toggleQuestions(this.value, '55cf312c-c76f-4485-bdf0-0dbaeb442a1b')">
+          <option value="">Select an option</option>
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="question-container" id="question2_55cf312c-c76f-4485-bdf0-0dbaeb442a1b" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="severityOfCyberbullying_55cf312c-c76f-4485-bdf0-0dbaeb442a1b">What is the severity?</label>
+        <select id="severityOfCyberbullying_55cf312c-c76f-4485-bdf0-0dbaeb442a1b" name="severityOfCyberbullying_55cf312c-c76f-4485-bdf0-0dbaeb442a1b">
+          <option value="">Select an option</option>
+          <option value="mild">Mild</option>
+          <option value="moderate">Moderate</option>
+          <option value="severe">Severe</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="selected-options-container" id="selectedOptionsContainer_55cf312c-c76f-4485-bdf0-0dbaeb442a1b">
+      <div class="question-container" id="question3_55cf312c-c76f-4485-bdf0-0dbaeb442a1b">
+        <div class="question">
+          <label for="topic_55cf312c-c76f-4485-bdf0-0dbaeb442a1b">What is the topic?</label>
+          <button type="button" onclick="toggleDropdown('dropdown_55cf312c-c76f-4485-bdf0-0dbaeb442a1b')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
+        </div>
+        <div id="dropdown_55cf312c-c76f-4485-bdf0-0dbaeb442a1b" class="checkbox-dropdown" style="display: none; position: absolute; background-color: #f9f9f9; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: calc(100% - 20px); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">
+          <div class="checkbox-option">
+            <input type="checkbox" id="sexual_55cf312c-c76f-4485-bdf0-0dbaeb442a1b" name="topicOfCyberbullying_55cf312c-c76f-4485-bdf0-0dbaeb442a1b[]" value="sexual" onchange="updateSelections('sexual', '55cf312c-c76f-4485-bdf0-0dbaeb442a1b')">
+            <label for="sexualharrasment_55cf312c-c76f-4485-bdf0-0dbaeb442a1b">Sexual but not Gender Identity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="physical_55cf312c-c76f-4485-bdf0-0dbaeb442a1b" name="topicOfCyberbullying_55cf312c-c76f-4485-bdf0-0dbaeb442a1b[]" value="physical" onchange="updateSelections('physical', '55cf312c-c76f-4485-bdf0-0dbaeb442a1b')">
+            <label for="physical_55cf312c-c76f-4485-bdf0-0dbaeb442a1b">Physical Appearance</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="gender_55cf312c-c76f-4485-bdf0-0dbaeb442a1b" name="topicOfCyberbullying_55cf312c-c76f-4485-bdf0-0dbaeb442a1b[]" value="gender" onchange="updateSelections('gender', '55cf312c-c76f-4485-bdf0-0dbaeb442a1b')">
+            <label for="genderidentity_55cf312c-c76f-4485-bdf0-0dbaeb442a1b">Gender Identity and Sexual Orientation</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="disability_55cf312c-c76f-4485-bdf0-0dbaeb442a1b" name="topicOfCyberbullying_55cf312c-c76f-4485-bdf0-0dbaeb442a1b[]" value="disability" onchange="updateSelections('disability', '55cf312c-c76f-4485-bdf0-0dbaeb442a1b')">
+            <label for="disability_55cf312c-c76f-4485-bdf0-0dbaeb442a1b">Disability and Neurodiversity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="social_status_55cf312c-c76f-4485-bdf0-0dbaeb442a1b" name="topicOfCyberbullying_55cf312c-c76f-4485-bdf0-0dbaeb442a1b[]" value="social_status" onchange="updateSelections('social_status', '55cf312c-c76f-4485-bdf0-0dbaeb442a1b')">
+            <label for="social_status_55cf312c-c76f-4485-bdf0-0dbaeb442a1b">Social Status/Popularity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="race_55cf312c-c76f-4485-bdf0-0dbaeb442a1b" name="topicOfCyberbullying_55cf312c-c76f-4485-bdf0-0dbaeb442a1b[]" value="race" onchange="updateSelections('race', '55cf312c-c76f-4485-bdf0-0dbaeb442a1b')">
+            <label for="race_55cf312c-c76f-4485-bdf0-0dbaeb442a1b">Race and Ethnicity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="intellectual_55cf312c-c76f-4485-bdf0-0dbaeb442a1b" name="topicOfCyberbullying_55cf312c-c76f-4485-bdf0-0dbaeb442a1b[]" value="intellectual" onchange="updateSelections('intellectual', '55cf312c-c76f-4485-bdf0-0dbaeb442a1b')">
+            <label for="intellectual_55cf312c-c76f-4485-bdf0-0dbaeb442a1b">Intellectual and Academic</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="religious_55cf312c-c76f-4485-bdf0-0dbaeb442a1b" name="topicOfCyberbullying_55cf312c-c76f-4485-bdf0-0dbaeb442a1b[]" value="religious" onchange="updateSelections('religious', '55cf312c-c76f-4485-bdf0-0dbaeb442a1b')">
+            <label for="religious_55cf312c-c76f-4485-bdf0-0dbaeb442a1b">Religious</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="political_55cf312c-c76f-4485-bdf0-0dbaeb442a1b" name="topicOfCyberbullying_55cf312c-c76f-4485-bdf0-0dbaeb442a1b[]" value="political" onchange="updateSelections('political', '55cf312c-c76f-4485-bdf0-0dbaeb442a1b')">
+            <label for="political_55cf312c-c76f-4485-bdf0-0dbaeb442a1b">Political</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="none_55cf312c-c76f-4485-bdf0-0dbaeb442a1b" name="topicOfCyberbullying_55cf312c-c76f-4485-bdf0-0dbaeb442a1b[]" value="none" onchange="updateSelections('none', '55cf312c-c76f-4485-bdf0-0dbaeb442a1b')">
+            <label for="none_55cf312c-c76f-4485-bdf0-0dbaeb442a1b">Other</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="question-container" id="question4_55cf312c-c76f-4485-bdf0-0dbaeb442a1b" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 1; margin-right: 10px;">
+          <label for="commentWriterRole_55cf312c-c76f-4485-bdf0-0dbaeb442a1b">What is the role of <span style="color: #93f945;">@eileenbarnett_225991</span> in this comment?</label>
+          <select id="commentWriterRole_55cf312c-c76f-4485-bdf0-0dbaeb442a1b" name="commentWriterRole_55cf312c-c76f-4485-bdf0-0dbaeb442a1b" onChange="updateQuestion4Options(this.value, '55cf312c-c76f-4485-bdf0-0dbaeb442a1b')">
+            <option value="">Select an option</option>
+          </select>
+        </div>
+        <div id="severityContainer_55cf312c-c76f-4485-bdf0-0dbaeb442a1b" style="flex: 1; display:none;">
+          <label id="severityLabel_55cf312c-c76f-4485-bdf0-0dbaeb442a1b" for="severityOfRole_55cf312c-c76f-4485-bdf0-0dbaeb442a1b">How is the victim being defended?</label>
+          <select id="severityOfRole_55cf312c-c76f-4485-bdf0-0dbaeb442a1b" name="severityOfRole_55cf312c-c76f-4485-bdf0-0dbaeb442a1b">
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <h3><span style="color: #19f8fc;">@phillip35_191979</span>: <span style="color: #93f945;">@eileenbarnett_225991</span> thanks</h3>
+    <div class="question-container" id="question1_dfb018a9-f870-498f-b8b8-af37e85aaf4a" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="Cyberbullying_dfb018a9-f870-498f-b8b8-af37e85aaf4a">Is there cyberbullying (even if in defense of the victim)?</label>
+        <select id="Cyberbullying_dfb018a9-f870-498f-b8b8-af37e85aaf4a" name="Cyberbullying_dfb018a9-f870-498f-b8b8-af37e85aaf4a" onChange="toggleQuestions(this.value, 'dfb018a9-f870-498f-b8b8-af37e85aaf4a')">
+          <option value="">Select an option</option>
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="question-container" id="question2_dfb018a9-f870-498f-b8b8-af37e85aaf4a" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="severityOfCyberbullying_dfb018a9-f870-498f-b8b8-af37e85aaf4a">What is the severity?</label>
+        <select id="severityOfCyberbullying_dfb018a9-f870-498f-b8b8-af37e85aaf4a" name="severityOfCyberbullying_dfb018a9-f870-498f-b8b8-af37e85aaf4a">
+          <option value="">Select an option</option>
+          <option value="mild">Mild</option>
+          <option value="moderate">Moderate</option>
+          <option value="severe">Severe</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="selected-options-container" id="selectedOptionsContainer_dfb018a9-f870-498f-b8b8-af37e85aaf4a">
+      <div class="question-container" id="question3_dfb018a9-f870-498f-b8b8-af37e85aaf4a">
+        <div class="question">
+          <label for="topic_dfb018a9-f870-498f-b8b8-af37e85aaf4a">What is the topic?</label>
+          <button type="button" onclick="toggleDropdown('dropdown_dfb018a9-f870-498f-b8b8-af37e85aaf4a')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
+        </div>
+        <div id="dropdown_dfb018a9-f870-498f-b8b8-af37e85aaf4a" class="checkbox-dropdown" style="display: none; position: absolute; background-color: #f9f9f9; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: calc(100% - 20px); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">
+          <div class="checkbox-option">
+            <input type="checkbox" id="sexual_dfb018a9-f870-498f-b8b8-af37e85aaf4a" name="topicOfCyberbullying_dfb018a9-f870-498f-b8b8-af37e85aaf4a[]" value="sexual" onchange="updateSelections('sexual', 'dfb018a9-f870-498f-b8b8-af37e85aaf4a')">
+            <label for="sexualharrasment_dfb018a9-f870-498f-b8b8-af37e85aaf4a">Sexual but not Gender Identity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="physical_dfb018a9-f870-498f-b8b8-af37e85aaf4a" name="topicOfCyberbullying_dfb018a9-f870-498f-b8b8-af37e85aaf4a[]" value="physical" onchange="updateSelections('physical', 'dfb018a9-f870-498f-b8b8-af37e85aaf4a')">
+            <label for="physical_dfb018a9-f870-498f-b8b8-af37e85aaf4a">Physical Appearance</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="gender_dfb018a9-f870-498f-b8b8-af37e85aaf4a" name="topicOfCyberbullying_dfb018a9-f870-498f-b8b8-af37e85aaf4a[]" value="gender" onchange="updateSelections('gender', 'dfb018a9-f870-498f-b8b8-af37e85aaf4a')">
+            <label for="genderidentity_dfb018a9-f870-498f-b8b8-af37e85aaf4a">Gender Identity and Sexual Orientation</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="disability_dfb018a9-f870-498f-b8b8-af37e85aaf4a" name="topicOfCyberbullying_dfb018a9-f870-498f-b8b8-af37e85aaf4a[]" value="disability" onchange="updateSelections('disability', 'dfb018a9-f870-498f-b8b8-af37e85aaf4a')">
+            <label for="disability_dfb018a9-f870-498f-b8b8-af37e85aaf4a">Disability and Neurodiversity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="social_status_dfb018a9-f870-498f-b8b8-af37e85aaf4a" name="topicOfCyberbullying_dfb018a9-f870-498f-b8b8-af37e85aaf4a[]" value="social_status" onchange="updateSelections('social_status', 'dfb018a9-f870-498f-b8b8-af37e85aaf4a')">
+            <label for="social_status_dfb018a9-f870-498f-b8b8-af37e85aaf4a">Social Status/Popularity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="race_dfb018a9-f870-498f-b8b8-af37e85aaf4a" name="topicOfCyberbullying_dfb018a9-f870-498f-b8b8-af37e85aaf4a[]" value="race" onchange="updateSelections('race', 'dfb018a9-f870-498f-b8b8-af37e85aaf4a')">
+            <label for="race_dfb018a9-f870-498f-b8b8-af37e85aaf4a">Race and Ethnicity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="intellectual_dfb018a9-f870-498f-b8b8-af37e85aaf4a" name="topicOfCyberbullying_dfb018a9-f870-498f-b8b8-af37e85aaf4a[]" value="intellectual" onchange="updateSelections('intellectual', 'dfb018a9-f870-498f-b8b8-af37e85aaf4a')">
+            <label for="intellectual_dfb018a9-f870-498f-b8b8-af37e85aaf4a">Intellectual and Academic</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="religious_dfb018a9-f870-498f-b8b8-af37e85aaf4a" name="topicOfCyberbullying_dfb018a9-f870-498f-b8b8-af37e85aaf4a[]" value="religious" onchange="updateSelections('religious', 'dfb018a9-f870-498f-b8b8-af37e85aaf4a')">
+            <label for="religious_dfb018a9-f870-498f-b8b8-af37e85aaf4a">Religious</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="political_dfb018a9-f870-498f-b8b8-af37e85aaf4a" name="topicOfCyberbullying_dfb018a9-f870-498f-b8b8-af37e85aaf4a[]" value="political" onchange="updateSelections('political', 'dfb018a9-f870-498f-b8b8-af37e85aaf4a')">
+            <label for="political_dfb018a9-f870-498f-b8b8-af37e85aaf4a">Political</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="none_dfb018a9-f870-498f-b8b8-af37e85aaf4a" name="topicOfCyberbullying_dfb018a9-f870-498f-b8b8-af37e85aaf4a[]" value="none" onchange="updateSelections('none', 'dfb018a9-f870-498f-b8b8-af37e85aaf4a')">
+            <label for="none_dfb018a9-f870-498f-b8b8-af37e85aaf4a">Other</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="question-container" id="question4_dfb018a9-f870-498f-b8b8-af37e85aaf4a" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 1; margin-right: 10px;">
+          <label for="commentWriterRole_dfb018a9-f870-498f-b8b8-af37e85aaf4a">What is the role of <span style="color: #19f8fc;">@phillip35_191979</span> in this comment?</label>
+          <select id="commentWriterRole_dfb018a9-f870-498f-b8b8-af37e85aaf4a" name="commentWriterRole_dfb018a9-f870-498f-b8b8-af37e85aaf4a" onChange="updateQuestion4Options(this.value, 'dfb018a9-f870-498f-b8b8-af37e85aaf4a')">
+            <option value="">Select an option</option>
+          </select>
+        </div>
+        <div id="severityContainer_dfb018a9-f870-498f-b8b8-af37e85aaf4a" style="flex: 1; display:none;">
+          <label id="severityLabel_dfb018a9-f870-498f-b8b8-af37e85aaf4a" for="severityOfRole_dfb018a9-f870-498f-b8b8-af37e85aaf4a">How is the victim being defended?</label>
+          <select id="severityOfRole_dfb018a9-f870-498f-b8b8-af37e85aaf4a" name="severityOfRole_dfb018a9-f870-498f-b8b8-af37e85aaf4a">
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <h3><span style="color: #dbe26c;">@pdavis_852990</span>: Yaaaaa Alec!!!!!!!!</h3>
+    <div class="question-container" id="question1_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="Cyberbullying_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45">Is there cyberbullying (even if in defense of the victim)?</label>
+        <select id="Cyberbullying_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45" name="Cyberbullying_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45" onChange="toggleQuestions(this.value, 'dbdec5f8-e5a6-4e27-9f8b-434801fa3f45')">
+          <option value="">Select an option</option>
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="question-container" id="question2_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="severityOfCyberbullying_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45">What is the severity?</label>
+        <select id="severityOfCyberbullying_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45" name="severityOfCyberbullying_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45">
+          <option value="">Select an option</option>
+          <option value="mild">Mild</option>
+          <option value="moderate">Moderate</option>
+          <option value="severe">Severe</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="selected-options-container" id="selectedOptionsContainer_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45">
+      <div class="question-container" id="question3_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45">
+        <div class="question">
+          <label for="topic_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45">What is the topic?</label>
+          <button type="button" onclick="toggleDropdown('dropdown_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
+        </div>
+        <div id="dropdown_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45" class="checkbox-dropdown" style="display: none; position: absolute; background-color: #f9f9f9; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: calc(100% - 20px); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">
+          <div class="checkbox-option">
+            <input type="checkbox" id="sexual_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45" name="topicOfCyberbullying_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45[]" value="sexual" onchange="updateSelections('sexual', 'dbdec5f8-e5a6-4e27-9f8b-434801fa3f45')">
+            <label for="sexualharrasment_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45">Sexual but not Gender Identity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="physical_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45" name="topicOfCyberbullying_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45[]" value="physical" onchange="updateSelections('physical', 'dbdec5f8-e5a6-4e27-9f8b-434801fa3f45')">
+            <label for="physical_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45">Physical Appearance</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="gender_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45" name="topicOfCyberbullying_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45[]" value="gender" onchange="updateSelections('gender', 'dbdec5f8-e5a6-4e27-9f8b-434801fa3f45')">
+            <label for="genderidentity_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45">Gender Identity and Sexual Orientation</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="disability_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45" name="topicOfCyberbullying_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45[]" value="disability" onchange="updateSelections('disability', 'dbdec5f8-e5a6-4e27-9f8b-434801fa3f45')">
+            <label for="disability_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45">Disability and Neurodiversity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="social_status_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45" name="topicOfCyberbullying_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45[]" value="social_status" onchange="updateSelections('social_status', 'dbdec5f8-e5a6-4e27-9f8b-434801fa3f45')">
+            <label for="social_status_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45">Social Status/Popularity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="race_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45" name="topicOfCyberbullying_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45[]" value="race" onchange="updateSelections('race', 'dbdec5f8-e5a6-4e27-9f8b-434801fa3f45')">
+            <label for="race_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45">Race and Ethnicity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="intellectual_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45" name="topicOfCyberbullying_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45[]" value="intellectual" onchange="updateSelections('intellectual', 'dbdec5f8-e5a6-4e27-9f8b-434801fa3f45')">
+            <label for="intellectual_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45">Intellectual and Academic</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="religious_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45" name="topicOfCyberbullying_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45[]" value="religious" onchange="updateSelections('religious', 'dbdec5f8-e5a6-4e27-9f8b-434801fa3f45')">
+            <label for="religious_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45">Religious</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="political_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45" name="topicOfCyberbullying_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45[]" value="political" onchange="updateSelections('political', 'dbdec5f8-e5a6-4e27-9f8b-434801fa3f45')">
+            <label for="political_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45">Political</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="none_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45" name="topicOfCyberbullying_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45[]" value="none" onchange="updateSelections('none', 'dbdec5f8-e5a6-4e27-9f8b-434801fa3f45')">
+            <label for="none_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45">Other</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="question-container" id="question4_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 1; margin-right: 10px;">
+          <label for="commentWriterRole_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45">What is the role of <span style="color: #dbe26c;">@pdavis_852990</span> in this comment?</label>
+          <select id="commentWriterRole_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45" name="commentWriterRole_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45" onChange="updateQuestion4Options(this.value, 'dbdec5f8-e5a6-4e27-9f8b-434801fa3f45')">
+            <option value="">Select an option</option>
+          </select>
+        </div>
+        <div id="severityContainer_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45" style="flex: 1; display:none;">
+          <label id="severityLabel_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45" for="severityOfRole_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45">How is the victim being defended?</label>
+          <select id="severityOfRole_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45" name="severityOfRole_dbdec5f8-e5a6-4e27-9f8b-434801fa3f45">
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <h3><span style="color: #92b7ef;">@brandon62_568382</span>: Dope drawing</h3>
+    <div class="question-container" id="question1_d2cddec0-610e-440b-a114-f3123f537b24" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="Cyberbullying_d2cddec0-610e-440b-a114-f3123f537b24">Is there cyberbullying (even if in defense of the victim)?</label>
+        <select id="Cyberbullying_d2cddec0-610e-440b-a114-f3123f537b24" name="Cyberbullying_d2cddec0-610e-440b-a114-f3123f537b24" onChange="toggleQuestions(this.value, 'd2cddec0-610e-440b-a114-f3123f537b24')">
+          <option value="">Select an option</option>
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="question-container" id="question2_d2cddec0-610e-440b-a114-f3123f537b24" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="severityOfCyberbullying_d2cddec0-610e-440b-a114-f3123f537b24">What is the severity?</label>
+        <select id="severityOfCyberbullying_d2cddec0-610e-440b-a114-f3123f537b24" name="severityOfCyberbullying_d2cddec0-610e-440b-a114-f3123f537b24">
+          <option value="">Select an option</option>
+          <option value="mild">Mild</option>
+          <option value="moderate">Moderate</option>
+          <option value="severe">Severe</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="selected-options-container" id="selectedOptionsContainer_d2cddec0-610e-440b-a114-f3123f537b24">
+      <div class="question-container" id="question3_d2cddec0-610e-440b-a114-f3123f537b24">
+        <div class="question">
+          <label for="topic_d2cddec0-610e-440b-a114-f3123f537b24">What is the topic?</label>
+          <button type="button" onclick="toggleDropdown('dropdown_d2cddec0-610e-440b-a114-f3123f537b24')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
+        </div>
+        <div id="dropdown_d2cddec0-610e-440b-a114-f3123f537b24" class="checkbox-dropdown" style="display: none; position: absolute; background-color: #f9f9f9; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: calc(100% - 20px); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">
+          <div class="checkbox-option">
+            <input type="checkbox" id="sexual_d2cddec0-610e-440b-a114-f3123f537b24" name="topicOfCyberbullying_d2cddec0-610e-440b-a114-f3123f537b24[]" value="sexual" onchange="updateSelections('sexual', 'd2cddec0-610e-440b-a114-f3123f537b24')">
+            <label for="sexualharrasment_d2cddec0-610e-440b-a114-f3123f537b24">Sexual but not Gender Identity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="physical_d2cddec0-610e-440b-a114-f3123f537b24" name="topicOfCyberbullying_d2cddec0-610e-440b-a114-f3123f537b24[]" value="physical" onchange="updateSelections('physical', 'd2cddec0-610e-440b-a114-f3123f537b24')">
+            <label for="physical_d2cddec0-610e-440b-a114-f3123f537b24">Physical Appearance</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="gender_d2cddec0-610e-440b-a114-f3123f537b24" name="topicOfCyberbullying_d2cddec0-610e-440b-a114-f3123f537b24[]" value="gender" onchange="updateSelections('gender', 'd2cddec0-610e-440b-a114-f3123f537b24')">
+            <label for="genderidentity_d2cddec0-610e-440b-a114-f3123f537b24">Gender Identity and Sexual Orientation</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="disability_d2cddec0-610e-440b-a114-f3123f537b24" name="topicOfCyberbullying_d2cddec0-610e-440b-a114-f3123f537b24[]" value="disability" onchange="updateSelections('disability', 'd2cddec0-610e-440b-a114-f3123f537b24')">
+            <label for="disability_d2cddec0-610e-440b-a114-f3123f537b24">Disability and Neurodiversity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="social_status_d2cddec0-610e-440b-a114-f3123f537b24" name="topicOfCyberbullying_d2cddec0-610e-440b-a114-f3123f537b24[]" value="social_status" onchange="updateSelections('social_status', 'd2cddec0-610e-440b-a114-f3123f537b24')">
+            <label for="social_status_d2cddec0-610e-440b-a114-f3123f537b24">Social Status/Popularity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="race_d2cddec0-610e-440b-a114-f3123f537b24" name="topicOfCyberbullying_d2cddec0-610e-440b-a114-f3123f537b24[]" value="race" onchange="updateSelections('race', 'd2cddec0-610e-440b-a114-f3123f537b24')">
+            <label for="race_d2cddec0-610e-440b-a114-f3123f537b24">Race and Ethnicity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="intellectual_d2cddec0-610e-440b-a114-f3123f537b24" name="topicOfCyberbullying_d2cddec0-610e-440b-a114-f3123f537b24[]" value="intellectual" onchange="updateSelections('intellectual', 'd2cddec0-610e-440b-a114-f3123f537b24')">
+            <label for="intellectual_d2cddec0-610e-440b-a114-f3123f537b24">Intellectual and Academic</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="religious_d2cddec0-610e-440b-a114-f3123f537b24" name="topicOfCyberbullying_d2cddec0-610e-440b-a114-f3123f537b24[]" value="religious" onchange="updateSelections('religious', 'd2cddec0-610e-440b-a114-f3123f537b24')">
+            <label for="religious_d2cddec0-610e-440b-a114-f3123f537b24">Religious</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="political_d2cddec0-610e-440b-a114-f3123f537b24" name="topicOfCyberbullying_d2cddec0-610e-440b-a114-f3123f537b24[]" value="political" onchange="updateSelections('political', 'd2cddec0-610e-440b-a114-f3123f537b24')">
+            <label for="political_d2cddec0-610e-440b-a114-f3123f537b24">Political</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="none_d2cddec0-610e-440b-a114-f3123f537b24" name="topicOfCyberbullying_d2cddec0-610e-440b-a114-f3123f537b24[]" value="none" onchange="updateSelections('none', 'd2cddec0-610e-440b-a114-f3123f537b24')">
+            <label for="none_d2cddec0-610e-440b-a114-f3123f537b24">Other</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="question-container" id="question4_d2cddec0-610e-440b-a114-f3123f537b24" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 1; margin-right: 10px;">
+          <label for="commentWriterRole_d2cddec0-610e-440b-a114-f3123f537b24">What is the role of <span style="color: #92b7ef;">@brandon62_568382</span> in this comment?</label>
+          <select id="commentWriterRole_d2cddec0-610e-440b-a114-f3123f537b24" name="commentWriterRole_d2cddec0-610e-440b-a114-f3123f537b24" onChange="updateQuestion4Options(this.value, 'd2cddec0-610e-440b-a114-f3123f537b24')">
+            <option value="">Select an option</option>
+          </select>
+        </div>
+        <div id="severityContainer_d2cddec0-610e-440b-a114-f3123f537b24" style="flex: 1; display:none;">
+          <label id="severityLabel_d2cddec0-610e-440b-a114-f3123f537b24" for="severityOfRole_d2cddec0-610e-440b-a114-f3123f537b24">How is the victim being defended?</label>
+          <select id="severityOfRole_d2cddec0-610e-440b-a114-f3123f537b24" name="severityOfRole_d2cddec0-610e-440b-a114-f3123f537b24">
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <h3><span style="color: #f993cd;">@kaylataylor_872779</span>: <span style="color: #2afc1b;">@smithzachary_833473</span> says the kid who has bboy as a user name a fucked up hair game and nothing but busted bitches on his profile</h3>
+    <div class="question-container" id="question1_612686c7-97e6-48bb-9a69-3dee7ff8387f" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="Cyberbullying_612686c7-97e6-48bb-9a69-3dee7ff8387f">Is there cyberbullying (even if in defense of the victim)?</label>
+        <select id="Cyberbullying_612686c7-97e6-48bb-9a69-3dee7ff8387f" name="Cyberbullying_612686c7-97e6-48bb-9a69-3dee7ff8387f" onChange="toggleQuestions(this.value, '612686c7-97e6-48bb-9a69-3dee7ff8387f')">
+          <option value="">Select an option</option>
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="question-container" id="question2_612686c7-97e6-48bb-9a69-3dee7ff8387f" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="severityOfCyberbullying_612686c7-97e6-48bb-9a69-3dee7ff8387f">What is the severity?</label>
+        <select id="severityOfCyberbullying_612686c7-97e6-48bb-9a69-3dee7ff8387f" name="severityOfCyberbullying_612686c7-97e6-48bb-9a69-3dee7ff8387f">
+          <option value="">Select an option</option>
+          <option value="mild">Mild</option>
+          <option value="moderate">Moderate</option>
+          <option value="severe">Severe</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="selected-options-container" id="selectedOptionsContainer_612686c7-97e6-48bb-9a69-3dee7ff8387f">
+      <div class="question-container" id="question3_612686c7-97e6-48bb-9a69-3dee7ff8387f">
+        <div class="question">
+          <label for="topic_612686c7-97e6-48bb-9a69-3dee7ff8387f">What is the topic?</label>
+          <button type="button" onclick="toggleDropdown('dropdown_612686c7-97e6-48bb-9a69-3dee7ff8387f')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
+        </div>
+        <div id="dropdown_612686c7-97e6-48bb-9a69-3dee7ff8387f" class="checkbox-dropdown" style="display: none; position: absolute; background-color: #f9f9f9; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: calc(100% - 20px); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">
+          <div class="checkbox-option">
+            <input type="checkbox" id="sexual_612686c7-97e6-48bb-9a69-3dee7ff8387f" name="topicOfCyberbullying_612686c7-97e6-48bb-9a69-3dee7ff8387f[]" value="sexual" onchange="updateSelections('sexual', '612686c7-97e6-48bb-9a69-3dee7ff8387f')">
+            <label for="sexualharrasment_612686c7-97e6-48bb-9a69-3dee7ff8387f">Sexual but not Gender Identity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="physical_612686c7-97e6-48bb-9a69-3dee7ff8387f" name="topicOfCyberbullying_612686c7-97e6-48bb-9a69-3dee7ff8387f[]" value="physical" onchange="updateSelections('physical', '612686c7-97e6-48bb-9a69-3dee7ff8387f')">
+            <label for="physical_612686c7-97e6-48bb-9a69-3dee7ff8387f">Physical Appearance</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="gender_612686c7-97e6-48bb-9a69-3dee7ff8387f" name="topicOfCyberbullying_612686c7-97e6-48bb-9a69-3dee7ff8387f[]" value="gender" onchange="updateSelections('gender', '612686c7-97e6-48bb-9a69-3dee7ff8387f')">
+            <label for="genderidentity_612686c7-97e6-48bb-9a69-3dee7ff8387f">Gender Identity and Sexual Orientation</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="disability_612686c7-97e6-48bb-9a69-3dee7ff8387f" name="topicOfCyberbullying_612686c7-97e6-48bb-9a69-3dee7ff8387f[]" value="disability" onchange="updateSelections('disability', '612686c7-97e6-48bb-9a69-3dee7ff8387f')">
+            <label for="disability_612686c7-97e6-48bb-9a69-3dee7ff8387f">Disability and Neurodiversity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="social_status_612686c7-97e6-48bb-9a69-3dee7ff8387f" name="topicOfCyberbullying_612686c7-97e6-48bb-9a69-3dee7ff8387f[]" value="social_status" onchange="updateSelections('social_status', '612686c7-97e6-48bb-9a69-3dee7ff8387f')">
+            <label for="social_status_612686c7-97e6-48bb-9a69-3dee7ff8387f">Social Status/Popularity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="race_612686c7-97e6-48bb-9a69-3dee7ff8387f" name="topicOfCyberbullying_612686c7-97e6-48bb-9a69-3dee7ff8387f[]" value="race" onchange="updateSelections('race', '612686c7-97e6-48bb-9a69-3dee7ff8387f')">
+            <label for="race_612686c7-97e6-48bb-9a69-3dee7ff8387f">Race and Ethnicity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="intellectual_612686c7-97e6-48bb-9a69-3dee7ff8387f" name="topicOfCyberbullying_612686c7-97e6-48bb-9a69-3dee7ff8387f[]" value="intellectual" onchange="updateSelections('intellectual', '612686c7-97e6-48bb-9a69-3dee7ff8387f')">
+            <label for="intellectual_612686c7-97e6-48bb-9a69-3dee7ff8387f">Intellectual and Academic</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="religious_612686c7-97e6-48bb-9a69-3dee7ff8387f" name="topicOfCyberbullying_612686c7-97e6-48bb-9a69-3dee7ff8387f[]" value="religious" onchange="updateSelections('religious', '612686c7-97e6-48bb-9a69-3dee7ff8387f')">
+            <label for="religious_612686c7-97e6-48bb-9a69-3dee7ff8387f">Religious</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="political_612686c7-97e6-48bb-9a69-3dee7ff8387f" name="topicOfCyberbullying_612686c7-97e6-48bb-9a69-3dee7ff8387f[]" value="political" onchange="updateSelections('political', '612686c7-97e6-48bb-9a69-3dee7ff8387f')">
+            <label for="political_612686c7-97e6-48bb-9a69-3dee7ff8387f">Political</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="none_612686c7-97e6-48bb-9a69-3dee7ff8387f" name="topicOfCyberbullying_612686c7-97e6-48bb-9a69-3dee7ff8387f[]" value="none" onchange="updateSelections('none', '612686c7-97e6-48bb-9a69-3dee7ff8387f')">
+            <label for="none_612686c7-97e6-48bb-9a69-3dee7ff8387f">Other</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="question-container" id="question4_612686c7-97e6-48bb-9a69-3dee7ff8387f" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 1; margin-right: 10px;">
+          <label for="commentWriterRole_612686c7-97e6-48bb-9a69-3dee7ff8387f">What is the role of <span style="color: #f993cd;">@kaylataylor_872779</span> in this comment?</label>
+          <select id="commentWriterRole_612686c7-97e6-48bb-9a69-3dee7ff8387f" name="commentWriterRole_612686c7-97e6-48bb-9a69-3dee7ff8387f" onChange="updateQuestion4Options(this.value, '612686c7-97e6-48bb-9a69-3dee7ff8387f')">
+            <option value="">Select an option</option>
+          </select>
+        </div>
+        <div id="severityContainer_612686c7-97e6-48bb-9a69-3dee7ff8387f" style="flex: 1; display:none;">
+          <label id="severityLabel_612686c7-97e6-48bb-9a69-3dee7ff8387f" for="severityOfRole_612686c7-97e6-48bb-9a69-3dee7ff8387f">How is the victim being defended?</label>
+          <select id="severityOfRole_612686c7-97e6-48bb-9a69-3dee7ff8387f" name="severityOfRole_612686c7-97e6-48bb-9a69-3dee7ff8387f">
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <h3><span style="color: #f993cd;">@kaylataylor_872779</span>: <span style="color: #2afc1b;">@smithzachary_833473</span> pussyass plank pusher</h3>
+    <div class="question-container" id="question1_862b1688-ee36-46e1-8f52-e2b804176c90" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="Cyberbullying_862b1688-ee36-46e1-8f52-e2b804176c90">Is there cyberbullying (even if in defense of the victim)?</label>
+        <select id="Cyberbullying_862b1688-ee36-46e1-8f52-e2b804176c90" name="Cyberbullying_862b1688-ee36-46e1-8f52-e2b804176c90" onChange="toggleQuestions(this.value, '862b1688-ee36-46e1-8f52-e2b804176c90')">
+          <option value="">Select an option</option>
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="question-container" id="question2_862b1688-ee36-46e1-8f52-e2b804176c90" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="severityOfCyberbullying_862b1688-ee36-46e1-8f52-e2b804176c90">What is the severity?</label>
+        <select id="severityOfCyberbullying_862b1688-ee36-46e1-8f52-e2b804176c90" name="severityOfCyberbullying_862b1688-ee36-46e1-8f52-e2b804176c90">
+          <option value="">Select an option</option>
+          <option value="mild">Mild</option>
+          <option value="moderate">Moderate</option>
+          <option value="severe">Severe</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="selected-options-container" id="selectedOptionsContainer_862b1688-ee36-46e1-8f52-e2b804176c90">
+      <div class="question-container" id="question3_862b1688-ee36-46e1-8f52-e2b804176c90">
+        <div class="question">
+          <label for="topic_862b1688-ee36-46e1-8f52-e2b804176c90">What is the topic?</label>
+          <button type="button" onclick="toggleDropdown('dropdown_862b1688-ee36-46e1-8f52-e2b804176c90')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
+        </div>
+        <div id="dropdown_862b1688-ee36-46e1-8f52-e2b804176c90" class="checkbox-dropdown" style="display: none; position: absolute; background-color: #f9f9f9; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: calc(100% - 20px); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">
+          <div class="checkbox-option">
+            <input type="checkbox" id="sexual_862b1688-ee36-46e1-8f52-e2b804176c90" name="topicOfCyberbullying_862b1688-ee36-46e1-8f52-e2b804176c90[]" value="sexual" onchange="updateSelections('sexual', '862b1688-ee36-46e1-8f52-e2b804176c90')">
+            <label for="sexualharrasment_862b1688-ee36-46e1-8f52-e2b804176c90">Sexual but not Gender Identity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="physical_862b1688-ee36-46e1-8f52-e2b804176c90" name="topicOfCyberbullying_862b1688-ee36-46e1-8f52-e2b804176c90[]" value="physical" onchange="updateSelections('physical', '862b1688-ee36-46e1-8f52-e2b804176c90')">
+            <label for="physical_862b1688-ee36-46e1-8f52-e2b804176c90">Physical Appearance</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="gender_862b1688-ee36-46e1-8f52-e2b804176c90" name="topicOfCyberbullying_862b1688-ee36-46e1-8f52-e2b804176c90[]" value="gender" onchange="updateSelections('gender', '862b1688-ee36-46e1-8f52-e2b804176c90')">
+            <label for="genderidentity_862b1688-ee36-46e1-8f52-e2b804176c90">Gender Identity and Sexual Orientation</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="disability_862b1688-ee36-46e1-8f52-e2b804176c90" name="topicOfCyberbullying_862b1688-ee36-46e1-8f52-e2b804176c90[]" value="disability" onchange="updateSelections('disability', '862b1688-ee36-46e1-8f52-e2b804176c90')">
+            <label for="disability_862b1688-ee36-46e1-8f52-e2b804176c90">Disability and Neurodiversity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="social_status_862b1688-ee36-46e1-8f52-e2b804176c90" name="topicOfCyberbullying_862b1688-ee36-46e1-8f52-e2b804176c90[]" value="social_status" onchange="updateSelections('social_status', '862b1688-ee36-46e1-8f52-e2b804176c90')">
+            <label for="social_status_862b1688-ee36-46e1-8f52-e2b804176c90">Social Status/Popularity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="race_862b1688-ee36-46e1-8f52-e2b804176c90" name="topicOfCyberbullying_862b1688-ee36-46e1-8f52-e2b804176c90[]" value="race" onchange="updateSelections('race', '862b1688-ee36-46e1-8f52-e2b804176c90')">
+            <label for="race_862b1688-ee36-46e1-8f52-e2b804176c90">Race and Ethnicity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="intellectual_862b1688-ee36-46e1-8f52-e2b804176c90" name="topicOfCyberbullying_862b1688-ee36-46e1-8f52-e2b804176c90[]" value="intellectual" onchange="updateSelections('intellectual', '862b1688-ee36-46e1-8f52-e2b804176c90')">
+            <label for="intellectual_862b1688-ee36-46e1-8f52-e2b804176c90">Intellectual and Academic</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="religious_862b1688-ee36-46e1-8f52-e2b804176c90" name="topicOfCyberbullying_862b1688-ee36-46e1-8f52-e2b804176c90[]" value="religious" onchange="updateSelections('religious', '862b1688-ee36-46e1-8f52-e2b804176c90')">
+            <label for="religious_862b1688-ee36-46e1-8f52-e2b804176c90">Religious</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="political_862b1688-ee36-46e1-8f52-e2b804176c90" name="topicOfCyberbullying_862b1688-ee36-46e1-8f52-e2b804176c90[]" value="political" onchange="updateSelections('political', '862b1688-ee36-46e1-8f52-e2b804176c90')">
+            <label for="political_862b1688-ee36-46e1-8f52-e2b804176c90">Political</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="none_862b1688-ee36-46e1-8f52-e2b804176c90" name="topicOfCyberbullying_862b1688-ee36-46e1-8f52-e2b804176c90[]" value="none" onchange="updateSelections('none', '862b1688-ee36-46e1-8f52-e2b804176c90')">
+            <label for="none_862b1688-ee36-46e1-8f52-e2b804176c90">Other</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="question-container" id="question4_862b1688-ee36-46e1-8f52-e2b804176c90" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 1; margin-right: 10px;">
+          <label for="commentWriterRole_862b1688-ee36-46e1-8f52-e2b804176c90">What is the role of <span style="color: #f993cd;">@kaylataylor_872779</span> in this comment?</label>
+          <select id="commentWriterRole_862b1688-ee36-46e1-8f52-e2b804176c90" name="commentWriterRole_862b1688-ee36-46e1-8f52-e2b804176c90" onChange="updateQuestion4Options(this.value, '862b1688-ee36-46e1-8f52-e2b804176c90')">
+            <option value="">Select an option</option>
+          </select>
+        </div>
+        <div id="severityContainer_862b1688-ee36-46e1-8f52-e2b804176c90" style="flex: 1; display:none;">
+          <label id="severityLabel_862b1688-ee36-46e1-8f52-e2b804176c90" for="severityOfRole_862b1688-ee36-46e1-8f52-e2b804176c90">How is the victim being defended?</label>
+          <select id="severityOfRole_862b1688-ee36-46e1-8f52-e2b804176c90" name="severityOfRole_862b1688-ee36-46e1-8f52-e2b804176c90">
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <h3><span style="color: #d16f5e;">@adamjohnson_962353</span>: Lol <span style="color: #99e88b;">@henry56_360216</span></h3>
+    <div class="question-container" id="question1_59ea8b1a-bf12-4396-9179-e325b52b2af0" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="Cyberbullying_59ea8b1a-bf12-4396-9179-e325b52b2af0">Is there cyberbullying (even if in defense of the victim)?</label>
+        <select id="Cyberbullying_59ea8b1a-bf12-4396-9179-e325b52b2af0" name="Cyberbullying_59ea8b1a-bf12-4396-9179-e325b52b2af0" onChange="toggleQuestions(this.value, '59ea8b1a-bf12-4396-9179-e325b52b2af0')">
+          <option value="">Select an option</option>
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="question-container" id="question2_59ea8b1a-bf12-4396-9179-e325b52b2af0" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="severityOfCyberbullying_59ea8b1a-bf12-4396-9179-e325b52b2af0">What is the severity?</label>
+        <select id="severityOfCyberbullying_59ea8b1a-bf12-4396-9179-e325b52b2af0" name="severityOfCyberbullying_59ea8b1a-bf12-4396-9179-e325b52b2af0">
+          <option value="">Select an option</option>
+          <option value="mild">Mild</option>
+          <option value="moderate">Moderate</option>
+          <option value="severe">Severe</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="selected-options-container" id="selectedOptionsContainer_59ea8b1a-bf12-4396-9179-e325b52b2af0">
+      <div class="question-container" id="question3_59ea8b1a-bf12-4396-9179-e325b52b2af0">
+        <div class="question">
+          <label for="topic_59ea8b1a-bf12-4396-9179-e325b52b2af0">What is the topic?</label>
+          <button type="button" onclick="toggleDropdown('dropdown_59ea8b1a-bf12-4396-9179-e325b52b2af0')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
+        </div>
+        <div id="dropdown_59ea8b1a-bf12-4396-9179-e325b52b2af0" class="checkbox-dropdown" style="display: none; position: absolute; background-color: #f9f9f9; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: calc(100% - 20px); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">
+          <div class="checkbox-option">
+            <input type="checkbox" id="sexual_59ea8b1a-bf12-4396-9179-e325b52b2af0" name="topicOfCyberbullying_59ea8b1a-bf12-4396-9179-e325b52b2af0[]" value="sexual" onchange="updateSelections('sexual', '59ea8b1a-bf12-4396-9179-e325b52b2af0')">
+            <label for="sexualharrasment_59ea8b1a-bf12-4396-9179-e325b52b2af0">Sexual but not Gender Identity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="physical_59ea8b1a-bf12-4396-9179-e325b52b2af0" name="topicOfCyberbullying_59ea8b1a-bf12-4396-9179-e325b52b2af0[]" value="physical" onchange="updateSelections('physical', '59ea8b1a-bf12-4396-9179-e325b52b2af0')">
+            <label for="physical_59ea8b1a-bf12-4396-9179-e325b52b2af0">Physical Appearance</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="gender_59ea8b1a-bf12-4396-9179-e325b52b2af0" name="topicOfCyberbullying_59ea8b1a-bf12-4396-9179-e325b52b2af0[]" value="gender" onchange="updateSelections('gender', '59ea8b1a-bf12-4396-9179-e325b52b2af0')">
+            <label for="genderidentity_59ea8b1a-bf12-4396-9179-e325b52b2af0">Gender Identity and Sexual Orientation</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="disability_59ea8b1a-bf12-4396-9179-e325b52b2af0" name="topicOfCyberbullying_59ea8b1a-bf12-4396-9179-e325b52b2af0[]" value="disability" onchange="updateSelections('disability', '59ea8b1a-bf12-4396-9179-e325b52b2af0')">
+            <label for="disability_59ea8b1a-bf12-4396-9179-e325b52b2af0">Disability and Neurodiversity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="social_status_59ea8b1a-bf12-4396-9179-e325b52b2af0" name="topicOfCyberbullying_59ea8b1a-bf12-4396-9179-e325b52b2af0[]" value="social_status" onchange="updateSelections('social_status', '59ea8b1a-bf12-4396-9179-e325b52b2af0')">
+            <label for="social_status_59ea8b1a-bf12-4396-9179-e325b52b2af0">Social Status/Popularity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="race_59ea8b1a-bf12-4396-9179-e325b52b2af0" name="topicOfCyberbullying_59ea8b1a-bf12-4396-9179-e325b52b2af0[]" value="race" onchange="updateSelections('race', '59ea8b1a-bf12-4396-9179-e325b52b2af0')">
+            <label for="race_59ea8b1a-bf12-4396-9179-e325b52b2af0">Race and Ethnicity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="intellectual_59ea8b1a-bf12-4396-9179-e325b52b2af0" name="topicOfCyberbullying_59ea8b1a-bf12-4396-9179-e325b52b2af0[]" value="intellectual" onchange="updateSelections('intellectual', '59ea8b1a-bf12-4396-9179-e325b52b2af0')">
+            <label for="intellectual_59ea8b1a-bf12-4396-9179-e325b52b2af0">Intellectual and Academic</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="religious_59ea8b1a-bf12-4396-9179-e325b52b2af0" name="topicOfCyberbullying_59ea8b1a-bf12-4396-9179-e325b52b2af0[]" value="religious" onchange="updateSelections('religious', '59ea8b1a-bf12-4396-9179-e325b52b2af0')">
+            <label for="religious_59ea8b1a-bf12-4396-9179-e325b52b2af0">Religious</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="political_59ea8b1a-bf12-4396-9179-e325b52b2af0" name="topicOfCyberbullying_59ea8b1a-bf12-4396-9179-e325b52b2af0[]" value="political" onchange="updateSelections('political', '59ea8b1a-bf12-4396-9179-e325b52b2af0')">
+            <label for="political_59ea8b1a-bf12-4396-9179-e325b52b2af0">Political</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="none_59ea8b1a-bf12-4396-9179-e325b52b2af0" name="topicOfCyberbullying_59ea8b1a-bf12-4396-9179-e325b52b2af0[]" value="none" onchange="updateSelections('none', '59ea8b1a-bf12-4396-9179-e325b52b2af0')">
+            <label for="none_59ea8b1a-bf12-4396-9179-e325b52b2af0">Other</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="question-container" id="question4_59ea8b1a-bf12-4396-9179-e325b52b2af0" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 1; margin-right: 10px;">
+          <label for="commentWriterRole_59ea8b1a-bf12-4396-9179-e325b52b2af0">What is the role of <span style="color: #d16f5e;">@adamjohnson_962353</span> in this comment?</label>
+          <select id="commentWriterRole_59ea8b1a-bf12-4396-9179-e325b52b2af0" name="commentWriterRole_59ea8b1a-bf12-4396-9179-e325b52b2af0" onChange="updateQuestion4Options(this.value, '59ea8b1a-bf12-4396-9179-e325b52b2af0')">
+            <option value="">Select an option</option>
+          </select>
+        </div>
+        <div id="severityContainer_59ea8b1a-bf12-4396-9179-e325b52b2af0" style="flex: 1; display:none;">
+          <label id="severityLabel_59ea8b1a-bf12-4396-9179-e325b52b2af0" for="severityOfRole_59ea8b1a-bf12-4396-9179-e325b52b2af0">How is the victim being defended?</label>
+          <select id="severityOfRole_59ea8b1a-bf12-4396-9179-e325b52b2af0" name="severityOfRole_59ea8b1a-bf12-4396-9179-e325b52b2af0">
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <h3><span style="color: #ab6ae8;">@lgarza_955146</span>: Follow me please <span style="color: #19f8fc;">@phillip35_191979</span></h3>
+    <div class="question-container" id="question1_85a4ebe3-bcfe-4c51-b204-e404d30fbccf" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="Cyberbullying_85a4ebe3-bcfe-4c51-b204-e404d30fbccf">Is there cyberbullying (even if in defense of the victim)?</label>
+        <select id="Cyberbullying_85a4ebe3-bcfe-4c51-b204-e404d30fbccf" name="Cyberbullying_85a4ebe3-bcfe-4c51-b204-e404d30fbccf" onChange="toggleQuestions(this.value, '85a4ebe3-bcfe-4c51-b204-e404d30fbccf')">
+          <option value="">Select an option</option>
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="question-container" id="question2_85a4ebe3-bcfe-4c51-b204-e404d30fbccf" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="severityOfCyberbullying_85a4ebe3-bcfe-4c51-b204-e404d30fbccf">What is the severity?</label>
+        <select id="severityOfCyberbullying_85a4ebe3-bcfe-4c51-b204-e404d30fbccf" name="severityOfCyberbullying_85a4ebe3-bcfe-4c51-b204-e404d30fbccf">
+          <option value="">Select an option</option>
+          <option value="mild">Mild</option>
+          <option value="moderate">Moderate</option>
+          <option value="severe">Severe</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="selected-options-container" id="selectedOptionsContainer_85a4ebe3-bcfe-4c51-b204-e404d30fbccf">
+      <div class="question-container" id="question3_85a4ebe3-bcfe-4c51-b204-e404d30fbccf">
+        <div class="question">
+          <label for="topic_85a4ebe3-bcfe-4c51-b204-e404d30fbccf">What is the topic?</label>
+          <button type="button" onclick="toggleDropdown('dropdown_85a4ebe3-bcfe-4c51-b204-e404d30fbccf')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
+        </div>
+        <div id="dropdown_85a4ebe3-bcfe-4c51-b204-e404d30fbccf" class="checkbox-dropdown" style="display: none; position: absolute; background-color: #f9f9f9; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: calc(100% - 20px); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">
+          <div class="checkbox-option">
+            <input type="checkbox" id="sexual_85a4ebe3-bcfe-4c51-b204-e404d30fbccf" name="topicOfCyberbullying_85a4ebe3-bcfe-4c51-b204-e404d30fbccf[]" value="sexual" onchange="updateSelections('sexual', '85a4ebe3-bcfe-4c51-b204-e404d30fbccf')">
+            <label for="sexualharrasment_85a4ebe3-bcfe-4c51-b204-e404d30fbccf">Sexual but not Gender Identity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="physical_85a4ebe3-bcfe-4c51-b204-e404d30fbccf" name="topicOfCyberbullying_85a4ebe3-bcfe-4c51-b204-e404d30fbccf[]" value="physical" onchange="updateSelections('physical', '85a4ebe3-bcfe-4c51-b204-e404d30fbccf')">
+            <label for="physical_85a4ebe3-bcfe-4c51-b204-e404d30fbccf">Physical Appearance</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="gender_85a4ebe3-bcfe-4c51-b204-e404d30fbccf" name="topicOfCyberbullying_85a4ebe3-bcfe-4c51-b204-e404d30fbccf[]" value="gender" onchange="updateSelections('gender', '85a4ebe3-bcfe-4c51-b204-e404d30fbccf')">
+            <label for="genderidentity_85a4ebe3-bcfe-4c51-b204-e404d30fbccf">Gender Identity and Sexual Orientation</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="disability_85a4ebe3-bcfe-4c51-b204-e404d30fbccf" name="topicOfCyberbullying_85a4ebe3-bcfe-4c51-b204-e404d30fbccf[]" value="disability" onchange="updateSelections('disability', '85a4ebe3-bcfe-4c51-b204-e404d30fbccf')">
+            <label for="disability_85a4ebe3-bcfe-4c51-b204-e404d30fbccf">Disability and Neurodiversity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="social_status_85a4ebe3-bcfe-4c51-b204-e404d30fbccf" name="topicOfCyberbullying_85a4ebe3-bcfe-4c51-b204-e404d30fbccf[]" value="social_status" onchange="updateSelections('social_status', '85a4ebe3-bcfe-4c51-b204-e404d30fbccf')">
+            <label for="social_status_85a4ebe3-bcfe-4c51-b204-e404d30fbccf">Social Status/Popularity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="race_85a4ebe3-bcfe-4c51-b204-e404d30fbccf" name="topicOfCyberbullying_85a4ebe3-bcfe-4c51-b204-e404d30fbccf[]" value="race" onchange="updateSelections('race', '85a4ebe3-bcfe-4c51-b204-e404d30fbccf')">
+            <label for="race_85a4ebe3-bcfe-4c51-b204-e404d30fbccf">Race and Ethnicity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="intellectual_85a4ebe3-bcfe-4c51-b204-e404d30fbccf" name="topicOfCyberbullying_85a4ebe3-bcfe-4c51-b204-e404d30fbccf[]" value="intellectual" onchange="updateSelections('intellectual', '85a4ebe3-bcfe-4c51-b204-e404d30fbccf')">
+            <label for="intellectual_85a4ebe3-bcfe-4c51-b204-e404d30fbccf">Intellectual and Academic</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="religious_85a4ebe3-bcfe-4c51-b204-e404d30fbccf" name="topicOfCyberbullying_85a4ebe3-bcfe-4c51-b204-e404d30fbccf[]" value="religious" onchange="updateSelections('religious', '85a4ebe3-bcfe-4c51-b204-e404d30fbccf')">
+            <label for="religious_85a4ebe3-bcfe-4c51-b204-e404d30fbccf">Religious</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="political_85a4ebe3-bcfe-4c51-b204-e404d30fbccf" name="topicOfCyberbullying_85a4ebe3-bcfe-4c51-b204-e404d30fbccf[]" value="political" onchange="updateSelections('political', '85a4ebe3-bcfe-4c51-b204-e404d30fbccf')">
+            <label for="political_85a4ebe3-bcfe-4c51-b204-e404d30fbccf">Political</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="none_85a4ebe3-bcfe-4c51-b204-e404d30fbccf" name="topicOfCyberbullying_85a4ebe3-bcfe-4c51-b204-e404d30fbccf[]" value="none" onchange="updateSelections('none', '85a4ebe3-bcfe-4c51-b204-e404d30fbccf')">
+            <label for="none_85a4ebe3-bcfe-4c51-b204-e404d30fbccf">Other</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="question-container" id="question4_85a4ebe3-bcfe-4c51-b204-e404d30fbccf" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 1; margin-right: 10px;">
+          <label for="commentWriterRole_85a4ebe3-bcfe-4c51-b204-e404d30fbccf">What is the role of <span style="color: #ab6ae8;">@lgarza_955146</span> in this comment?</label>
+          <select id="commentWriterRole_85a4ebe3-bcfe-4c51-b204-e404d30fbccf" name="commentWriterRole_85a4ebe3-bcfe-4c51-b204-e404d30fbccf" onChange="updateQuestion4Options(this.value, '85a4ebe3-bcfe-4c51-b204-e404d30fbccf')">
+            <option value="">Select an option</option>
+          </select>
+        </div>
+        <div id="severityContainer_85a4ebe3-bcfe-4c51-b204-e404d30fbccf" style="flex: 1; display:none;">
+          <label id="severityLabel_85a4ebe3-bcfe-4c51-b204-e404d30fbccf" for="severityOfRole_85a4ebe3-bcfe-4c51-b204-e404d30fbccf">How is the victim being defended?</label>
+          <select id="severityOfRole_85a4ebe3-bcfe-4c51-b204-e404d30fbccf" name="severityOfRole_85a4ebe3-bcfe-4c51-b204-e404d30fbccf">
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <h3><span style="color: #f993cd;">@kaylataylor_872779</span>: <span style="color: #2afc1b;">@smithzachary_833473</span> I bike for fun not to show off or people up but tell me of anyone who's only biked a little under a year and does what I do. Doubt it. Go take your wooden dildo up your ass skater.</h3>
+    <div class="question-container" id="question1_6a78448c-7fdf-4044-9c42-e4022d53c541" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="Cyberbullying_6a78448c-7fdf-4044-9c42-e4022d53c541">Is there cyberbullying (even if in defense of the victim)?</label>
+        <select id="Cyberbullying_6a78448c-7fdf-4044-9c42-e4022d53c541" name="Cyberbullying_6a78448c-7fdf-4044-9c42-e4022d53c541" onChange="toggleQuestions(this.value, '6a78448c-7fdf-4044-9c42-e4022d53c541')">
+          <option value="">Select an option</option>
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="question-container" id="question2_6a78448c-7fdf-4044-9c42-e4022d53c541" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="severityOfCyberbullying_6a78448c-7fdf-4044-9c42-e4022d53c541">What is the severity?</label>
+        <select id="severityOfCyberbullying_6a78448c-7fdf-4044-9c42-e4022d53c541" name="severityOfCyberbullying_6a78448c-7fdf-4044-9c42-e4022d53c541">
+          <option value="">Select an option</option>
+          <option value="mild">Mild</option>
+          <option value="moderate">Moderate</option>
+          <option value="severe">Severe</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="selected-options-container" id="selectedOptionsContainer_6a78448c-7fdf-4044-9c42-e4022d53c541">
+      <div class="question-container" id="question3_6a78448c-7fdf-4044-9c42-e4022d53c541">
+        <div class="question">
+          <label for="topic_6a78448c-7fdf-4044-9c42-e4022d53c541">What is the topic?</label>
+          <button type="button" onclick="toggleDropdown('dropdown_6a78448c-7fdf-4044-9c42-e4022d53c541')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
+        </div>
+        <div id="dropdown_6a78448c-7fdf-4044-9c42-e4022d53c541" class="checkbox-dropdown" style="display: none; position: absolute; background-color: #f9f9f9; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: calc(100% - 20px); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">
+          <div class="checkbox-option">
+            <input type="checkbox" id="sexual_6a78448c-7fdf-4044-9c42-e4022d53c541" name="topicOfCyberbullying_6a78448c-7fdf-4044-9c42-e4022d53c541[]" value="sexual" onchange="updateSelections('sexual', '6a78448c-7fdf-4044-9c42-e4022d53c541')">
+            <label for="sexualharrasment_6a78448c-7fdf-4044-9c42-e4022d53c541">Sexual but not Gender Identity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="physical_6a78448c-7fdf-4044-9c42-e4022d53c541" name="topicOfCyberbullying_6a78448c-7fdf-4044-9c42-e4022d53c541[]" value="physical" onchange="updateSelections('physical', '6a78448c-7fdf-4044-9c42-e4022d53c541')">
+            <label for="physical_6a78448c-7fdf-4044-9c42-e4022d53c541">Physical Appearance</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="gender_6a78448c-7fdf-4044-9c42-e4022d53c541" name="topicOfCyberbullying_6a78448c-7fdf-4044-9c42-e4022d53c541[]" value="gender" onchange="updateSelections('gender', '6a78448c-7fdf-4044-9c42-e4022d53c541')">
+            <label for="genderidentity_6a78448c-7fdf-4044-9c42-e4022d53c541">Gender Identity and Sexual Orientation</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="disability_6a78448c-7fdf-4044-9c42-e4022d53c541" name="topicOfCyberbullying_6a78448c-7fdf-4044-9c42-e4022d53c541[]" value="disability" onchange="updateSelections('disability', '6a78448c-7fdf-4044-9c42-e4022d53c541')">
+            <label for="disability_6a78448c-7fdf-4044-9c42-e4022d53c541">Disability and Neurodiversity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="social_status_6a78448c-7fdf-4044-9c42-e4022d53c541" name="topicOfCyberbullying_6a78448c-7fdf-4044-9c42-e4022d53c541[]" value="social_status" onchange="updateSelections('social_status', '6a78448c-7fdf-4044-9c42-e4022d53c541')">
+            <label for="social_status_6a78448c-7fdf-4044-9c42-e4022d53c541">Social Status/Popularity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="race_6a78448c-7fdf-4044-9c42-e4022d53c541" name="topicOfCyberbullying_6a78448c-7fdf-4044-9c42-e4022d53c541[]" value="race" onchange="updateSelections('race', '6a78448c-7fdf-4044-9c42-e4022d53c541')">
+            <label for="race_6a78448c-7fdf-4044-9c42-e4022d53c541">Race and Ethnicity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="intellectual_6a78448c-7fdf-4044-9c42-e4022d53c541" name="topicOfCyberbullying_6a78448c-7fdf-4044-9c42-e4022d53c541[]" value="intellectual" onchange="updateSelections('intellectual', '6a78448c-7fdf-4044-9c42-e4022d53c541')">
+            <label for="intellectual_6a78448c-7fdf-4044-9c42-e4022d53c541">Intellectual and Academic</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="religious_6a78448c-7fdf-4044-9c42-e4022d53c541" name="topicOfCyberbullying_6a78448c-7fdf-4044-9c42-e4022d53c541[]" value="religious" onchange="updateSelections('religious', '6a78448c-7fdf-4044-9c42-e4022d53c541')">
+            <label for="religious_6a78448c-7fdf-4044-9c42-e4022d53c541">Religious</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="political_6a78448c-7fdf-4044-9c42-e4022d53c541" name="topicOfCyberbullying_6a78448c-7fdf-4044-9c42-e4022d53c541[]" value="political" onchange="updateSelections('political', '6a78448c-7fdf-4044-9c42-e4022d53c541')">
+            <label for="political_6a78448c-7fdf-4044-9c42-e4022d53c541">Political</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="none_6a78448c-7fdf-4044-9c42-e4022d53c541" name="topicOfCyberbullying_6a78448c-7fdf-4044-9c42-e4022d53c541[]" value="none" onchange="updateSelections('none', '6a78448c-7fdf-4044-9c42-e4022d53c541')">
+            <label for="none_6a78448c-7fdf-4044-9c42-e4022d53c541">Other</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="question-container" id="question4_6a78448c-7fdf-4044-9c42-e4022d53c541" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 1; margin-right: 10px;">
+          <label for="commentWriterRole_6a78448c-7fdf-4044-9c42-e4022d53c541">What is the role of <span style="color: #f993cd;">@kaylataylor_872779</span> in this comment?</label>
+          <select id="commentWriterRole_6a78448c-7fdf-4044-9c42-e4022d53c541" name="commentWriterRole_6a78448c-7fdf-4044-9c42-e4022d53c541" onChange="updateQuestion4Options(this.value, '6a78448c-7fdf-4044-9c42-e4022d53c541')">
+            <option value="">Select an option</option>
+          </select>
+        </div>
+        <div id="severityContainer_6a78448c-7fdf-4044-9c42-e4022d53c541" style="flex: 1; display:none;">
+          <label id="severityLabel_6a78448c-7fdf-4044-9c42-e4022d53c541" for="severityOfRole_6a78448c-7fdf-4044-9c42-e4022d53c541">How is the victim being defended?</label>
+          <select id="severityOfRole_6a78448c-7fdf-4044-9c42-e4022d53c541" name="severityOfRole_6a78448c-7fdf-4044-9c42-e4022d53c541">
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <h3><span style="color: #f993cd;">@kaylataylor_872779</span>: <span style="color: #2afc1b;">@smithzachary_833473</span> my rims cost more than your board</h3>
+    <div class="question-container" id="question1_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="Cyberbullying_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded">Is there cyberbullying (even if in defense of the victim)?</label>
+        <select id="Cyberbullying_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded" name="Cyberbullying_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded" onChange="toggleQuestions(this.value, 'ecdff53d-30ac-48f7-ab79-8ecb38bc4ded')">
+          <option value="">Select an option</option>
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="question-container" id="question2_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="severityOfCyberbullying_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded">What is the severity?</label>
+        <select id="severityOfCyberbullying_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded" name="severityOfCyberbullying_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded">
+          <option value="">Select an option</option>
+          <option value="mild">Mild</option>
+          <option value="moderate">Moderate</option>
+          <option value="severe">Severe</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="selected-options-container" id="selectedOptionsContainer_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded">
+      <div class="question-container" id="question3_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded">
+        <div class="question">
+          <label for="topic_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded">What is the topic?</label>
+          <button type="button" onclick="toggleDropdown('dropdown_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
+        </div>
+        <div id="dropdown_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded" class="checkbox-dropdown" style="display: none; position: absolute; background-color: #f9f9f9; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: calc(100% - 20px); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">
+          <div class="checkbox-option">
+            <input type="checkbox" id="sexual_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded" name="topicOfCyberbullying_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded[]" value="sexual" onchange="updateSelections('sexual', 'ecdff53d-30ac-48f7-ab79-8ecb38bc4ded')">
+            <label for="sexualharrasment_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded">Sexual but not Gender Identity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="physical_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded" name="topicOfCyberbullying_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded[]" value="physical" onchange="updateSelections('physical', 'ecdff53d-30ac-48f7-ab79-8ecb38bc4ded')">
+            <label for="physical_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded">Physical Appearance</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="gender_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded" name="topicOfCyberbullying_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded[]" value="gender" onchange="updateSelections('gender', 'ecdff53d-30ac-48f7-ab79-8ecb38bc4ded')">
+            <label for="genderidentity_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded">Gender Identity and Sexual Orientation</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="disability_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded" name="topicOfCyberbullying_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded[]" value="disability" onchange="updateSelections('disability', 'ecdff53d-30ac-48f7-ab79-8ecb38bc4ded')">
+            <label for="disability_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded">Disability and Neurodiversity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="social_status_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded" name="topicOfCyberbullying_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded[]" value="social_status" onchange="updateSelections('social_status', 'ecdff53d-30ac-48f7-ab79-8ecb38bc4ded')">
+            <label for="social_status_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded">Social Status/Popularity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="race_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded" name="topicOfCyberbullying_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded[]" value="race" onchange="updateSelections('race', 'ecdff53d-30ac-48f7-ab79-8ecb38bc4ded')">
+            <label for="race_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded">Race and Ethnicity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="intellectual_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded" name="topicOfCyberbullying_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded[]" value="intellectual" onchange="updateSelections('intellectual', 'ecdff53d-30ac-48f7-ab79-8ecb38bc4ded')">
+            <label for="intellectual_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded">Intellectual and Academic</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="religious_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded" name="topicOfCyberbullying_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded[]" value="religious" onchange="updateSelections('religious', 'ecdff53d-30ac-48f7-ab79-8ecb38bc4ded')">
+            <label for="religious_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded">Religious</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="political_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded" name="topicOfCyberbullying_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded[]" value="political" onchange="updateSelections('political', 'ecdff53d-30ac-48f7-ab79-8ecb38bc4ded')">
+            <label for="political_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded">Political</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="none_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded" name="topicOfCyberbullying_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded[]" value="none" onchange="updateSelections('none', 'ecdff53d-30ac-48f7-ab79-8ecb38bc4ded')">
+            <label for="none_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded">Other</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="question-container" id="question4_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 1; margin-right: 10px;">
+          <label for="commentWriterRole_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded">What is the role of <span style="color: #f993cd;">@kaylataylor_872779</span> in this comment?</label>
+          <select id="commentWriterRole_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded" name="commentWriterRole_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded" onChange="updateQuestion4Options(this.value, 'ecdff53d-30ac-48f7-ab79-8ecb38bc4ded')">
+            <option value="">Select an option</option>
+          </select>
+        </div>
+        <div id="severityContainer_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded" style="flex: 1; display:none;">
+          <label id="severityLabel_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded" for="severityOfRole_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded">How is the victim being defended?</label>
+          <select id="severityOfRole_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded" name="severityOfRole_ecdff53d-30ac-48f7-ab79-8ecb38bc4ded">
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <h3><span style="color: #f993cd;">@kaylataylor_872779</span>: <span style="color: #2afc1b;">@smithzachary_833473</span> no you don't</h3>
+    <div class="question-container" id="question1_612f6023-1ac6-4e16-b54f-7776facf850a" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="Cyberbullying_612f6023-1ac6-4e16-b54f-7776facf850a">Is there cyberbullying (even if in defense of the victim)?</label>
+        <select id="Cyberbullying_612f6023-1ac6-4e16-b54f-7776facf850a" name="Cyberbullying_612f6023-1ac6-4e16-b54f-7776facf850a" onChange="toggleQuestions(this.value, '612f6023-1ac6-4e16-b54f-7776facf850a')">
+          <option value="">Select an option</option>
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="question-container" id="question2_612f6023-1ac6-4e16-b54f-7776facf850a" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="severityOfCyberbullying_612f6023-1ac6-4e16-b54f-7776facf850a">What is the severity?</label>
+        <select id="severityOfCyberbullying_612f6023-1ac6-4e16-b54f-7776facf850a" name="severityOfCyberbullying_612f6023-1ac6-4e16-b54f-7776facf850a">
+          <option value="">Select an option</option>
+          <option value="mild">Mild</option>
+          <option value="moderate">Moderate</option>
+          <option value="severe">Severe</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="selected-options-container" id="selectedOptionsContainer_612f6023-1ac6-4e16-b54f-7776facf850a">
+      <div class="question-container" id="question3_612f6023-1ac6-4e16-b54f-7776facf850a">
+        <div class="question">
+          <label for="topic_612f6023-1ac6-4e16-b54f-7776facf850a">What is the topic?</label>
+          <button type="button" onclick="toggleDropdown('dropdown_612f6023-1ac6-4e16-b54f-7776facf850a')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
+        </div>
+        <div id="dropdown_612f6023-1ac6-4e16-b54f-7776facf850a" class="checkbox-dropdown" style="display: none; position: absolute; background-color: #f9f9f9; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: calc(100% - 20px); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">
+          <div class="checkbox-option">
+            <input type="checkbox" id="sexual_612f6023-1ac6-4e16-b54f-7776facf850a" name="topicOfCyberbullying_612f6023-1ac6-4e16-b54f-7776facf850a[]" value="sexual" onchange="updateSelections('sexual', '612f6023-1ac6-4e16-b54f-7776facf850a')">
+            <label for="sexualharrasment_612f6023-1ac6-4e16-b54f-7776facf850a">Sexual but not Gender Identity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="physical_612f6023-1ac6-4e16-b54f-7776facf850a" name="topicOfCyberbullying_612f6023-1ac6-4e16-b54f-7776facf850a[]" value="physical" onchange="updateSelections('physical', '612f6023-1ac6-4e16-b54f-7776facf850a')">
+            <label for="physical_612f6023-1ac6-4e16-b54f-7776facf850a">Physical Appearance</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="gender_612f6023-1ac6-4e16-b54f-7776facf850a" name="topicOfCyberbullying_612f6023-1ac6-4e16-b54f-7776facf850a[]" value="gender" onchange="updateSelections('gender', '612f6023-1ac6-4e16-b54f-7776facf850a')">
+            <label for="genderidentity_612f6023-1ac6-4e16-b54f-7776facf850a">Gender Identity and Sexual Orientation</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="disability_612f6023-1ac6-4e16-b54f-7776facf850a" name="topicOfCyberbullying_612f6023-1ac6-4e16-b54f-7776facf850a[]" value="disability" onchange="updateSelections('disability', '612f6023-1ac6-4e16-b54f-7776facf850a')">
+            <label for="disability_612f6023-1ac6-4e16-b54f-7776facf850a">Disability and Neurodiversity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="social_status_612f6023-1ac6-4e16-b54f-7776facf850a" name="topicOfCyberbullying_612f6023-1ac6-4e16-b54f-7776facf850a[]" value="social_status" onchange="updateSelections('social_status', '612f6023-1ac6-4e16-b54f-7776facf850a')">
+            <label for="social_status_612f6023-1ac6-4e16-b54f-7776facf850a">Social Status/Popularity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="race_612f6023-1ac6-4e16-b54f-7776facf850a" name="topicOfCyberbullying_612f6023-1ac6-4e16-b54f-7776facf850a[]" value="race" onchange="updateSelections('race', '612f6023-1ac6-4e16-b54f-7776facf850a')">
+            <label for="race_612f6023-1ac6-4e16-b54f-7776facf850a">Race and Ethnicity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="intellectual_612f6023-1ac6-4e16-b54f-7776facf850a" name="topicOfCyberbullying_612f6023-1ac6-4e16-b54f-7776facf850a[]" value="intellectual" onchange="updateSelections('intellectual', '612f6023-1ac6-4e16-b54f-7776facf850a')">
+            <label for="intellectual_612f6023-1ac6-4e16-b54f-7776facf850a">Intellectual and Academic</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="religious_612f6023-1ac6-4e16-b54f-7776facf850a" name="topicOfCyberbullying_612f6023-1ac6-4e16-b54f-7776facf850a[]" value="religious" onchange="updateSelections('religious', '612f6023-1ac6-4e16-b54f-7776facf850a')">
+            <label for="religious_612f6023-1ac6-4e16-b54f-7776facf850a">Religious</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="political_612f6023-1ac6-4e16-b54f-7776facf850a" name="topicOfCyberbullying_612f6023-1ac6-4e16-b54f-7776facf850a[]" value="political" onchange="updateSelections('political', '612f6023-1ac6-4e16-b54f-7776facf850a')">
+            <label for="political_612f6023-1ac6-4e16-b54f-7776facf850a">Political</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="none_612f6023-1ac6-4e16-b54f-7776facf850a" name="topicOfCyberbullying_612f6023-1ac6-4e16-b54f-7776facf850a[]" value="none" onchange="updateSelections('none', '612f6023-1ac6-4e16-b54f-7776facf850a')">
+            <label for="none_612f6023-1ac6-4e16-b54f-7776facf850a">Other</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="question-container" id="question4_612f6023-1ac6-4e16-b54f-7776facf850a" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 1; margin-right: 10px;">
+          <label for="commentWriterRole_612f6023-1ac6-4e16-b54f-7776facf850a">What is the role of <span style="color: #f993cd;">@kaylataylor_872779</span> in this comment?</label>
+          <select id="commentWriterRole_612f6023-1ac6-4e16-b54f-7776facf850a" name="commentWriterRole_612f6023-1ac6-4e16-b54f-7776facf850a" onChange="updateQuestion4Options(this.value, '612f6023-1ac6-4e16-b54f-7776facf850a')">
+            <option value="">Select an option</option>
+          </select>
+        </div>
+        <div id="severityContainer_612f6023-1ac6-4e16-b54f-7776facf850a" style="flex: 1; display:none;">
+          <label id="severityLabel_612f6023-1ac6-4e16-b54f-7776facf850a" for="severityOfRole_612f6023-1ac6-4e16-b54f-7776facf850a">How is the victim being defended?</label>
+          <select id="severityOfRole_612f6023-1ac6-4e16-b54f-7776facf850a" name="severityOfRole_612f6023-1ac6-4e16-b54f-7776facf850a">
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <h3><span style="color: #00b57b;">@gallagherdominique_870423</span>: <span style="color: #add2ea;">@ubarrera_656309</span> ALEC I FOUND YOUR DRAWING!!!!</h3>
+    <div class="question-container" id="question1_c358b412-3393-4c09-a4ad-ad5ea480ee95" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="Cyberbullying_c358b412-3393-4c09-a4ad-ad5ea480ee95">Is there cyberbullying (even if in defense of the victim)?</label>
+        <select id="Cyberbullying_c358b412-3393-4c09-a4ad-ad5ea480ee95" name="Cyberbullying_c358b412-3393-4c09-a4ad-ad5ea480ee95" onChange="toggleQuestions(this.value, 'c358b412-3393-4c09-a4ad-ad5ea480ee95')">
+          <option value="">Select an option</option>
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="question-container" id="question2_c358b412-3393-4c09-a4ad-ad5ea480ee95" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question">
+        <label for="severityOfCyberbullying_c358b412-3393-4c09-a4ad-ad5ea480ee95">What is the severity?</label>
+        <select id="severityOfCyberbullying_c358b412-3393-4c09-a4ad-ad5ea480ee95" name="severityOfCyberbullying_c358b412-3393-4c09-a4ad-ad5ea480ee95">
+          <option value="">Select an option</option>
+          <option value="mild">Mild</option>
+          <option value="moderate">Moderate</option>
+          <option value="severe">Severe</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="selected-options-container" id="selectedOptionsContainer_c358b412-3393-4c09-a4ad-ad5ea480ee95">
+      <div class="question-container" id="question3_c358b412-3393-4c09-a4ad-ad5ea480ee95">
+        <div class="question">
+          <label for="topic_c358b412-3393-4c09-a4ad-ad5ea480ee95">What is the topic?</label>
+          <button type="button" onclick="toggleDropdown('dropdown_c358b412-3393-4c09-a4ad-ad5ea480ee95')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
+        </div>
+        <div id="dropdown_c358b412-3393-4c09-a4ad-ad5ea480ee95" class="checkbox-dropdown" style="display: none; position: absolute; background-color: #f9f9f9; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: calc(100% - 20px); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">
+          <div class="checkbox-option">
+            <input type="checkbox" id="sexual_c358b412-3393-4c09-a4ad-ad5ea480ee95" name="topicOfCyberbullying_c358b412-3393-4c09-a4ad-ad5ea480ee95[]" value="sexual" onchange="updateSelections('sexual', 'c358b412-3393-4c09-a4ad-ad5ea480ee95')">
+            <label for="sexualharrasment_c358b412-3393-4c09-a4ad-ad5ea480ee95">Sexual but not Gender Identity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="physical_c358b412-3393-4c09-a4ad-ad5ea480ee95" name="topicOfCyberbullying_c358b412-3393-4c09-a4ad-ad5ea480ee95[]" value="physical" onchange="updateSelections('physical', 'c358b412-3393-4c09-a4ad-ad5ea480ee95')">
+            <label for="physical_c358b412-3393-4c09-a4ad-ad5ea480ee95">Physical Appearance</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="gender_c358b412-3393-4c09-a4ad-ad5ea480ee95" name="topicOfCyberbullying_c358b412-3393-4c09-a4ad-ad5ea480ee95[]" value="gender" onchange="updateSelections('gender', 'c358b412-3393-4c09-a4ad-ad5ea480ee95')">
+            <label for="genderidentity_c358b412-3393-4c09-a4ad-ad5ea480ee95">Gender Identity and Sexual Orientation</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="disability_c358b412-3393-4c09-a4ad-ad5ea480ee95" name="topicOfCyberbullying_c358b412-3393-4c09-a4ad-ad5ea480ee95[]" value="disability" onchange="updateSelections('disability', 'c358b412-3393-4c09-a4ad-ad5ea480ee95')">
+            <label for="disability_c358b412-3393-4c09-a4ad-ad5ea480ee95">Disability and Neurodiversity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="social_status_c358b412-3393-4c09-a4ad-ad5ea480ee95" name="topicOfCyberbullying_c358b412-3393-4c09-a4ad-ad5ea480ee95[]" value="social_status" onchange="updateSelections('social_status', 'c358b412-3393-4c09-a4ad-ad5ea480ee95')">
+            <label for="social_status_c358b412-3393-4c09-a4ad-ad5ea480ee95">Social Status/Popularity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="race_c358b412-3393-4c09-a4ad-ad5ea480ee95" name="topicOfCyberbullying_c358b412-3393-4c09-a4ad-ad5ea480ee95[]" value="race" onchange="updateSelections('race', 'c358b412-3393-4c09-a4ad-ad5ea480ee95')">
+            <label for="race_c358b412-3393-4c09-a4ad-ad5ea480ee95">Race and Ethnicity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="intellectual_c358b412-3393-4c09-a4ad-ad5ea480ee95" name="topicOfCyberbullying_c358b412-3393-4c09-a4ad-ad5ea480ee95[]" value="intellectual" onchange="updateSelections('intellectual', 'c358b412-3393-4c09-a4ad-ad5ea480ee95')">
+            <label for="intellectual_c358b412-3393-4c09-a4ad-ad5ea480ee95">Intellectual and Academic</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="religious_c358b412-3393-4c09-a4ad-ad5ea480ee95" name="topicOfCyberbullying_c358b412-3393-4c09-a4ad-ad5ea480ee95[]" value="religious" onchange="updateSelections('religious', 'c358b412-3393-4c09-a4ad-ad5ea480ee95')">
+            <label for="religious_c358b412-3393-4c09-a4ad-ad5ea480ee95">Religious</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="political_c358b412-3393-4c09-a4ad-ad5ea480ee95" name="topicOfCyberbullying_c358b412-3393-4c09-a4ad-ad5ea480ee95[]" value="political" onchange="updateSelections('political', 'c358b412-3393-4c09-a4ad-ad5ea480ee95')">
+            <label for="political_c358b412-3393-4c09-a4ad-ad5ea480ee95">Political</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="none_c358b412-3393-4c09-a4ad-ad5ea480ee95" name="topicOfCyberbullying_c358b412-3393-4c09-a4ad-ad5ea480ee95[]" value="none" onchange="updateSelections('none', 'c358b412-3393-4c09-a4ad-ad5ea480ee95')">
+            <label for="none_c358b412-3393-4c09-a4ad-ad5ea480ee95">Other</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="question-container" id="question4_c358b412-3393-4c09-a4ad-ad5ea480ee95" style="margin-bottom: 0px; padding: 5px;">
+      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 1; margin-right: 10px;">
+          <label for="commentWriterRole_c358b412-3393-4c09-a4ad-ad5ea480ee95">What is the role of <span style="color: #00b57b;">@gallagherdominique_870423</span> in this comment?</label>
+          <select id="commentWriterRole_c358b412-3393-4c09-a4ad-ad5ea480ee95" name="commentWriterRole_c358b412-3393-4c09-a4ad-ad5ea480ee95" onChange="updateQuestion4Options(this.value, 'c358b412-3393-4c09-a4ad-ad5ea480ee95')">
+            <option value="">Select an option</option>
+          </select>
+        </div>
+        <div id="severityContainer_c358b412-3393-4c09-a4ad-ad5ea480ee95" style="flex: 1; display:none;">
+          <label id="severityLabel_c358b412-3393-4c09-a4ad-ad5ea480ee95" for="severityOfRole_c358b412-3393-4c09-a4ad-ad5ea480ee95">How is the victim being defended?</label>
+          <select id="severityOfRole_c358b412-3393-4c09-a4ad-ad5ea480ee95" name="severityOfRole_c358b412-3393-4c09-a4ad-ad5ea480ee95">
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      <div class="overall-question-container" style="margin-top: 20px; padding: 10px; border: 1px solid #ddd; border-radius: 5px; background-color: #f9f9f9;">
+        <h3>Overall Session Bullying Assessment</h3>
+        <div class="question">
+          <label for="overallCyberbullying_652910780">Who is the main victim in this post?</label>
+          <select id="target_652910780" name="target_652910780">
+            <option value="">Select an option</option>
+            <option value="user">The user who created the post</option>
+            <option value="participants">Participants in the comments</option>
+            <option value="people_in_picture">People depicted in the picture</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+    
+            </crowd-form>
+        
+      <script>
+      
+      
+      function markQuestionAsInvalid(questionContainer) {
+        questionContainer.classList.add('invalid-question-container');
+      }
+      
+      function markQuestionAsValid(questionContainer) {
+        questionContainer.classList.remove('invalid-question-container');
+      }
+
+      const toggleButton = document.querySelector('.toggle-button');
+const content = document.querySelector('.content');
+
+// Add this line to show the content by default
+content.classList.add('show');
+
+toggleButton.addEventListener('click', () => {
+  content.classList.toggle('show');
+  if (content.classList.contains('show')) {
+    toggleButton.textContent = 'Hide Instructions';
+  } else {
+    toggleButton.textContent = 'Show Instructions';
+  }
+});
+
+  function toggleDropdown(id) {
+    var dropdown = document.getElementById(id);
+    var display = dropdown.style.display;
+    dropdown.style.display = display === "none" ? "block" : "none";
+
+    if (dropdown.style.display === "block") {
+      setTimeout(() => {
+        document.addEventListener("click", function handler(event) {
+          if (
+            !dropdown.contains(event.target) &&
+            !event.target.matches("button")
+          ) {
+            dropdown.style.display = "none";
+            document.removeEventListener("click", handler);
+          }
+        });
+      }, 0);
+    }
+  }
+
+  var coll = document.querySelector(".collapsible");
+  coll.addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+
+  var modal = document.getElementById("myModal");
+  var img = document.getElementById("imgModalOpener");
+  var modalImg = document.getElementById("img01");
+  img.onclick = function () {
+    modal.style.display = "block";
+    modalImg.src = this.children[0].src;
+  };
+
+  var span = document.getElementsByClassName("modal-close")[0];
+  span.onclick = function () {
+    modal.style.display = "none";
+  };
+
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
+
+  function updateSelections(value, actualCommentID) {
+    var checkbox = document.getElementById(value + "_" + actualCommentID);
+    var selectedContainer = document.getElementById(
+      "selectedOptionsContainer_" + actualCommentID
+    );
+
+    if (checkbox.checked) {
+      var span = document.createElement("span");
+      span.textContent = checkbox.nextElementSibling.innerText;
+      span.setAttribute("data-value", value);
+      span.style.padding = "5px";
+      span.style.borderRadius = "5px";
+      span.style.display = "flex";
+      span.style.alignItems = "center";
+      span.onclick = function () {
+        checkbox.checked = false;
+        updateSelections(value, actualCommentID);
+      };
+      selectedContainer.appendChild(span);
+    } else {
+      var items = selectedContainer.querySelectorAll(
+        'span[data-value="' + value + '"]'
+      );
+      items.forEach(function (item) {
+        selectedContainer.removeChild(item);
+      });
+    }
+  }
+
+  function validateForm() {
+  let isValid = true;
+  const comments = document.querySelectorAll('.comment');
+
+  comments.forEach(comment => {
+    const commentId = comment.querySelector('select[id^="Cyberbullying_"]').id.split('_')[1];
+    const cyberbullyingSelect = comment.querySelector('select[id="Cyberbullying_' + commentId + '"]');
+    const severitySelect = comment.querySelector('select[id="severityOfCyberbullying_' + commentId + '"]');
+    const topicContainer = comment.querySelector('div[id="question3_' + commentId + '"]');
+    const roleSelect = comment.querySelector('select[id="commentWriterRole_' + commentId + '"]');
+    const severityOfRoleSelect = comment.querySelector('select[id="severityOfRole_' + commentId + '"]');
+
+    if (cyberbullyingSelect.value === "") {
+      isValid = false;
+      markQuestionAsInvalid(cyberbullyingSelect.closest('.question-container'));
+    } else {
+      markQuestionAsValid(cyberbullyingSelect.closest('.question-container'));
+    }
+
+    if (cyberbullyingSelect.value === "1") {
+      if (severitySelect.value === "") {
+        isValid = false;
+        markQuestionAsInvalid(severitySelect.closest('.question-container'));
+      } else {
+        markQuestionAsValid(severitySelect.closest('.question-container'));
+      }
+
+      const selectedTopics = Array.from(topicContainer.querySelectorAll('input[type="checkbox"]:checked'))
+        .map(cb => cb.value)
+        .filter(value => value !== "none");
+      
+      if (selectedTopics.length === 0) {
+        isValid = false;
+        markQuestionAsInvalid(topicContainer);
+      } else {
+        markQuestionAsValid(topicContainer);
+      }
+
+      if (roleSelect.value === "") {
+        isValid = false;
+        markQuestionAsInvalid(roleSelect.closest('.question-container'));
+      } else {
+        markQuestionAsValid(roleSelect.closest('.question-container'));
+      }
+    } else {
+      severitySelect.value = "";
+      topicContainer.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
+        cb.checked = false;
+      });
+    }
+
+    if (roleSelect.value === "non_aggressive_defender") {
+      if (!severityOfRoleSelect.value) {
+        isValid = false;
+        markQuestionAsInvalid(severityOfRoleSelect.closest('.question-container'));
+      } else {
+        markQuestionAsValid(severityOfRoleSelect.closest('.question-container'));
+      }
+    }
+  });
+
+  const overallQuestion = document.querySelector('select[id^="target_"]');
+  if (overallQuestion.value === "") {
+    isValid = false;
+    markQuestionAsInvalid(overallQuestion.closest('.question'));
+  } else {
+    markQuestionAsValid(overallQuestion.closest('.question'));
+  }
+
+  if (!isValid) {
+    alert("Please fill all required fields before submitting.");
+  }
+
+  return isValid;
+}
+
+function toggleQuestions(value, commentID) {
+  const displayStyle = value === "1" ? "block" : "none";
+  
+  // Get all relevant elements
+  const severityDiv = document.getElementById("question2_" + commentID);
+  const topicDiv = document.getElementById("question3_" + commentID);
+  const topicCheckboxes = topicDiv.querySelectorAll('input[type="checkbox"]');
+  const roleSelect = document.getElementById("commentWriterRole_" + commentID);
+  const severityContainer = document.getElementById("severityContainer_" + commentID);
+  const severityOfRoleSelect = document.getElementById("severityOfRole_" + commentID);
+
+  // Show/hide severity and topic sections
+  severityDiv.style.display = displayStyle;
+  topicDiv.style.display = displayStyle;
+
+  // If cyberbullying is No (value === "0")
+  if (value === "0") {
+    // Clear all topic checkboxes
+    topicCheckboxes.forEach(checkbox => {
+      checkbox.checked = false;
+    });
+    
+    // Clear any selected options display
+    const selectedOptionsContainer = document.getElementById("selectedOptionsContainer_" + commentID);
+    const selectedSpans = selectedOptionsContainer.querySelectorAll('span');
+    selectedSpans.forEach(span => span.remove());
+  }
+
+  // Update role options
+  roleSelect.innerHTML = "";
+  if (value === "1") {
+    roleSelect.options[roleSelect.options.length] = new Option("Select an option", "");
+    roleSelect.options[roleSelect.options.length] = new Option("Bully", "bully");
+    roleSelect.options[roleSelect.options.length] = new Option("Bully Assistant", "bully_assistant");
+    roleSelect.options[roleSelect.options.length] = new Option("Aggressive Victim", "aggressive_victim");
+    roleSelect.options[roleSelect.options.length] = new Option("Aggressive Defender of Victim", "aggressive_defender");
+    roleSelect.options[roleSelect.options.length] = new Option("Non-aggressive Defender of Victim", "non_aggressive_defender");
+  } else {
+    roleSelect.options[roleSelect.options.length] = new Option("Select an option", "");
+    roleSelect.options[roleSelect.options.length] = new Option("Non-aggressive Victim", "non_aggressive_victim");
+    roleSelect.options[roleSelect.options.length] = new Option("Passive Bystander", "passive_bystander");
+  }
+
+  // Reset severity of role
+  severityOfRoleSelect.innerHTML = "";
+  severityContainer.style.display = "none";
+}
+  
+  function updateQuestion4Options(role, commentID) {
+    const severityLabel = document.getElementById("severityLabel_" + commentID);
+    const severityDropdown = document.getElementById(
+      "severityOfRole_" + commentID
+    );
+    const severityContainer = document.getElementById(
+      "severityContainer_" + commentID
+    );
+  
+    severityDropdown.innerHTML = "";
+  
+    if (
+      [
+        "bully",
+        "aggressive_victim",
+        "bully_assistant",
+        "aggressive_defender",
+      ].includes(role)
+    ) {
+      severityLabel.textContent = "Severity of the role?";
+      severityContainer.style.display = "none"; 
+    } else if (role === "non_aggressive_defender") {
+      severityLabel.textContent = "How is the victim being defended?";
+      severityDropdown.options[severityDropdown.options.length] = new Option(
+        "Select an option",
+        "",
+        false,
+        false
+      );
+      severityDropdown.options[severityDropdown.options.length] = new Option(
+        "Confronting a bully",
+        "direct_to_the_bully"
+      );
+      severityDropdown.options[severityDropdown.options.length] = new Option(
+        "Supporting the victim",
+        "support_of_the_victim"
+      );
+      severityContainer.style.display = "flex";
+    } else {
+      severityContainer.style.display = "none";
+    }
+  }
+
+document.addEventListener('DOMContentLoaded', function() {
+  setupEventListeners();
+});      </script>
+                </html>
+              ]]></HTMLContent>
+              <FrameHeight></FrameHeight>
+            </HTMLQuestion>
+    
