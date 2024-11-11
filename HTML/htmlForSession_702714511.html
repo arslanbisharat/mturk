@@ -366,7 +366,7 @@ body, html {
                     <p><span style="color: #ffb6af;">@guerrerosara_28103</span>: Beyonc, literally the best video I've ever seen #omg "</p>
                     <strong>
                   </div>
-                  <a id="imgModalOpener"><img src="../found_pictures/../found_pictures/643669957186756909_388598399.jpg" alt="Post Image" style="width:100%;max-width:300px"></a>
+                  <a id="imgModalOpener"><img src="../found_pictures/../found_pictures/643669957186756909_388598399.jpg" alt="[No Image Found]" style="width:100%;max-width:300px"></a>
                   </div>
                   <div id="myModal" class="modal">
   <span class="modal-close">&times;</span>
@@ -12507,7 +12507,6 @@ body, html {
       const toggleButton = document.querySelector('.toggle-button');
 const content = document.querySelector('.content');
 
-// Add this line to show the content by default
 content.classList.add('show');
 
 toggleButton.addEventListener('click', () => {
@@ -12674,7 +12673,6 @@ toggleButton.addEventListener('click', () => {
 }
 
 function toggleQuestions(value, commentID) {
-  // Get all relevant elements
   const severityDiv = document.getElementById("question2_" + commentID);
   const selectedOptionsContainer = document.getElementById("selectedOptionsContainer_" + commentID);
   const topicDiv = document.getElementById("question3_" + commentID);
@@ -12684,7 +12682,6 @@ function toggleQuestions(value, commentID) {
   const severityOfRoleSelect = document.getElementById("severityOfRole_" + commentID);
   const question4Container = document.getElementById("question4_" + commentID);
 
-  // If no value is selected, hide everything
   if (value === "") {
     severityDiv.style.display = "none";
     selectedOptionsContainer.style.display = "none";
@@ -12692,10 +12689,8 @@ function toggleQuestions(value, commentID) {
     return;
   }
 
-  // Show question 4 since a selection was made
   question4Container.style.display = "block";
   
-  // Show/hide severity and topic sections based on Yes/No
   const displayStyle = value === "1" ? "block" : "none";
   severityDiv.style.display = displayStyle;
   topicDiv.style.display = displayStyle;
@@ -12703,19 +12698,15 @@ function toggleQuestions(value, commentID) {
   selectedOptionsContainer.style.flexWrap = "wrap";
   selectedOptionsContainer.style.gap = "5px";
 
-  // If cyberbullying is No (value === "0")
   if (value === "0") {
-    // Clear all topic checkboxes
     topicCheckboxes.forEach(checkbox => {
       checkbox.checked = false;
     });
     
-    // Clear any selected options display
     const selectedSpans = selectedOptionsContainer.querySelectorAll('span');
     selectedSpans.forEach(span => span.remove());
   }
 
-  // Update role options
   roleSelect.innerHTML = "";
   if (value === "1") {
     roleSelect.options[roleSelect.options.length] = new Option("Select an option", "");
@@ -12730,7 +12721,6 @@ function toggleQuestions(value, commentID) {
     roleSelect.options[roleSelect.options.length] = new Option("Passive Bystander", "passive_bystander");
   }
 
-  // Reset severity of role
   severityOfRoleSelect.innerHTML = "";
   severityContainer.style.display = "none";
 }
