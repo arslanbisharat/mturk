@@ -2272,8 +2272,7 @@ toggleButton.addEventListener('click', () => {
       });
     }
   }
-
-  function validateForm() {
+function validateForm() {
   let isValid = true;
   const comments = document.querySelectorAll('.comment');
 
@@ -2285,6 +2284,7 @@ toggleButton.addEventListener('click', () => {
     const roleSelect = comment.querySelector('select[id="commentWriterRole_' + commentId + '"]');
     const severityOfRoleSelect = comment.querySelector('select[id="severityOfRole_' + commentId + '"]');
 
+    // Validate Cyberbullying field
     if (cyberbullyingSelect.value === "") {
       isValid = false;
       markQuestionAsInvalid(cyberbullyingSelect.closest('.question-container'));
@@ -2292,7 +2292,9 @@ toggleButton.addEventListener('click', () => {
       markQuestionAsValid(cyberbullyingSelect.closest('.question-container'));
     }
 
+    // If Cyberbullying is "Yes", validate severity, topic, and role
     if (cyberbullyingSelect.value === "1") {
+      // Validate Severity field
       if (severitySelect.value === "") {
         isValid = false;
         markQuestionAsInvalid(severitySelect.closest('.question-container'));
@@ -2300,6 +2302,7 @@ toggleButton.addEventListener('click', () => {
         markQuestionAsValid(severitySelect.closest('.question-container'));
       }
 
+      // Validate Topic selection
       const selectedTopics = Array.from(topicContainer.querySelectorAll('input[type="checkbox"]:checked'))
         .map(cb => cb.value);
       
@@ -2310,19 +2313,30 @@ toggleButton.addEventListener('click', () => {
         markQuestionAsValid(topicContainer);
       }
 
+      // Validate Role field
       if (roleSelect.value === "") {
         isValid = false;
         markQuestionAsInvalid(roleSelect.closest('.question-container'));
       } else {
         markQuestionAsValid(roleSelect.closest('.question-container'));
       }
-    } else {
+    } else if (cyberbullyingSelect.value === "0") {
+      // If Cyberbullying is "No", only validate the Role field
+      if (roleSelect.value === "") {
+        isValid = false;
+        markQuestionAsInvalid(roleSelect.closest('.question-container'));
+      } else {
+        markQuestionAsValid(roleSelect.closest('.question-container'));
+      }
+      
+      // Reset severity and topic fields as they are not required
       severitySelect.value = "";
       topicContainer.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
         cb.checked = false;
       });
     }
 
+    // Conditional validation for Severity of Role if applicable
     if (roleSelect.value === "non_aggressive_defender") {
       if (!severityOfRoleSelect.value) {
         isValid = false;
@@ -2333,6 +2347,7 @@ toggleButton.addEventListener('click', () => {
     }
   });
 
+  // Validate Overall Session Assessment
   const overallQuestion = document.querySelector('select[id^="target_"]');
   if (overallQuestion.value === "") {
     isValid = false;
@@ -2347,6 +2362,7 @@ toggleButton.addEventListener('click', () => {
 
   return isValid;
 }
+
 
 function toggleQuestions(value, commentID) {
   const severityDiv = document.getElementById("question2_" + commentID);
