@@ -1,0 +1,10 @@
+import shutil
+import os
+
+here = "."
+destination = "ready_images"
+for image_file_name in os.listdir(here):
+    media_id = image_file_name.split("_")[0]
+    new_file_name = f"{media_id}.jpg"
+    output = f"{destination}/{new_file_name}"
+    shutil.copyfile(image_file_name, output)
