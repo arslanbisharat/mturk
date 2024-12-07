@@ -151,32 +151,8 @@ body, html {
   padding: 0px;
 }
 
-.instructions {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  background-color: #f9f9f9;
-  z-index: 1000;
-  padding: 10px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
 .instructions h1 {
   font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.instructions .toggle-button {
-  width: 20%;
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
   margin-bottom: 10px;
 }
 
@@ -189,6 +165,55 @@ body, html {
   background-color: white;
   border-radius: 5px;
   padding: 15px;
+}
+
+/* Find this existing CSS section and update/add these styles */
+.instructions {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100vh; /* Full viewport height initially */
+  background-color: white;
+  z-index: 1000;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.instructions.collapsed {
+  height: auto; /* Returns to normal height after first click */
+  background-color: #f9f9f9;
+}
+
+.instructions .toggle-button {
+  width: 200px;
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+#warningMessage {
+  background-color: #ffebee;
+  color: #c62828;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 4px;
+  font-weight: bold;
+  text-align: center;
+}
+
+crowd-form {
+  display: none; /* Hidden initially */
+}
+
+crowd-form.visible {
+  display: block;
 }
 
 .instructions .content.show {
@@ -260,10 +285,22 @@ body, html {
         <body>
         
         <div class="instructions">
-  <button class="toggle-button">Hide Instructions</button>
+
+<div id="warningMessage" style="text-align: left; padding: 20px;">
+  <div style="color: #d32f2f; margin-bottom: 15px;">
+    ⚠️ Please read the instructions carefully and click 'Hide Instructions' before proceeding with the task.
+  </div>
+  
+  <div style="color: #1976d2; font-weight: bold; margin-bottom: 20px;">
+    Total Number of comments for this task is 30.
+  </div>
+</div>
+
+        <button class="toggle-button">Hide Instructions</button>
   <div class="content box" >
     <h1>Annotator Instructions</h1>
-    <p style = "color: blue;">Your tasks involves selecting if an Instagram comment has cyberbullying, the severity of cyberbullying, the topic of cyberbullying, and the role the user had in the bullying.</p>
+    <p style = "color: blue;">Your tasks involves selecting if an Instagram comment has cyberbullying or not, the severity of cyberbullying, the topic of cyberbullying, and the role the user had in the bullying.</p>
+    <p style = "color: red;"> Observe that not all the comments will contain cyberbullying.</p>
     <hr>
     <br>
 
@@ -338,16 +375,17 @@ body, html {
                 <p><strong>Non-Aggressive Defender of Victim:</strong> A person who attempts to help someone being attacked through non-aggressive support
                 </ul>
                 <hr>
+                <br>
                 <p style = "color: blue;">
                 If you selected Non-Aggressive Defender of Victim, select the type of support they are providing.
                 </p>
                 <ul>
-                        <p><strong>Direct:</strong> Defender is communicating directly to the attacker to tell them what they did is wrong.
+                        <p><strong>Directly confronting a bully:</strong> Defender is communicating directly to the attacker to tell them what they did is wrong.
                             <ul>
                                 <li>Example: "Do you realize how problematic what you just said is?"</li>
                             </ul>
                         </li>
-                        <p><strong>Support:</strong> Defender is providing empathy and support to the person(s) being attacked
+                        <p><strong>Supporting the victim:</strong> Defender is providing empathy and support to the person(s) being attacked
                             <ul>
                                 <li>Example: "I'm here for you and I've got your back."</li>
                             </ul>
@@ -360,13 +398,25 @@ body, html {
 </div>
 
 <crowd-form onsubmit="return validateForm()">
+              <div class="overall-question-container" style="margin-top: 20px; margin-bottom: 20px; padding: 10px; border: 1px solid #ddd; border-radius: 5px; background-color: #76b5c5;">
+                <h3>Commitment to Quality</h3>
+                <div class="question">
+                  <label for="commitment_679604593">The quality of your responses is very important to us. For us to get the most accurate data, it is important that you provide thoughtful answers to each question in this survey. Towards this effort, you will notice that we have included a few questions throughout the survey to assess your level of attentiveness. The approval/rejection of this task will be dependent on your responses to these checks. Do you commit to providing thoughtful answers to the questions in this survey?</label>
+                  <select id="commitment_679604593" name="commitment_679604593">
+                    <option value="">Select an option</option>
+                    <option value="maybe">I can't promise either way</option>
+                    <option value="yes">Yes, I do</option>
+                    <option value="no">No, I don't</option>
+                  </select>
+                </div>
+              </div>
                 <div id="fixed-post">
                   <div class="post-text">
                   <strong>
-                    <p><span style="color: grey;">@undefined</span>: House Budget Chair Paul Ryan (R-WI) speaks with Brian Williams about poverty in America at the Newseum in Washington, D.C. See more at inplainsight.nbcnews.com."</p>
+                    <p><span style="color: #dda275;">@cameronjason_987841</span>: House Budget Chair Paul Ryan (R-WI) speaks with Brian Williams about poverty in America at the Newseum in Washington, D.C. See more at inplainsight.nbcnews.com."</p>
                     <strong>
                   </div>
-                  <a id="imgModalOpener"><img src="../found_pictures/../found_pictures/629952078219304144_1269598.jpg" alt="Post Image" style="width:100%;max-width:300px"></a>
+                  <a id="imgModalOpener"><img src="../found_pictures/../found_pictures/629952078219304144.jpg" alt="[No Image Found]" style="width:100%;max-width:300px"></a>
                   </div>
                   <div id="myModal" class="modal">
   <span class="modal-close">&times;</span>
@@ -374,20 +424,19 @@ body, html {
 </div>
                 
   <div class="comment">
-    <h3><span style="color: grey;">@undefined</span>: #inplainsight #nbcnews #nbcnewspics #povertyinamerica #newseum</h3>
+    <h3><span style="color: #dda275;">@cameronjason_987841</span>: #inplainsight #nbcnews #nbcnewspics #povertyinamerica #newseum</h3>
     <div class="question-container" id="question1_2184790b-19ea-483f-9f26-1c71e1d89753" style="margin-bottom: 0px; padding: 5px;">
       <div class="question">
-        <label for="Cyberbullying_2184790b-19ea-483f-9f26-1c71e1d89753">Is there cyberbullying (even if in defense of the victim)?</label>
+        <label for="Cyberbullying_2184790b-19ea-483f-9f26-1c71e1d89753">Is there cyberbullying (even if in defense of the victim or if the victim is defending themself)?</label>
         <select id="Cyberbullying_2184790b-19ea-483f-9f26-1c71e1d89753" name="Cyberbullying_2184790b-19ea-483f-9f26-1c71e1d89753" onChange="toggleQuestions(this.value, '2184790b-19ea-483f-9f26-1c71e1d89753')">
           <option value="">Select an option</option>
-          <option value="1">Yes</option>
           <option value="0">No</option>
+          <option value="1">Yes</option>
         </select>
       </div>
     </div>
 
-    <div class="question-container" id="question2_2184790b-19ea-483f-9f26-1c71e1d89753" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question">
+<div class="question-container" id="question2_2184790b-19ea-483f-9f26-1c71e1d89753" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question">
         <label for="severityOfCyberbullying_2184790b-19ea-483f-9f26-1c71e1d89753">What is the severity?</label>
         <select id="severityOfCyberbullying_2184790b-19ea-483f-9f26-1c71e1d89753" name="severityOfCyberbullying_2184790b-19ea-483f-9f26-1c71e1d89753">
           <option value="">Select an option</option>
@@ -398,8 +447,7 @@ body, html {
       </div>
     </div>
 
-    <div class="selected-options-container" id="selectedOptionsContainer_2184790b-19ea-483f-9f26-1c71e1d89753">
-      <div class="question-container" id="question3_2184790b-19ea-483f-9f26-1c71e1d89753">
+<div class="selected-options-container" id="selectedOptionsContainer_2184790b-19ea-483f-9f26-1c71e1d89753" style="display: none;">      <div class="question-container" id="question3_2184790b-19ea-483f-9f26-1c71e1d89753">
         <div class="question">
           <label for="topic_2184790b-19ea-483f-9f26-1c71e1d89753">What is the topic?</label>
           <button type="button" onclick="toggleDropdown('dropdown_2184790b-19ea-483f-9f26-1c71e1d89753')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
@@ -448,10 +496,9 @@ body, html {
         </div>
       </div>
     </div>
-    <div class="question-container" id="question4_2184790b-19ea-483f-9f26-1c71e1d89753" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="question-container" id="question4_2184790b-19ea-483f-9f26-1c71e1d89753" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
         <div style="flex: 1; margin-right: 10px;">
-          <label for="commentWriterRole_2184790b-19ea-483f-9f26-1c71e1d89753">What is the role of <span style="color: grey;">@undefined</span> in this comment?</label>
+          <label for="commentWriterRole_2184790b-19ea-483f-9f26-1c71e1d89753">What is the role of <span style="color: #dda275;">@cameronjason_987841</span> in this comment?</label>
           <select id="commentWriterRole_2184790b-19ea-483f-9f26-1c71e1d89753" name="commentWriterRole_2184790b-19ea-483f-9f26-1c71e1d89753" onChange="updateQuestion4Options(this.value, '2184790b-19ea-483f-9f26-1c71e1d89753')">
             <option value="">Select an option</option>
           </select>
@@ -466,20 +513,19 @@ body, html {
   </div>
 
   <div class="comment">
-    <h3><span style="color: grey;">@undefined</span>: What does Paul Ryan or any of them know about poverty. Ask them to give up some of their benefits, retirement, etc.</h3>
+    <h3><span style="color: #4cefe4;">@benjaminthompson_395625</span>: What does Paul Ryan or any of them know about poverty. Ask them to give up some of their benefits, retirement, etc.</h3>
     <div class="question-container" id="question1_6e2a6bbd-0155-40e5-8fcd-91761a4d257a" style="margin-bottom: 0px; padding: 5px;">
       <div class="question">
-        <label for="Cyberbullying_6e2a6bbd-0155-40e5-8fcd-91761a4d257a">Is there cyberbullying (even if in defense of the victim)?</label>
+        <label for="Cyberbullying_6e2a6bbd-0155-40e5-8fcd-91761a4d257a">Is there cyberbullying (even if in defense of the victim or if the victim is defending themself)?</label>
         <select id="Cyberbullying_6e2a6bbd-0155-40e5-8fcd-91761a4d257a" name="Cyberbullying_6e2a6bbd-0155-40e5-8fcd-91761a4d257a" onChange="toggleQuestions(this.value, '6e2a6bbd-0155-40e5-8fcd-91761a4d257a')">
           <option value="">Select an option</option>
-          <option value="1">Yes</option>
           <option value="0">No</option>
+          <option value="1">Yes</option>
         </select>
       </div>
     </div>
 
-    <div class="question-container" id="question2_6e2a6bbd-0155-40e5-8fcd-91761a4d257a" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question">
+<div class="question-container" id="question2_6e2a6bbd-0155-40e5-8fcd-91761a4d257a" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question">
         <label for="severityOfCyberbullying_6e2a6bbd-0155-40e5-8fcd-91761a4d257a">What is the severity?</label>
         <select id="severityOfCyberbullying_6e2a6bbd-0155-40e5-8fcd-91761a4d257a" name="severityOfCyberbullying_6e2a6bbd-0155-40e5-8fcd-91761a4d257a">
           <option value="">Select an option</option>
@@ -490,8 +536,7 @@ body, html {
       </div>
     </div>
 
-    <div class="selected-options-container" id="selectedOptionsContainer_6e2a6bbd-0155-40e5-8fcd-91761a4d257a">
-      <div class="question-container" id="question3_6e2a6bbd-0155-40e5-8fcd-91761a4d257a">
+<div class="selected-options-container" id="selectedOptionsContainer_6e2a6bbd-0155-40e5-8fcd-91761a4d257a" style="display: none;">      <div class="question-container" id="question3_6e2a6bbd-0155-40e5-8fcd-91761a4d257a">
         <div class="question">
           <label for="topic_6e2a6bbd-0155-40e5-8fcd-91761a4d257a">What is the topic?</label>
           <button type="button" onclick="toggleDropdown('dropdown_6e2a6bbd-0155-40e5-8fcd-91761a4d257a')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
@@ -540,10 +585,9 @@ body, html {
         </div>
       </div>
     </div>
-    <div class="question-container" id="question4_6e2a6bbd-0155-40e5-8fcd-91761a4d257a" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="question-container" id="question4_6e2a6bbd-0155-40e5-8fcd-91761a4d257a" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
         <div style="flex: 1; margin-right: 10px;">
-          <label for="commentWriterRole_6e2a6bbd-0155-40e5-8fcd-91761a4d257a">What is the role of <span style="color: grey;">@undefined</span> in this comment?</label>
+          <label for="commentWriterRole_6e2a6bbd-0155-40e5-8fcd-91761a4d257a">What is the role of <span style="color: #4cefe4;">@benjaminthompson_395625</span> in this comment?</label>
           <select id="commentWriterRole_6e2a6bbd-0155-40e5-8fcd-91761a4d257a" name="commentWriterRole_6e2a6bbd-0155-40e5-8fcd-91761a4d257a" onChange="updateQuestion4Options(this.value, '6e2a6bbd-0155-40e5-8fcd-91761a4d257a')">
             <option value="">Select an option</option>
           </select>
@@ -558,20 +602,19 @@ body, html {
   </div>
 
   <div class="comment">
-    <h3><span style="color: grey;">@undefined</span>: <span style="color: grey;">@bcole_474688</span> Word!</h3>
+    <h3><span style="color: #dc68f9;">@usutton_878913</span>: <span style="color: #4cefe4;">@benjaminthompson_395625</span> Word!</h3>
     <div class="question-container" id="question1_782b6abe-7796-4c82-80dc-c7f779fb9ea3" style="margin-bottom: 0px; padding: 5px;">
       <div class="question">
-        <label for="Cyberbullying_782b6abe-7796-4c82-80dc-c7f779fb9ea3">Is there cyberbullying (even if in defense of the victim)?</label>
+        <label for="Cyberbullying_782b6abe-7796-4c82-80dc-c7f779fb9ea3">Is there cyberbullying (even if in defense of the victim or if the victim is defending themself)?</label>
         <select id="Cyberbullying_782b6abe-7796-4c82-80dc-c7f779fb9ea3" name="Cyberbullying_782b6abe-7796-4c82-80dc-c7f779fb9ea3" onChange="toggleQuestions(this.value, '782b6abe-7796-4c82-80dc-c7f779fb9ea3')">
           <option value="">Select an option</option>
-          <option value="1">Yes</option>
           <option value="0">No</option>
+          <option value="1">Yes</option>
         </select>
       </div>
     </div>
 
-    <div class="question-container" id="question2_782b6abe-7796-4c82-80dc-c7f779fb9ea3" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question">
+<div class="question-container" id="question2_782b6abe-7796-4c82-80dc-c7f779fb9ea3" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question">
         <label for="severityOfCyberbullying_782b6abe-7796-4c82-80dc-c7f779fb9ea3">What is the severity?</label>
         <select id="severityOfCyberbullying_782b6abe-7796-4c82-80dc-c7f779fb9ea3" name="severityOfCyberbullying_782b6abe-7796-4c82-80dc-c7f779fb9ea3">
           <option value="">Select an option</option>
@@ -582,8 +625,7 @@ body, html {
       </div>
     </div>
 
-    <div class="selected-options-container" id="selectedOptionsContainer_782b6abe-7796-4c82-80dc-c7f779fb9ea3">
-      <div class="question-container" id="question3_782b6abe-7796-4c82-80dc-c7f779fb9ea3">
+<div class="selected-options-container" id="selectedOptionsContainer_782b6abe-7796-4c82-80dc-c7f779fb9ea3" style="display: none;">      <div class="question-container" id="question3_782b6abe-7796-4c82-80dc-c7f779fb9ea3">
         <div class="question">
           <label for="topic_782b6abe-7796-4c82-80dc-c7f779fb9ea3">What is the topic?</label>
           <button type="button" onclick="toggleDropdown('dropdown_782b6abe-7796-4c82-80dc-c7f779fb9ea3')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
@@ -632,10 +674,9 @@ body, html {
         </div>
       </div>
     </div>
-    <div class="question-container" id="question4_782b6abe-7796-4c82-80dc-c7f779fb9ea3" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="question-container" id="question4_782b6abe-7796-4c82-80dc-c7f779fb9ea3" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
         <div style="flex: 1; margin-right: 10px;">
-          <label for="commentWriterRole_782b6abe-7796-4c82-80dc-c7f779fb9ea3">What is the role of <span style="color: grey;">@undefined</span> in this comment?</label>
+          <label for="commentWriterRole_782b6abe-7796-4c82-80dc-c7f779fb9ea3">What is the role of <span style="color: #dc68f9;">@usutton_878913</span> in this comment?</label>
           <select id="commentWriterRole_782b6abe-7796-4c82-80dc-c7f779fb9ea3" name="commentWriterRole_782b6abe-7796-4c82-80dc-c7f779fb9ea3" onChange="updateQuestion4Options(this.value, '782b6abe-7796-4c82-80dc-c7f779fb9ea3')">
             <option value="">Select an option</option>
           </select>
@@ -650,20 +691,19 @@ body, html {
   </div>
 
   <div class="comment">
-    <h3><span style="color: grey;">@undefined</span>: What he knows about poverty are statistics, studies and research findings. Ryan is the son of a lawyer and the Grandson of an entrepreneur. He know nothing of poverty.</h3>
+    <h3><span style="color: #d5dd5a;">@kbarnett_306370</span>: What he knows about poverty are statistics, studies and research findings. Ryan is the son of a lawyer and the Grandson of an entrepreneur. He know nothing of poverty.</h3>
     <div class="question-container" id="question1_c916d24b-7714-4e6c-8bb1-18a30a2aa4f0" style="margin-bottom: 0px; padding: 5px;">
       <div class="question">
-        <label for="Cyberbullying_c916d24b-7714-4e6c-8bb1-18a30a2aa4f0">Is there cyberbullying (even if in defense of the victim)?</label>
+        <label for="Cyberbullying_c916d24b-7714-4e6c-8bb1-18a30a2aa4f0">Is there cyberbullying (even if in defense of the victim or if the victim is defending themself)?</label>
         <select id="Cyberbullying_c916d24b-7714-4e6c-8bb1-18a30a2aa4f0" name="Cyberbullying_c916d24b-7714-4e6c-8bb1-18a30a2aa4f0" onChange="toggleQuestions(this.value, 'c916d24b-7714-4e6c-8bb1-18a30a2aa4f0')">
           <option value="">Select an option</option>
-          <option value="1">Yes</option>
           <option value="0">No</option>
+          <option value="1">Yes</option>
         </select>
       </div>
     </div>
 
-    <div class="question-container" id="question2_c916d24b-7714-4e6c-8bb1-18a30a2aa4f0" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question">
+<div class="question-container" id="question2_c916d24b-7714-4e6c-8bb1-18a30a2aa4f0" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question">
         <label for="severityOfCyberbullying_c916d24b-7714-4e6c-8bb1-18a30a2aa4f0">What is the severity?</label>
         <select id="severityOfCyberbullying_c916d24b-7714-4e6c-8bb1-18a30a2aa4f0" name="severityOfCyberbullying_c916d24b-7714-4e6c-8bb1-18a30a2aa4f0">
           <option value="">Select an option</option>
@@ -674,8 +714,7 @@ body, html {
       </div>
     </div>
 
-    <div class="selected-options-container" id="selectedOptionsContainer_c916d24b-7714-4e6c-8bb1-18a30a2aa4f0">
-      <div class="question-container" id="question3_c916d24b-7714-4e6c-8bb1-18a30a2aa4f0">
+<div class="selected-options-container" id="selectedOptionsContainer_c916d24b-7714-4e6c-8bb1-18a30a2aa4f0" style="display: none;">      <div class="question-container" id="question3_c916d24b-7714-4e6c-8bb1-18a30a2aa4f0">
         <div class="question">
           <label for="topic_c916d24b-7714-4e6c-8bb1-18a30a2aa4f0">What is the topic?</label>
           <button type="button" onclick="toggleDropdown('dropdown_c916d24b-7714-4e6c-8bb1-18a30a2aa4f0')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
@@ -724,10 +763,9 @@ body, html {
         </div>
       </div>
     </div>
-    <div class="question-container" id="question4_c916d24b-7714-4e6c-8bb1-18a30a2aa4f0" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="question-container" id="question4_c916d24b-7714-4e6c-8bb1-18a30a2aa4f0" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
         <div style="flex: 1; margin-right: 10px;">
-          <label for="commentWriterRole_c916d24b-7714-4e6c-8bb1-18a30a2aa4f0">What is the role of <span style="color: grey;">@undefined</span> in this comment?</label>
+          <label for="commentWriterRole_c916d24b-7714-4e6c-8bb1-18a30a2aa4f0">What is the role of <span style="color: #d5dd5a;">@kbarnett_306370</span> in this comment?</label>
           <select id="commentWriterRole_c916d24b-7714-4e6c-8bb1-18a30a2aa4f0" name="commentWriterRole_c916d24b-7714-4e6c-8bb1-18a30a2aa4f0" onChange="updateQuestion4Options(this.value, 'c916d24b-7714-4e6c-8bb1-18a30a2aa4f0')">
             <option value="">Select an option</option>
           </select>
@@ -742,20 +780,19 @@ body, html {
   </div>
 
   <div class="comment">
-    <h3><span style="color: grey;">@undefined</span>: <span style="color: grey;">@bcole_474688</span> that's silly. So an oncologist who's never had cancer can't cure it?</h3>
+    <h3><span style="color: #16998e;">@rachel25_44318</span>: <span style="color: #4cefe4;">@benjaminthompson_395625</span> that's silly. So an oncologist who's never had cancer can't cure it?</h3>
     <div class="question-container" id="question1_13be4bed-b074-4c4b-8110-2d563d07f290" style="margin-bottom: 0px; padding: 5px;">
       <div class="question">
-        <label for="Cyberbullying_13be4bed-b074-4c4b-8110-2d563d07f290">Is there cyberbullying (even if in defense of the victim)?</label>
+        <label for="Cyberbullying_13be4bed-b074-4c4b-8110-2d563d07f290">Is there cyberbullying (even if in defense of the victim or if the victim is defending themself)?</label>
         <select id="Cyberbullying_13be4bed-b074-4c4b-8110-2d563d07f290" name="Cyberbullying_13be4bed-b074-4c4b-8110-2d563d07f290" onChange="toggleQuestions(this.value, '13be4bed-b074-4c4b-8110-2d563d07f290')">
           <option value="">Select an option</option>
-          <option value="1">Yes</option>
           <option value="0">No</option>
+          <option value="1">Yes</option>
         </select>
       </div>
     </div>
 
-    <div class="question-container" id="question2_13be4bed-b074-4c4b-8110-2d563d07f290" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question">
+<div class="question-container" id="question2_13be4bed-b074-4c4b-8110-2d563d07f290" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question">
         <label for="severityOfCyberbullying_13be4bed-b074-4c4b-8110-2d563d07f290">What is the severity?</label>
         <select id="severityOfCyberbullying_13be4bed-b074-4c4b-8110-2d563d07f290" name="severityOfCyberbullying_13be4bed-b074-4c4b-8110-2d563d07f290">
           <option value="">Select an option</option>
@@ -766,8 +803,7 @@ body, html {
       </div>
     </div>
 
-    <div class="selected-options-container" id="selectedOptionsContainer_13be4bed-b074-4c4b-8110-2d563d07f290">
-      <div class="question-container" id="question3_13be4bed-b074-4c4b-8110-2d563d07f290">
+<div class="selected-options-container" id="selectedOptionsContainer_13be4bed-b074-4c4b-8110-2d563d07f290" style="display: none;">      <div class="question-container" id="question3_13be4bed-b074-4c4b-8110-2d563d07f290">
         <div class="question">
           <label for="topic_13be4bed-b074-4c4b-8110-2d563d07f290">What is the topic?</label>
           <button type="button" onclick="toggleDropdown('dropdown_13be4bed-b074-4c4b-8110-2d563d07f290')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
@@ -816,10 +852,9 @@ body, html {
         </div>
       </div>
     </div>
-    <div class="question-container" id="question4_13be4bed-b074-4c4b-8110-2d563d07f290" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="question-container" id="question4_13be4bed-b074-4c4b-8110-2d563d07f290" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
         <div style="flex: 1; margin-right: 10px;">
-          <label for="commentWriterRole_13be4bed-b074-4c4b-8110-2d563d07f290">What is the role of <span style="color: grey;">@undefined</span> in this comment?</label>
+          <label for="commentWriterRole_13be4bed-b074-4c4b-8110-2d563d07f290">What is the role of <span style="color: #16998e;">@rachel25_44318</span> in this comment?</label>
           <select id="commentWriterRole_13be4bed-b074-4c4b-8110-2d563d07f290" name="commentWriterRole_13be4bed-b074-4c4b-8110-2d563d07f290" onChange="updateQuestion4Options(this.value, '13be4bed-b074-4c4b-8110-2d563d07f290')">
             <option value="">Select an option</option>
           </select>
@@ -834,20 +869,19 @@ body, html {
   </div>
 
   <div class="comment">
-    <h3><span style="color: grey;">@undefined</span>: <span style="color: grey;">@janetvalentine_3384</span> recognize this stage?</h3>
+    <h3><span style="color: #e1f263;">@garnerjose_319608</span>: <span style="color: #f27697;">@williamsrebecca_469822</span> recognize this stage?</h3>
     <div class="question-container" id="question1_4a38bad5-17a8-48b7-b99e-1adb083014a4" style="margin-bottom: 0px; padding: 5px;">
       <div class="question">
-        <label for="Cyberbullying_4a38bad5-17a8-48b7-b99e-1adb083014a4">Is there cyberbullying (even if in defense of the victim)?</label>
+        <label for="Cyberbullying_4a38bad5-17a8-48b7-b99e-1adb083014a4">Is there cyberbullying (even if in defense of the victim or if the victim is defending themself)?</label>
         <select id="Cyberbullying_4a38bad5-17a8-48b7-b99e-1adb083014a4" name="Cyberbullying_4a38bad5-17a8-48b7-b99e-1adb083014a4" onChange="toggleQuestions(this.value, '4a38bad5-17a8-48b7-b99e-1adb083014a4')">
           <option value="">Select an option</option>
-          <option value="1">Yes</option>
           <option value="0">No</option>
+          <option value="1">Yes</option>
         </select>
       </div>
     </div>
 
-    <div class="question-container" id="question2_4a38bad5-17a8-48b7-b99e-1adb083014a4" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question">
+<div class="question-container" id="question2_4a38bad5-17a8-48b7-b99e-1adb083014a4" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question">
         <label for="severityOfCyberbullying_4a38bad5-17a8-48b7-b99e-1adb083014a4">What is the severity?</label>
         <select id="severityOfCyberbullying_4a38bad5-17a8-48b7-b99e-1adb083014a4" name="severityOfCyberbullying_4a38bad5-17a8-48b7-b99e-1adb083014a4">
           <option value="">Select an option</option>
@@ -858,8 +892,7 @@ body, html {
       </div>
     </div>
 
-    <div class="selected-options-container" id="selectedOptionsContainer_4a38bad5-17a8-48b7-b99e-1adb083014a4">
-      <div class="question-container" id="question3_4a38bad5-17a8-48b7-b99e-1adb083014a4">
+<div class="selected-options-container" id="selectedOptionsContainer_4a38bad5-17a8-48b7-b99e-1adb083014a4" style="display: none;">      <div class="question-container" id="question3_4a38bad5-17a8-48b7-b99e-1adb083014a4">
         <div class="question">
           <label for="topic_4a38bad5-17a8-48b7-b99e-1adb083014a4">What is the topic?</label>
           <button type="button" onclick="toggleDropdown('dropdown_4a38bad5-17a8-48b7-b99e-1adb083014a4')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
@@ -908,10 +941,9 @@ body, html {
         </div>
       </div>
     </div>
-    <div class="question-container" id="question4_4a38bad5-17a8-48b7-b99e-1adb083014a4" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="question-container" id="question4_4a38bad5-17a8-48b7-b99e-1adb083014a4" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
         <div style="flex: 1; margin-right: 10px;">
-          <label for="commentWriterRole_4a38bad5-17a8-48b7-b99e-1adb083014a4">What is the role of <span style="color: grey;">@undefined</span> in this comment?</label>
+          <label for="commentWriterRole_4a38bad5-17a8-48b7-b99e-1adb083014a4">What is the role of <span style="color: #e1f263;">@garnerjose_319608</span> in this comment?</label>
           <select id="commentWriterRole_4a38bad5-17a8-48b7-b99e-1adb083014a4" name="commentWriterRole_4a38bad5-17a8-48b7-b99e-1adb083014a4" onChange="updateQuestion4Options(this.value, '4a38bad5-17a8-48b7-b99e-1adb083014a4')">
             <option value="">Select an option</option>
           </select>
@@ -926,20 +958,19 @@ body, html {
   </div>
 
   <div class="comment">
-    <h3><span style="color: grey;">@undefined</span>: <span style="color: grey;">@scottamanda_405356</span> look where they're located.</h3>
+    <h3><span style="color: #ed3b88;">@cookmichael_139930</span>: <span style="color: #ffd1a0;">@jenningssabrina_682907</span> look where they're located.</h3>
     <div class="question-container" id="question1_70f4a949-d28e-4ea8-ab77-9c976c58d37e" style="margin-bottom: 0px; padding: 5px;">
       <div class="question">
-        <label for="Cyberbullying_70f4a949-d28e-4ea8-ab77-9c976c58d37e">Is there cyberbullying (even if in defense of the victim)?</label>
+        <label for="Cyberbullying_70f4a949-d28e-4ea8-ab77-9c976c58d37e">Is there cyberbullying (even if in defense of the victim or if the victim is defending themself)?</label>
         <select id="Cyberbullying_70f4a949-d28e-4ea8-ab77-9c976c58d37e" name="Cyberbullying_70f4a949-d28e-4ea8-ab77-9c976c58d37e" onChange="toggleQuestions(this.value, '70f4a949-d28e-4ea8-ab77-9c976c58d37e')">
           <option value="">Select an option</option>
-          <option value="1">Yes</option>
           <option value="0">No</option>
+          <option value="1">Yes</option>
         </select>
       </div>
     </div>
 
-    <div class="question-container" id="question2_70f4a949-d28e-4ea8-ab77-9c976c58d37e" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question">
+<div class="question-container" id="question2_70f4a949-d28e-4ea8-ab77-9c976c58d37e" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question">
         <label for="severityOfCyberbullying_70f4a949-d28e-4ea8-ab77-9c976c58d37e">What is the severity?</label>
         <select id="severityOfCyberbullying_70f4a949-d28e-4ea8-ab77-9c976c58d37e" name="severityOfCyberbullying_70f4a949-d28e-4ea8-ab77-9c976c58d37e">
           <option value="">Select an option</option>
@@ -950,8 +981,7 @@ body, html {
       </div>
     </div>
 
-    <div class="selected-options-container" id="selectedOptionsContainer_70f4a949-d28e-4ea8-ab77-9c976c58d37e">
-      <div class="question-container" id="question3_70f4a949-d28e-4ea8-ab77-9c976c58d37e">
+<div class="selected-options-container" id="selectedOptionsContainer_70f4a949-d28e-4ea8-ab77-9c976c58d37e" style="display: none;">      <div class="question-container" id="question3_70f4a949-d28e-4ea8-ab77-9c976c58d37e">
         <div class="question">
           <label for="topic_70f4a949-d28e-4ea8-ab77-9c976c58d37e">What is the topic?</label>
           <button type="button" onclick="toggleDropdown('dropdown_70f4a949-d28e-4ea8-ab77-9c976c58d37e')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
@@ -1000,10 +1030,9 @@ body, html {
         </div>
       </div>
     </div>
-    <div class="question-container" id="question4_70f4a949-d28e-4ea8-ab77-9c976c58d37e" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="question-container" id="question4_70f4a949-d28e-4ea8-ab77-9c976c58d37e" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
         <div style="flex: 1; margin-right: 10px;">
-          <label for="commentWriterRole_70f4a949-d28e-4ea8-ab77-9c976c58d37e">What is the role of <span style="color: grey;">@undefined</span> in this comment?</label>
+          <label for="commentWriterRole_70f4a949-d28e-4ea8-ab77-9c976c58d37e">What is the role of <span style="color: #ed3b88;">@cookmichael_139930</span> in this comment?</label>
           <select id="commentWriterRole_70f4a949-d28e-4ea8-ab77-9c976c58d37e" name="commentWriterRole_70f4a949-d28e-4ea8-ab77-9c976c58d37e" onChange="updateQuestion4Options(this.value, '70f4a949-d28e-4ea8-ab77-9c976c58d37e')">
             <option value="">Select an option</option>
           </select>
@@ -1018,20 +1047,108 @@ body, html {
   </div>
 
   <div class="comment">
-    <h3><span style="color: grey;">@undefined</span>: <span style="color: grey;">@meghan20_418139</span> yeah but the oncologist actually cares about curing it.</h3>
-    <div class="question-container" id="question1_acd91cde-e67c-4f56-ab81-81c934fd3bb6" style="margin-bottom: 0px; padding: 5px;">
+    <h3><span style="color: grey;">@redrambler_231864</span>: Do you agree with the following statement? Most people are born with three legs. After making your initial selection (in the first question), select Non-aggressive Victim for the Role.</h3>
+    <div class="question-container" id="question1_check1" style="margin-bottom: 0px; padding: 5px;">
       <div class="question">
-        <label for="Cyberbullying_acd91cde-e67c-4f56-ab81-81c934fd3bb6">Is there cyberbullying (even if in defense of the victim)?</label>
-        <select id="Cyberbullying_acd91cde-e67c-4f56-ab81-81c934fd3bb6" name="Cyberbullying_acd91cde-e67c-4f56-ab81-81c934fd3bb6" onChange="toggleQuestions(this.value, 'acd91cde-e67c-4f56-ab81-81c934fd3bb6')">
+        <label for="Cyberbullying_check1">Is there cyberbullying (even if in defense of the victim or if the victim is defending themself)?</label>
+        <select id="Cyberbullying_check1" name="Cyberbullying_check1" onChange="toggleQuestions(this.value, 'check1')">
           <option value="">Select an option</option>
-          <option value="1">Yes</option>
           <option value="0">No</option>
+          <option value="1">Yes</option>
         </select>
       </div>
     </div>
 
-    <div class="question-container" id="question2_acd91cde-e67c-4f56-ab81-81c934fd3bb6" style="margin-bottom: 0px; padding: 5px;">
+<div class="question-container" id="question2_check1" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question">
+        <label for="severityOfCyberbullying_check1">What is the severity?</label>
+        <select id="severityOfCyberbullying_check1" name="severityOfCyberbullying_check1">
+          <option value="">Select an option</option>
+          <option value="mild">Mild</option>
+          <option value="moderate">Moderate</option>
+          <option value="severe">Severe</option>
+        </select>
+      </div>
+    </div>
+
+<div class="selected-options-container" id="selectedOptionsContainer_check1" style="display: none;">      <div class="question-container" id="question3_check1">
+        <div class="question">
+          <label for="topic_check1">What is the topic?</label>
+          <button type="button" onclick="toggleDropdown('dropdown_check1')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
+        </div>
+        <div id="dropdown_check1" class="checkbox-dropdown" style="display: none; position: absolute; background-color: #f9f9f9; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: calc(100% - 20px); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">
+          <div class="checkbox-option">
+            <input type="checkbox" id="sexual_check1" name="topicOfCyberbullying_check1[]" value="sexual" onchange="updateSelections('sexual', 'check1')">
+            <label for="sexualharrasment_check1">Sexual but not Gender Identity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="physical_check1" name="topicOfCyberbullying_check1[]" value="physical" onchange="updateSelections('physical', 'check1')">
+            <label for="physical_check1">Physical Appearance</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="gender_check1" name="topicOfCyberbullying_check1[]" value="gender" onchange="updateSelections('gender', 'check1')">
+            <label for="genderidentity_check1">Gender Identity and Sexual Orientation</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="disability_check1" name="topicOfCyberbullying_check1[]" value="disability" onchange="updateSelections('disability', 'check1')">
+            <label for="disability_check1">Disability and Neurodiversity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="social_status_check1" name="topicOfCyberbullying_check1[]" value="social_status" onchange="updateSelections('social_status', 'check1')">
+            <label for="social_status_check1">Social Status/Popularity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="race_check1" name="topicOfCyberbullying_check1[]" value="race" onchange="updateSelections('race', 'check1')">
+            <label for="race_check1">Race and Ethnicity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="intellectual_check1" name="topicOfCyberbullying_check1[]" value="intellectual" onchange="updateSelections('intellectual', 'check1')">
+            <label for="intellectual_check1">Intellectual and Academic</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="religious_check1" name="topicOfCyberbullying_check1[]" value="religious" onchange="updateSelections('religious', 'check1')">
+            <label for="religious_check1">Religious</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="political_check1" name="topicOfCyberbullying_check1[]" value="political" onchange="updateSelections('political', 'check1')">
+            <label for="political_check1">Political</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="none_check1" name="topicOfCyberbullying_check1[]" value="none" onchange="updateSelections('none', 'check1')">
+            <label for="none_check1">Other</label>
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="question-container" id="question4_check1" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 1; margin-right: 10px;">
+          <label for="commentWriterRole_check1">What is the role of <span style="color: grey;">@redrambler_231864</span> in this comment?</label>
+          <select id="commentWriterRole_check1" name="commentWriterRole_check1" onChange="updateQuestion4Options(this.value, 'check1')">
+            <option value="">Select an option</option>
+          </select>
+        </div>
+        <div id="severityContainer_check1" style="flex: 1; display:none;">
+          <label id="severityLabel_check1" for="severityOfRole_check1">How is the victim being defended?</label>
+          <select id="severityOfRole_check1" name="severityOfRole_check1">
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <h3><span style="color: #5f2196;">@christopher11_979425</span>: <span style="color: #16998e;">@rachel25_44318</span> yeah but the oncologist actually cares about curing it.</h3>
+    <div class="question-container" id="question1_acd91cde-e67c-4f56-ab81-81c934fd3bb6" style="margin-bottom: 0px; padding: 5px;">
       <div class="question">
+        <label for="Cyberbullying_acd91cde-e67c-4f56-ab81-81c934fd3bb6">Is there cyberbullying (even if in defense of the victim or if the victim is defending themself)?</label>
+        <select id="Cyberbullying_acd91cde-e67c-4f56-ab81-81c934fd3bb6" name="Cyberbullying_acd91cde-e67c-4f56-ab81-81c934fd3bb6" onChange="toggleQuestions(this.value, 'acd91cde-e67c-4f56-ab81-81c934fd3bb6')">
+          <option value="">Select an option</option>
+          <option value="0">No</option>
+          <option value="1">Yes</option>
+        </select>
+      </div>
+    </div>
+
+<div class="question-container" id="question2_acd91cde-e67c-4f56-ab81-81c934fd3bb6" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question">
         <label for="severityOfCyberbullying_acd91cde-e67c-4f56-ab81-81c934fd3bb6">What is the severity?</label>
         <select id="severityOfCyberbullying_acd91cde-e67c-4f56-ab81-81c934fd3bb6" name="severityOfCyberbullying_acd91cde-e67c-4f56-ab81-81c934fd3bb6">
           <option value="">Select an option</option>
@@ -1042,8 +1159,7 @@ body, html {
       </div>
     </div>
 
-    <div class="selected-options-container" id="selectedOptionsContainer_acd91cde-e67c-4f56-ab81-81c934fd3bb6">
-      <div class="question-container" id="question3_acd91cde-e67c-4f56-ab81-81c934fd3bb6">
+<div class="selected-options-container" id="selectedOptionsContainer_acd91cde-e67c-4f56-ab81-81c934fd3bb6" style="display: none;">      <div class="question-container" id="question3_acd91cde-e67c-4f56-ab81-81c934fd3bb6">
         <div class="question">
           <label for="topic_acd91cde-e67c-4f56-ab81-81c934fd3bb6">What is the topic?</label>
           <button type="button" onclick="toggleDropdown('dropdown_acd91cde-e67c-4f56-ab81-81c934fd3bb6')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
@@ -1092,10 +1208,9 @@ body, html {
         </div>
       </div>
     </div>
-    <div class="question-container" id="question4_acd91cde-e67c-4f56-ab81-81c934fd3bb6" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="question-container" id="question4_acd91cde-e67c-4f56-ab81-81c934fd3bb6" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
         <div style="flex: 1; margin-right: 10px;">
-          <label for="commentWriterRole_acd91cde-e67c-4f56-ab81-81c934fd3bb6">What is the role of <span style="color: grey;">@undefined</span> in this comment?</label>
+          <label for="commentWriterRole_acd91cde-e67c-4f56-ab81-81c934fd3bb6">What is the role of <span style="color: #5f2196;">@christopher11_979425</span> in this comment?</label>
           <select id="commentWriterRole_acd91cde-e67c-4f56-ab81-81c934fd3bb6" name="commentWriterRole_acd91cde-e67c-4f56-ab81-81c934fd3bb6" onChange="updateQuestion4Options(this.value, 'acd91cde-e67c-4f56-ab81-81c934fd3bb6')">
             <option value="">Select an option</option>
           </select>
@@ -1110,20 +1225,19 @@ body, html {
   </div>
 
   <div class="comment">
-    <h3><span style="color: grey;">@undefined</span>: <span style="color: grey;">@megancole_735484</span> okay. So what's your point?</h3>
+    <h3><span style="color: #16998e;">@rachel25_44318</span>: <span style="color: #5f2196;">@christopher11_979425</span> okay. So what's your point?</h3>
     <div class="question-container" id="question1_44e67e65-c968-44ff-9455-20ab8c261e4e" style="margin-bottom: 0px; padding: 5px;">
       <div class="question">
-        <label for="Cyberbullying_44e67e65-c968-44ff-9455-20ab8c261e4e">Is there cyberbullying (even if in defense of the victim)?</label>
+        <label for="Cyberbullying_44e67e65-c968-44ff-9455-20ab8c261e4e">Is there cyberbullying (even if in defense of the victim or if the victim is defending themself)?</label>
         <select id="Cyberbullying_44e67e65-c968-44ff-9455-20ab8c261e4e" name="Cyberbullying_44e67e65-c968-44ff-9455-20ab8c261e4e" onChange="toggleQuestions(this.value, '44e67e65-c968-44ff-9455-20ab8c261e4e')">
           <option value="">Select an option</option>
-          <option value="1">Yes</option>
           <option value="0">No</option>
+          <option value="1">Yes</option>
         </select>
       </div>
     </div>
 
-    <div class="question-container" id="question2_44e67e65-c968-44ff-9455-20ab8c261e4e" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question">
+<div class="question-container" id="question2_44e67e65-c968-44ff-9455-20ab8c261e4e" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question">
         <label for="severityOfCyberbullying_44e67e65-c968-44ff-9455-20ab8c261e4e">What is the severity?</label>
         <select id="severityOfCyberbullying_44e67e65-c968-44ff-9455-20ab8c261e4e" name="severityOfCyberbullying_44e67e65-c968-44ff-9455-20ab8c261e4e">
           <option value="">Select an option</option>
@@ -1134,8 +1248,7 @@ body, html {
       </div>
     </div>
 
-    <div class="selected-options-container" id="selectedOptionsContainer_44e67e65-c968-44ff-9455-20ab8c261e4e">
-      <div class="question-container" id="question3_44e67e65-c968-44ff-9455-20ab8c261e4e">
+<div class="selected-options-container" id="selectedOptionsContainer_44e67e65-c968-44ff-9455-20ab8c261e4e" style="display: none;">      <div class="question-container" id="question3_44e67e65-c968-44ff-9455-20ab8c261e4e">
         <div class="question">
           <label for="topic_44e67e65-c968-44ff-9455-20ab8c261e4e">What is the topic?</label>
           <button type="button" onclick="toggleDropdown('dropdown_44e67e65-c968-44ff-9455-20ab8c261e4e')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
@@ -1184,10 +1297,9 @@ body, html {
         </div>
       </div>
     </div>
-    <div class="question-container" id="question4_44e67e65-c968-44ff-9455-20ab8c261e4e" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="question-container" id="question4_44e67e65-c968-44ff-9455-20ab8c261e4e" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
         <div style="flex: 1; margin-right: 10px;">
-          <label for="commentWriterRole_44e67e65-c968-44ff-9455-20ab8c261e4e">What is the role of <span style="color: grey;">@undefined</span> in this comment?</label>
+          <label for="commentWriterRole_44e67e65-c968-44ff-9455-20ab8c261e4e">What is the role of <span style="color: #16998e;">@rachel25_44318</span> in this comment?</label>
           <select id="commentWriterRole_44e67e65-c968-44ff-9455-20ab8c261e4e" name="commentWriterRole_44e67e65-c968-44ff-9455-20ab8c261e4e" onChange="updateQuestion4Options(this.value, '44e67e65-c968-44ff-9455-20ab8c261e4e')">
             <option value="">Select an option</option>
           </select>
@@ -1202,20 +1314,19 @@ body, html {
   </div>
 
   <div class="comment">
-    <h3><span style="color: grey;">@undefined</span>: Paul Ryan? Cares about poverty?  Hahahahahahahahahahahahahahahahah!  Good one!!!</h3>
+    <h3><span style="color: #f484e0;">@yrodriguez_50608</span>: Paul Ryan? Cares about poverty?  Hahahahahahahahahahahahahahahahah!  Good one!!!</h3>
     <div class="question-container" id="question1_66207435-c20a-47f7-b10a-85d378cb42a0" style="margin-bottom: 0px; padding: 5px;">
       <div class="question">
-        <label for="Cyberbullying_66207435-c20a-47f7-b10a-85d378cb42a0">Is there cyberbullying (even if in defense of the victim)?</label>
+        <label for="Cyberbullying_66207435-c20a-47f7-b10a-85d378cb42a0">Is there cyberbullying (even if in defense of the victim or if the victim is defending themself)?</label>
         <select id="Cyberbullying_66207435-c20a-47f7-b10a-85d378cb42a0" name="Cyberbullying_66207435-c20a-47f7-b10a-85d378cb42a0" onChange="toggleQuestions(this.value, '66207435-c20a-47f7-b10a-85d378cb42a0')">
           <option value="">Select an option</option>
-          <option value="1">Yes</option>
           <option value="0">No</option>
+          <option value="1">Yes</option>
         </select>
       </div>
     </div>
 
-    <div class="question-container" id="question2_66207435-c20a-47f7-b10a-85d378cb42a0" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question">
+<div class="question-container" id="question2_66207435-c20a-47f7-b10a-85d378cb42a0" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question">
         <label for="severityOfCyberbullying_66207435-c20a-47f7-b10a-85d378cb42a0">What is the severity?</label>
         <select id="severityOfCyberbullying_66207435-c20a-47f7-b10a-85d378cb42a0" name="severityOfCyberbullying_66207435-c20a-47f7-b10a-85d378cb42a0">
           <option value="">Select an option</option>
@@ -1226,8 +1337,7 @@ body, html {
       </div>
     </div>
 
-    <div class="selected-options-container" id="selectedOptionsContainer_66207435-c20a-47f7-b10a-85d378cb42a0">
-      <div class="question-container" id="question3_66207435-c20a-47f7-b10a-85d378cb42a0">
+<div class="selected-options-container" id="selectedOptionsContainer_66207435-c20a-47f7-b10a-85d378cb42a0" style="display: none;">      <div class="question-container" id="question3_66207435-c20a-47f7-b10a-85d378cb42a0">
         <div class="question">
           <label for="topic_66207435-c20a-47f7-b10a-85d378cb42a0">What is the topic?</label>
           <button type="button" onclick="toggleDropdown('dropdown_66207435-c20a-47f7-b10a-85d378cb42a0')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
@@ -1276,10 +1386,9 @@ body, html {
         </div>
       </div>
     </div>
-    <div class="question-container" id="question4_66207435-c20a-47f7-b10a-85d378cb42a0" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="question-container" id="question4_66207435-c20a-47f7-b10a-85d378cb42a0" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
         <div style="flex: 1; margin-right: 10px;">
-          <label for="commentWriterRole_66207435-c20a-47f7-b10a-85d378cb42a0">What is the role of <span style="color: grey;">@undefined</span> in this comment?</label>
+          <label for="commentWriterRole_66207435-c20a-47f7-b10a-85d378cb42a0">What is the role of <span style="color: #f484e0;">@yrodriguez_50608</span> in this comment?</label>
           <select id="commentWriterRole_66207435-c20a-47f7-b10a-85d378cb42a0" name="commentWriterRole_66207435-c20a-47f7-b10a-85d378cb42a0" onChange="updateQuestion4Options(this.value, '66207435-c20a-47f7-b10a-85d378cb42a0')">
             <option value="">Select an option</option>
           </select>
@@ -1294,20 +1403,19 @@ body, html {
   </div>
 
   <div class="comment">
-    <h3><span style="color: grey;">@undefined</span>: Anyone who makes their staffers read atlas shrugged like the bible has no room to speak in poverty</h3>
+    <h3><span style="color: #a764c9;">@carterjoshua_73503</span>: Anyone who makes their staffers read atlas shrugged like the bible has no room to speak in poverty</h3>
     <div class="question-container" id="question1_49d55826-a546-4fd3-8e36-05cab3a97e4c" style="margin-bottom: 0px; padding: 5px;">
       <div class="question">
-        <label for="Cyberbullying_49d55826-a546-4fd3-8e36-05cab3a97e4c">Is there cyberbullying (even if in defense of the victim)?</label>
+        <label for="Cyberbullying_49d55826-a546-4fd3-8e36-05cab3a97e4c">Is there cyberbullying (even if in defense of the victim or if the victim is defending themself)?</label>
         <select id="Cyberbullying_49d55826-a546-4fd3-8e36-05cab3a97e4c" name="Cyberbullying_49d55826-a546-4fd3-8e36-05cab3a97e4c" onChange="toggleQuestions(this.value, '49d55826-a546-4fd3-8e36-05cab3a97e4c')">
           <option value="">Select an option</option>
-          <option value="1">Yes</option>
           <option value="0">No</option>
+          <option value="1">Yes</option>
         </select>
       </div>
     </div>
 
-    <div class="question-container" id="question2_49d55826-a546-4fd3-8e36-05cab3a97e4c" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question">
+<div class="question-container" id="question2_49d55826-a546-4fd3-8e36-05cab3a97e4c" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question">
         <label for="severityOfCyberbullying_49d55826-a546-4fd3-8e36-05cab3a97e4c">What is the severity?</label>
         <select id="severityOfCyberbullying_49d55826-a546-4fd3-8e36-05cab3a97e4c" name="severityOfCyberbullying_49d55826-a546-4fd3-8e36-05cab3a97e4c">
           <option value="">Select an option</option>
@@ -1318,8 +1426,7 @@ body, html {
       </div>
     </div>
 
-    <div class="selected-options-container" id="selectedOptionsContainer_49d55826-a546-4fd3-8e36-05cab3a97e4c">
-      <div class="question-container" id="question3_49d55826-a546-4fd3-8e36-05cab3a97e4c">
+<div class="selected-options-container" id="selectedOptionsContainer_49d55826-a546-4fd3-8e36-05cab3a97e4c" style="display: none;">      <div class="question-container" id="question3_49d55826-a546-4fd3-8e36-05cab3a97e4c">
         <div class="question">
           <label for="topic_49d55826-a546-4fd3-8e36-05cab3a97e4c">What is the topic?</label>
           <button type="button" onclick="toggleDropdown('dropdown_49d55826-a546-4fd3-8e36-05cab3a97e4c')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
@@ -1368,10 +1475,9 @@ body, html {
         </div>
       </div>
     </div>
-    <div class="question-container" id="question4_49d55826-a546-4fd3-8e36-05cab3a97e4c" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="question-container" id="question4_49d55826-a546-4fd3-8e36-05cab3a97e4c" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
         <div style="flex: 1; margin-right: 10px;">
-          <label for="commentWriterRole_49d55826-a546-4fd3-8e36-05cab3a97e4c">What is the role of <span style="color: grey;">@undefined</span> in this comment?</label>
+          <label for="commentWriterRole_49d55826-a546-4fd3-8e36-05cab3a97e4c">What is the role of <span style="color: #a764c9;">@carterjoshua_73503</span> in this comment?</label>
           <select id="commentWriterRole_49d55826-a546-4fd3-8e36-05cab3a97e4c" name="commentWriterRole_49d55826-a546-4fd3-8e36-05cab3a97e4c" onChange="updateQuestion4Options(this.value, '49d55826-a546-4fd3-8e36-05cab3a97e4c')">
             <option value="">Select an option</option>
           </select>
@@ -1386,20 +1492,19 @@ body, html {
   </div>
 
   <div class="comment">
-    <h3><span style="color: grey;">@undefined</span>: Paul Ryan sucks.</h3>
+    <h3><span style="color: #d87f5f;">@solisjodi_167126</span>: Paul Ryan sucks.</h3>
     <div class="question-container" id="question1_9f8ef2e9-d374-466f-87b9-6985d32814b3" style="margin-bottom: 0px; padding: 5px;">
       <div class="question">
-        <label for="Cyberbullying_9f8ef2e9-d374-466f-87b9-6985d32814b3">Is there cyberbullying (even if in defense of the victim)?</label>
+        <label for="Cyberbullying_9f8ef2e9-d374-466f-87b9-6985d32814b3">Is there cyberbullying (even if in defense of the victim or if the victim is defending themself)?</label>
         <select id="Cyberbullying_9f8ef2e9-d374-466f-87b9-6985d32814b3" name="Cyberbullying_9f8ef2e9-d374-466f-87b9-6985d32814b3" onChange="toggleQuestions(this.value, '9f8ef2e9-d374-466f-87b9-6985d32814b3')">
           <option value="">Select an option</option>
-          <option value="1">Yes</option>
           <option value="0">No</option>
+          <option value="1">Yes</option>
         </select>
       </div>
     </div>
 
-    <div class="question-container" id="question2_9f8ef2e9-d374-466f-87b9-6985d32814b3" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question">
+<div class="question-container" id="question2_9f8ef2e9-d374-466f-87b9-6985d32814b3" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question">
         <label for="severityOfCyberbullying_9f8ef2e9-d374-466f-87b9-6985d32814b3">What is the severity?</label>
         <select id="severityOfCyberbullying_9f8ef2e9-d374-466f-87b9-6985d32814b3" name="severityOfCyberbullying_9f8ef2e9-d374-466f-87b9-6985d32814b3">
           <option value="">Select an option</option>
@@ -1410,8 +1515,7 @@ body, html {
       </div>
     </div>
 
-    <div class="selected-options-container" id="selectedOptionsContainer_9f8ef2e9-d374-466f-87b9-6985d32814b3">
-      <div class="question-container" id="question3_9f8ef2e9-d374-466f-87b9-6985d32814b3">
+<div class="selected-options-container" id="selectedOptionsContainer_9f8ef2e9-d374-466f-87b9-6985d32814b3" style="display: none;">      <div class="question-container" id="question3_9f8ef2e9-d374-466f-87b9-6985d32814b3">
         <div class="question">
           <label for="topic_9f8ef2e9-d374-466f-87b9-6985d32814b3">What is the topic?</label>
           <button type="button" onclick="toggleDropdown('dropdown_9f8ef2e9-d374-466f-87b9-6985d32814b3')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
@@ -1460,10 +1564,9 @@ body, html {
         </div>
       </div>
     </div>
-    <div class="question-container" id="question4_9f8ef2e9-d374-466f-87b9-6985d32814b3" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="question-container" id="question4_9f8ef2e9-d374-466f-87b9-6985d32814b3" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
         <div style="flex: 1; margin-right: 10px;">
-          <label for="commentWriterRole_9f8ef2e9-d374-466f-87b9-6985d32814b3">What is the role of <span style="color: grey;">@undefined</span> in this comment?</label>
+          <label for="commentWriterRole_9f8ef2e9-d374-466f-87b9-6985d32814b3">What is the role of <span style="color: #d87f5f;">@solisjodi_167126</span> in this comment?</label>
           <select id="commentWriterRole_9f8ef2e9-d374-466f-87b9-6985d32814b3" name="commentWriterRole_9f8ef2e9-d374-466f-87b9-6985d32814b3" onChange="updateQuestion4Options(this.value, '9f8ef2e9-d374-466f-87b9-6985d32814b3')">
             <option value="">Select an option</option>
           </select>
@@ -1478,20 +1581,19 @@ body, html {
   </div>
 
   <div class="comment">
-    <h3><span style="color: grey;">@undefined</span>: Ryan grew up in one of the richest families in Janesville, Wisc. And has never worked at anything but politics. He knows nothing, especially about poverty.</h3>
+    <h3><span style="color: #53dba4;">@ricebrandon_107850</span>: Ryan grew up in one of the richest families in Janesville, Wisc. And has never worked at anything but politics. He knows nothing, especially about poverty.</h3>
     <div class="question-container" id="question1_0c985915-a710-42dd-a384-f5c28a405cb0" style="margin-bottom: 0px; padding: 5px;">
       <div class="question">
-        <label for="Cyberbullying_0c985915-a710-42dd-a384-f5c28a405cb0">Is there cyberbullying (even if in defense of the victim)?</label>
+        <label for="Cyberbullying_0c985915-a710-42dd-a384-f5c28a405cb0">Is there cyberbullying (even if in defense of the victim or if the victim is defending themself)?</label>
         <select id="Cyberbullying_0c985915-a710-42dd-a384-f5c28a405cb0" name="Cyberbullying_0c985915-a710-42dd-a384-f5c28a405cb0" onChange="toggleQuestions(this.value, '0c985915-a710-42dd-a384-f5c28a405cb0')">
           <option value="">Select an option</option>
-          <option value="1">Yes</option>
           <option value="0">No</option>
+          <option value="1">Yes</option>
         </select>
       </div>
     </div>
 
-    <div class="question-container" id="question2_0c985915-a710-42dd-a384-f5c28a405cb0" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question">
+<div class="question-container" id="question2_0c985915-a710-42dd-a384-f5c28a405cb0" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question">
         <label for="severityOfCyberbullying_0c985915-a710-42dd-a384-f5c28a405cb0">What is the severity?</label>
         <select id="severityOfCyberbullying_0c985915-a710-42dd-a384-f5c28a405cb0" name="severityOfCyberbullying_0c985915-a710-42dd-a384-f5c28a405cb0">
           <option value="">Select an option</option>
@@ -1502,8 +1604,7 @@ body, html {
       </div>
     </div>
 
-    <div class="selected-options-container" id="selectedOptionsContainer_0c985915-a710-42dd-a384-f5c28a405cb0">
-      <div class="question-container" id="question3_0c985915-a710-42dd-a384-f5c28a405cb0">
+<div class="selected-options-container" id="selectedOptionsContainer_0c985915-a710-42dd-a384-f5c28a405cb0" style="display: none;">      <div class="question-container" id="question3_0c985915-a710-42dd-a384-f5c28a405cb0">
         <div class="question">
           <label for="topic_0c985915-a710-42dd-a384-f5c28a405cb0">What is the topic?</label>
           <button type="button" onclick="toggleDropdown('dropdown_0c985915-a710-42dd-a384-f5c28a405cb0')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
@@ -1552,10 +1653,9 @@ body, html {
         </div>
       </div>
     </div>
-    <div class="question-container" id="question4_0c985915-a710-42dd-a384-f5c28a405cb0" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="question-container" id="question4_0c985915-a710-42dd-a384-f5c28a405cb0" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
         <div style="flex: 1; margin-right: 10px;">
-          <label for="commentWriterRole_0c985915-a710-42dd-a384-f5c28a405cb0">What is the role of <span style="color: grey;">@undefined</span> in this comment?</label>
+          <label for="commentWriterRole_0c985915-a710-42dd-a384-f5c28a405cb0">What is the role of <span style="color: #53dba4;">@ricebrandon_107850</span> in this comment?</label>
           <select id="commentWriterRole_0c985915-a710-42dd-a384-f5c28a405cb0" name="commentWriterRole_0c985915-a710-42dd-a384-f5c28a405cb0" onChange="updateQuestion4Options(this.value, '0c985915-a710-42dd-a384-f5c28a405cb0')">
             <option value="">Select an option</option>
           </select>
@@ -1570,20 +1670,19 @@ body, html {
   </div>
 
   <div class="comment">
-    <h3><span style="color: grey;">@undefined</span>: Was this a comedy show? Where's Chappelle?</h3>
+    <h3><span style="color: #ef7f07;">@lopezashley_222123</span>: Was this a comedy show? Where's Chappelle?</h3>
     <div class="question-container" id="question1_4c4a8a2e-1855-4de0-a964-e4b1945da940" style="margin-bottom: 0px; padding: 5px;">
       <div class="question">
-        <label for="Cyberbullying_4c4a8a2e-1855-4de0-a964-e4b1945da940">Is there cyberbullying (even if in defense of the victim)?</label>
+        <label for="Cyberbullying_4c4a8a2e-1855-4de0-a964-e4b1945da940">Is there cyberbullying (even if in defense of the victim or if the victim is defending themself)?</label>
         <select id="Cyberbullying_4c4a8a2e-1855-4de0-a964-e4b1945da940" name="Cyberbullying_4c4a8a2e-1855-4de0-a964-e4b1945da940" onChange="toggleQuestions(this.value, '4c4a8a2e-1855-4de0-a964-e4b1945da940')">
           <option value="">Select an option</option>
-          <option value="1">Yes</option>
           <option value="0">No</option>
+          <option value="1">Yes</option>
         </select>
       </div>
     </div>
 
-    <div class="question-container" id="question2_4c4a8a2e-1855-4de0-a964-e4b1945da940" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question">
+<div class="question-container" id="question2_4c4a8a2e-1855-4de0-a964-e4b1945da940" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question">
         <label for="severityOfCyberbullying_4c4a8a2e-1855-4de0-a964-e4b1945da940">What is the severity?</label>
         <select id="severityOfCyberbullying_4c4a8a2e-1855-4de0-a964-e4b1945da940" name="severityOfCyberbullying_4c4a8a2e-1855-4de0-a964-e4b1945da940">
           <option value="">Select an option</option>
@@ -1594,8 +1693,7 @@ body, html {
       </div>
     </div>
 
-    <div class="selected-options-container" id="selectedOptionsContainer_4c4a8a2e-1855-4de0-a964-e4b1945da940">
-      <div class="question-container" id="question3_4c4a8a2e-1855-4de0-a964-e4b1945da940">
+<div class="selected-options-container" id="selectedOptionsContainer_4c4a8a2e-1855-4de0-a964-e4b1945da940" style="display: none;">      <div class="question-container" id="question3_4c4a8a2e-1855-4de0-a964-e4b1945da940">
         <div class="question">
           <label for="topic_4c4a8a2e-1855-4de0-a964-e4b1945da940">What is the topic?</label>
           <button type="button" onclick="toggleDropdown('dropdown_4c4a8a2e-1855-4de0-a964-e4b1945da940')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
@@ -1644,10 +1742,9 @@ body, html {
         </div>
       </div>
     </div>
-    <div class="question-container" id="question4_4c4a8a2e-1855-4de0-a964-e4b1945da940" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="question-container" id="question4_4c4a8a2e-1855-4de0-a964-e4b1945da940" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
         <div style="flex: 1; margin-right: 10px;">
-          <label for="commentWriterRole_4c4a8a2e-1855-4de0-a964-e4b1945da940">What is the role of <span style="color: grey;">@undefined</span> in this comment?</label>
+          <label for="commentWriterRole_4c4a8a2e-1855-4de0-a964-e4b1945da940">What is the role of <span style="color: #ef7f07;">@lopezashley_222123</span> in this comment?</label>
           <select id="commentWriterRole_4c4a8a2e-1855-4de0-a964-e4b1945da940" name="commentWriterRole_4c4a8a2e-1855-4de0-a964-e4b1945da940" onChange="updateQuestion4Options(this.value, '4c4a8a2e-1855-4de0-a964-e4b1945da940')">
             <option value="">Select an option</option>
           </select>
@@ -1662,20 +1759,108 @@ body, html {
   </div>
 
   <div class="comment">
-    <h3><span style="color: grey;">@undefined</span>: Paul Ryan and his ideas were destroyed in the 2012 election. You may want to check the result. He's a joke.</h3>
-    <div class="question-container" id="question1_c6667b1a-4a30-4642-a8bf-f37dca04e18e" style="margin-bottom: 0px; padding: 5px;">
+    <h3><span style="color: grey;">@yellowsparky_345452</span>: Do you agree with the following statement? I need oxygen to breathe. After your initial selection (in the first question), select Moderate for Severity, select Other for the Topic, and select Bully Assistant for the Role.</h3>
+    <div class="question-container" id="question1_check2" style="margin-bottom: 0px; padding: 5px;">
       <div class="question">
-        <label for="Cyberbullying_c6667b1a-4a30-4642-a8bf-f37dca04e18e">Is there cyberbullying (even if in defense of the victim)?</label>
-        <select id="Cyberbullying_c6667b1a-4a30-4642-a8bf-f37dca04e18e" name="Cyberbullying_c6667b1a-4a30-4642-a8bf-f37dca04e18e" onChange="toggleQuestions(this.value, 'c6667b1a-4a30-4642-a8bf-f37dca04e18e')">
+        <label for="Cyberbullying_check2">Is there cyberbullying (even if in defense of the victim or if the victim is defending themself)?</label>
+        <select id="Cyberbullying_check2" name="Cyberbullying_check2" onChange="toggleQuestions(this.value, 'check2')">
           <option value="">Select an option</option>
-          <option value="1">Yes</option>
           <option value="0">No</option>
+          <option value="1">Yes</option>
         </select>
       </div>
     </div>
 
-    <div class="question-container" id="question2_c6667b1a-4a30-4642-a8bf-f37dca04e18e" style="margin-bottom: 0px; padding: 5px;">
+<div class="question-container" id="question2_check2" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question">
+        <label for="severityOfCyberbullying_check2">What is the severity?</label>
+        <select id="severityOfCyberbullying_check2" name="severityOfCyberbullying_check2">
+          <option value="">Select an option</option>
+          <option value="mild">Mild</option>
+          <option value="moderate">Moderate</option>
+          <option value="severe">Severe</option>
+        </select>
+      </div>
+    </div>
+
+<div class="selected-options-container" id="selectedOptionsContainer_check2" style="display: none;">      <div class="question-container" id="question3_check2">
+        <div class="question">
+          <label for="topic_check2">What is the topic?</label>
+          <button type="button" onclick="toggleDropdown('dropdown_check2')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
+        </div>
+        <div id="dropdown_check2" class="checkbox-dropdown" style="display: none; position: absolute; background-color: #f9f9f9; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: calc(100% - 20px); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">
+          <div class="checkbox-option">
+            <input type="checkbox" id="sexual_check2" name="topicOfCyberbullying_check2[]" value="sexual" onchange="updateSelections('sexual', 'check2')">
+            <label for="sexualharrasment_check2">Sexual but not Gender Identity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="physical_check2" name="topicOfCyberbullying_check2[]" value="physical" onchange="updateSelections('physical', 'check2')">
+            <label for="physical_check2">Physical Appearance</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="gender_check2" name="topicOfCyberbullying_check2[]" value="gender" onchange="updateSelections('gender', 'check2')">
+            <label for="genderidentity_check2">Gender Identity and Sexual Orientation</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="disability_check2" name="topicOfCyberbullying_check2[]" value="disability" onchange="updateSelections('disability', 'check2')">
+            <label for="disability_check2">Disability and Neurodiversity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="social_status_check2" name="topicOfCyberbullying_check2[]" value="social_status" onchange="updateSelections('social_status', 'check2')">
+            <label for="social_status_check2">Social Status/Popularity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="race_check2" name="topicOfCyberbullying_check2[]" value="race" onchange="updateSelections('race', 'check2')">
+            <label for="race_check2">Race and Ethnicity</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="intellectual_check2" name="topicOfCyberbullying_check2[]" value="intellectual" onchange="updateSelections('intellectual', 'check2')">
+            <label for="intellectual_check2">Intellectual and Academic</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="religious_check2" name="topicOfCyberbullying_check2[]" value="religious" onchange="updateSelections('religious', 'check2')">
+            <label for="religious_check2">Religious</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="political_check2" name="topicOfCyberbullying_check2[]" value="political" onchange="updateSelections('political', 'check2')">
+            <label for="political_check2">Political</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="none_check2" name="topicOfCyberbullying_check2[]" value="none" onchange="updateSelections('none', 'check2')">
+            <label for="none_check2">Other</label>
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="question-container" id="question4_check2" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 1; margin-right: 10px;">
+          <label for="commentWriterRole_check2">What is the role of <span style="color: grey;">@yellowsparky_345452</span> in this comment?</label>
+          <select id="commentWriterRole_check2" name="commentWriterRole_check2" onChange="updateQuestion4Options(this.value, 'check2')">
+            <option value="">Select an option</option>
+          </select>
+        </div>
+        <div id="severityContainer_check2" style="flex: 1; display:none;">
+          <label id="severityLabel_check2" for="severityOfRole_check2">How is the victim being defended?</label>
+          <select id="severityOfRole_check2" name="severityOfRole_check2">
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <h3><span style="color: #aa81f4;">@duncanangela_180412</span>: Paul Ryan and his ideas were destroyed in the 2012 election. You may want to check the result. He's a joke.</h3>
+    <div class="question-container" id="question1_c6667b1a-4a30-4642-a8bf-f37dca04e18e" style="margin-bottom: 0px; padding: 5px;">
       <div class="question">
+        <label for="Cyberbullying_c6667b1a-4a30-4642-a8bf-f37dca04e18e">Is there cyberbullying (even if in defense of the victim or if the victim is defending themself)?</label>
+        <select id="Cyberbullying_c6667b1a-4a30-4642-a8bf-f37dca04e18e" name="Cyberbullying_c6667b1a-4a30-4642-a8bf-f37dca04e18e" onChange="toggleQuestions(this.value, 'c6667b1a-4a30-4642-a8bf-f37dca04e18e')">
+          <option value="">Select an option</option>
+          <option value="0">No</option>
+          <option value="1">Yes</option>
+        </select>
+      </div>
+    </div>
+
+<div class="question-container" id="question2_c6667b1a-4a30-4642-a8bf-f37dca04e18e" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question">
         <label for="severityOfCyberbullying_c6667b1a-4a30-4642-a8bf-f37dca04e18e">What is the severity?</label>
         <select id="severityOfCyberbullying_c6667b1a-4a30-4642-a8bf-f37dca04e18e" name="severityOfCyberbullying_c6667b1a-4a30-4642-a8bf-f37dca04e18e">
           <option value="">Select an option</option>
@@ -1686,8 +1871,7 @@ body, html {
       </div>
     </div>
 
-    <div class="selected-options-container" id="selectedOptionsContainer_c6667b1a-4a30-4642-a8bf-f37dca04e18e">
-      <div class="question-container" id="question3_c6667b1a-4a30-4642-a8bf-f37dca04e18e">
+<div class="selected-options-container" id="selectedOptionsContainer_c6667b1a-4a30-4642-a8bf-f37dca04e18e" style="display: none;">      <div class="question-container" id="question3_c6667b1a-4a30-4642-a8bf-f37dca04e18e">
         <div class="question">
           <label for="topic_c6667b1a-4a30-4642-a8bf-f37dca04e18e">What is the topic?</label>
           <button type="button" onclick="toggleDropdown('dropdown_c6667b1a-4a30-4642-a8bf-f37dca04e18e')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
@@ -1736,10 +1920,9 @@ body, html {
         </div>
       </div>
     </div>
-    <div class="question-container" id="question4_c6667b1a-4a30-4642-a8bf-f37dca04e18e" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="question-container" id="question4_c6667b1a-4a30-4642-a8bf-f37dca04e18e" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
         <div style="flex: 1; margin-right: 10px;">
-          <label for="commentWriterRole_c6667b1a-4a30-4642-a8bf-f37dca04e18e">What is the role of <span style="color: grey;">@undefined</span> in this comment?</label>
+          <label for="commentWriterRole_c6667b1a-4a30-4642-a8bf-f37dca04e18e">What is the role of <span style="color: #aa81f4;">@duncanangela_180412</span> in this comment?</label>
           <select id="commentWriterRole_c6667b1a-4a30-4642-a8bf-f37dca04e18e" name="commentWriterRole_c6667b1a-4a30-4642-a8bf-f37dca04e18e" onChange="updateQuestion4Options(this.value, 'c6667b1a-4a30-4642-a8bf-f37dca04e18e')">
             <option value="">Select an option</option>
           </select>
@@ -1754,20 +1937,19 @@ body, html {
   </div>
 
   <div class="comment">
-    <h3><span style="color: grey;">@undefined</span>: <span style="color: grey;">@belindamarshall_44183</span> A joke, absolutely.</h3>
+    <h3><span style="color: #d469f4;">@ayersannette_476851</span>: <span style="color: #aa81f4;">@duncanangela_180412</span> A joke, absolutely.</h3>
     <div class="question-container" id="question1_b76a3cff-028f-448d-886a-41fa74434452" style="margin-bottom: 0px; padding: 5px;">
       <div class="question">
-        <label for="Cyberbullying_b76a3cff-028f-448d-886a-41fa74434452">Is there cyberbullying (even if in defense of the victim)?</label>
+        <label for="Cyberbullying_b76a3cff-028f-448d-886a-41fa74434452">Is there cyberbullying (even if in defense of the victim or if the victim is defending themself)?</label>
         <select id="Cyberbullying_b76a3cff-028f-448d-886a-41fa74434452" name="Cyberbullying_b76a3cff-028f-448d-886a-41fa74434452" onChange="toggleQuestions(this.value, 'b76a3cff-028f-448d-886a-41fa74434452')">
           <option value="">Select an option</option>
-          <option value="1">Yes</option>
           <option value="0">No</option>
+          <option value="1">Yes</option>
         </select>
       </div>
     </div>
 
-    <div class="question-container" id="question2_b76a3cff-028f-448d-886a-41fa74434452" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question">
+<div class="question-container" id="question2_b76a3cff-028f-448d-886a-41fa74434452" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question">
         <label for="severityOfCyberbullying_b76a3cff-028f-448d-886a-41fa74434452">What is the severity?</label>
         <select id="severityOfCyberbullying_b76a3cff-028f-448d-886a-41fa74434452" name="severityOfCyberbullying_b76a3cff-028f-448d-886a-41fa74434452">
           <option value="">Select an option</option>
@@ -1778,8 +1960,7 @@ body, html {
       </div>
     </div>
 
-    <div class="selected-options-container" id="selectedOptionsContainer_b76a3cff-028f-448d-886a-41fa74434452">
-      <div class="question-container" id="question3_b76a3cff-028f-448d-886a-41fa74434452">
+<div class="selected-options-container" id="selectedOptionsContainer_b76a3cff-028f-448d-886a-41fa74434452" style="display: none;">      <div class="question-container" id="question3_b76a3cff-028f-448d-886a-41fa74434452">
         <div class="question">
           <label for="topic_b76a3cff-028f-448d-886a-41fa74434452">What is the topic?</label>
           <button type="button" onclick="toggleDropdown('dropdown_b76a3cff-028f-448d-886a-41fa74434452')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
@@ -1828,10 +2009,9 @@ body, html {
         </div>
       </div>
     </div>
-    <div class="question-container" id="question4_b76a3cff-028f-448d-886a-41fa74434452" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="question-container" id="question4_b76a3cff-028f-448d-886a-41fa74434452" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
         <div style="flex: 1; margin-right: 10px;">
-          <label for="commentWriterRole_b76a3cff-028f-448d-886a-41fa74434452">What is the role of <span style="color: grey;">@undefined</span> in this comment?</label>
+          <label for="commentWriterRole_b76a3cff-028f-448d-886a-41fa74434452">What is the role of <span style="color: #d469f4;">@ayersannette_476851</span> in this comment?</label>
           <select id="commentWriterRole_b76a3cff-028f-448d-886a-41fa74434452" name="commentWriterRole_b76a3cff-028f-448d-886a-41fa74434452" onChange="updateQuestion4Options(this.value, 'b76a3cff-028f-448d-886a-41fa74434452')">
             <option value="">Select an option</option>
           </select>
@@ -1846,20 +2026,19 @@ body, html {
   </div>
 
   <div class="comment">
-    <h3><span style="color: grey;">@undefined</span>: Ryan is a spoon fed spoiled brat. Right wing extremist</h3>
+    <h3><span style="color: #c9341a;">@gabriel64_925207</span>: Ryan is a spoon fed spoiled brat. Right wing extremist</h3>
     <div class="question-container" id="question1_b0dbe94f-03c6-4002-a0b3-33406c59f432" style="margin-bottom: 0px; padding: 5px;">
       <div class="question">
-        <label for="Cyberbullying_b0dbe94f-03c6-4002-a0b3-33406c59f432">Is there cyberbullying (even if in defense of the victim)?</label>
+        <label for="Cyberbullying_b0dbe94f-03c6-4002-a0b3-33406c59f432">Is there cyberbullying (even if in defense of the victim or if the victim is defending themself)?</label>
         <select id="Cyberbullying_b0dbe94f-03c6-4002-a0b3-33406c59f432" name="Cyberbullying_b0dbe94f-03c6-4002-a0b3-33406c59f432" onChange="toggleQuestions(this.value, 'b0dbe94f-03c6-4002-a0b3-33406c59f432')">
           <option value="">Select an option</option>
-          <option value="1">Yes</option>
           <option value="0">No</option>
+          <option value="1">Yes</option>
         </select>
       </div>
     </div>
 
-    <div class="question-container" id="question2_b0dbe94f-03c6-4002-a0b3-33406c59f432" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question">
+<div class="question-container" id="question2_b0dbe94f-03c6-4002-a0b3-33406c59f432" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question">
         <label for="severityOfCyberbullying_b0dbe94f-03c6-4002-a0b3-33406c59f432">What is the severity?</label>
         <select id="severityOfCyberbullying_b0dbe94f-03c6-4002-a0b3-33406c59f432" name="severityOfCyberbullying_b0dbe94f-03c6-4002-a0b3-33406c59f432">
           <option value="">Select an option</option>
@@ -1870,8 +2049,7 @@ body, html {
       </div>
     </div>
 
-    <div class="selected-options-container" id="selectedOptionsContainer_b0dbe94f-03c6-4002-a0b3-33406c59f432">
-      <div class="question-container" id="question3_b0dbe94f-03c6-4002-a0b3-33406c59f432">
+<div class="selected-options-container" id="selectedOptionsContainer_b0dbe94f-03c6-4002-a0b3-33406c59f432" style="display: none;">      <div class="question-container" id="question3_b0dbe94f-03c6-4002-a0b3-33406c59f432">
         <div class="question">
           <label for="topic_b0dbe94f-03c6-4002-a0b3-33406c59f432">What is the topic?</label>
           <button type="button" onclick="toggleDropdown('dropdown_b0dbe94f-03c6-4002-a0b3-33406c59f432')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
@@ -1920,10 +2098,9 @@ body, html {
         </div>
       </div>
     </div>
-    <div class="question-container" id="question4_b0dbe94f-03c6-4002-a0b3-33406c59f432" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="question-container" id="question4_b0dbe94f-03c6-4002-a0b3-33406c59f432" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
         <div style="flex: 1; margin-right: 10px;">
-          <label for="commentWriterRole_b0dbe94f-03c6-4002-a0b3-33406c59f432">What is the role of <span style="color: grey;">@undefined</span> in this comment?</label>
+          <label for="commentWriterRole_b0dbe94f-03c6-4002-a0b3-33406c59f432">What is the role of <span style="color: #c9341a;">@gabriel64_925207</span> in this comment?</label>
           <select id="commentWriterRole_b0dbe94f-03c6-4002-a0b3-33406c59f432" name="commentWriterRole_b0dbe94f-03c6-4002-a0b3-33406c59f432" onChange="updateQuestion4Options(this.value, 'b0dbe94f-03c6-4002-a0b3-33406c59f432')">
             <option value="">Select an option</option>
           </select>
@@ -1938,20 +2115,19 @@ body, html {
   </div>
 
   <div class="comment">
-    <h3><span style="color: grey;">@undefined</span>: Wow what perspective</h3>
+    <h3><span style="color: #e06dc5;">@edwardhawkins_960074</span>: Wow what perspective</h3>
     <div class="question-container" id="question1_69c77847-27e1-469d-a695-4cfbdd35e4c3" style="margin-bottom: 0px; padding: 5px;">
       <div class="question">
-        <label for="Cyberbullying_69c77847-27e1-469d-a695-4cfbdd35e4c3">Is there cyberbullying (even if in defense of the victim)?</label>
+        <label for="Cyberbullying_69c77847-27e1-469d-a695-4cfbdd35e4c3">Is there cyberbullying (even if in defense of the victim or if the victim is defending themself)?</label>
         <select id="Cyberbullying_69c77847-27e1-469d-a695-4cfbdd35e4c3" name="Cyberbullying_69c77847-27e1-469d-a695-4cfbdd35e4c3" onChange="toggleQuestions(this.value, '69c77847-27e1-469d-a695-4cfbdd35e4c3')">
           <option value="">Select an option</option>
-          <option value="1">Yes</option>
           <option value="0">No</option>
+          <option value="1">Yes</option>
         </select>
       </div>
     </div>
 
-    <div class="question-container" id="question2_69c77847-27e1-469d-a695-4cfbdd35e4c3" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question">
+<div class="question-container" id="question2_69c77847-27e1-469d-a695-4cfbdd35e4c3" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question">
         <label for="severityOfCyberbullying_69c77847-27e1-469d-a695-4cfbdd35e4c3">What is the severity?</label>
         <select id="severityOfCyberbullying_69c77847-27e1-469d-a695-4cfbdd35e4c3" name="severityOfCyberbullying_69c77847-27e1-469d-a695-4cfbdd35e4c3">
           <option value="">Select an option</option>
@@ -1962,8 +2138,7 @@ body, html {
       </div>
     </div>
 
-    <div class="selected-options-container" id="selectedOptionsContainer_69c77847-27e1-469d-a695-4cfbdd35e4c3">
-      <div class="question-container" id="question3_69c77847-27e1-469d-a695-4cfbdd35e4c3">
+<div class="selected-options-container" id="selectedOptionsContainer_69c77847-27e1-469d-a695-4cfbdd35e4c3" style="display: none;">      <div class="question-container" id="question3_69c77847-27e1-469d-a695-4cfbdd35e4c3">
         <div class="question">
           <label for="topic_69c77847-27e1-469d-a695-4cfbdd35e4c3">What is the topic?</label>
           <button type="button" onclick="toggleDropdown('dropdown_69c77847-27e1-469d-a695-4cfbdd35e4c3')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
@@ -2012,10 +2187,9 @@ body, html {
         </div>
       </div>
     </div>
-    <div class="question-container" id="question4_69c77847-27e1-469d-a695-4cfbdd35e4c3" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="question-container" id="question4_69c77847-27e1-469d-a695-4cfbdd35e4c3" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
         <div style="flex: 1; margin-right: 10px;">
-          <label for="commentWriterRole_69c77847-27e1-469d-a695-4cfbdd35e4c3">What is the role of <span style="color: grey;">@undefined</span> in this comment?</label>
+          <label for="commentWriterRole_69c77847-27e1-469d-a695-4cfbdd35e4c3">What is the role of <span style="color: #e06dc5;">@edwardhawkins_960074</span> in this comment?</label>
           <select id="commentWriterRole_69c77847-27e1-469d-a695-4cfbdd35e4c3" name="commentWriterRole_69c77847-27e1-469d-a695-4cfbdd35e4c3" onChange="updateQuestion4Options(this.value, '69c77847-27e1-469d-a695-4cfbdd35e4c3')">
             <option value="">Select an option</option>
           </select>
@@ -2030,20 +2204,19 @@ body, html {
   </div>
 
   <div class="comment">
-    <h3><span style="color: grey;">@undefined</span>: Like he knows anything about what poverty is really like! Give me a break. Washington is so corrupt!</h3>
+    <h3><span style="color: #396ea3;">@juan44_286567</span>: Like he knows anything about what poverty is really like! Give me a break. Washington is so corrupt!</h3>
     <div class="question-container" id="question1_d3c8f718-70d8-4fb1-bd67-4688f84bf983" style="margin-bottom: 0px; padding: 5px;">
       <div class="question">
-        <label for="Cyberbullying_d3c8f718-70d8-4fb1-bd67-4688f84bf983">Is there cyberbullying (even if in defense of the victim)?</label>
+        <label for="Cyberbullying_d3c8f718-70d8-4fb1-bd67-4688f84bf983">Is there cyberbullying (even if in defense of the victim or if the victim is defending themself)?</label>
         <select id="Cyberbullying_d3c8f718-70d8-4fb1-bd67-4688f84bf983" name="Cyberbullying_d3c8f718-70d8-4fb1-bd67-4688f84bf983" onChange="toggleQuestions(this.value, 'd3c8f718-70d8-4fb1-bd67-4688f84bf983')">
           <option value="">Select an option</option>
-          <option value="1">Yes</option>
           <option value="0">No</option>
+          <option value="1">Yes</option>
         </select>
       </div>
     </div>
 
-    <div class="question-container" id="question2_d3c8f718-70d8-4fb1-bd67-4688f84bf983" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question">
+<div class="question-container" id="question2_d3c8f718-70d8-4fb1-bd67-4688f84bf983" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question">
         <label for="severityOfCyberbullying_d3c8f718-70d8-4fb1-bd67-4688f84bf983">What is the severity?</label>
         <select id="severityOfCyberbullying_d3c8f718-70d8-4fb1-bd67-4688f84bf983" name="severityOfCyberbullying_d3c8f718-70d8-4fb1-bd67-4688f84bf983">
           <option value="">Select an option</option>
@@ -2054,8 +2227,7 @@ body, html {
       </div>
     </div>
 
-    <div class="selected-options-container" id="selectedOptionsContainer_d3c8f718-70d8-4fb1-bd67-4688f84bf983">
-      <div class="question-container" id="question3_d3c8f718-70d8-4fb1-bd67-4688f84bf983">
+<div class="selected-options-container" id="selectedOptionsContainer_d3c8f718-70d8-4fb1-bd67-4688f84bf983" style="display: none;">      <div class="question-container" id="question3_d3c8f718-70d8-4fb1-bd67-4688f84bf983">
         <div class="question">
           <label for="topic_d3c8f718-70d8-4fb1-bd67-4688f84bf983">What is the topic?</label>
           <button type="button" onclick="toggleDropdown('dropdown_d3c8f718-70d8-4fb1-bd67-4688f84bf983')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
@@ -2104,10 +2276,9 @@ body, html {
         </div>
       </div>
     </div>
-    <div class="question-container" id="question4_d3c8f718-70d8-4fb1-bd67-4688f84bf983" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="question-container" id="question4_d3c8f718-70d8-4fb1-bd67-4688f84bf983" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
         <div style="flex: 1; margin-right: 10px;">
-          <label for="commentWriterRole_d3c8f718-70d8-4fb1-bd67-4688f84bf983">What is the role of <span style="color: grey;">@undefined</span> in this comment?</label>
+          <label for="commentWriterRole_d3c8f718-70d8-4fb1-bd67-4688f84bf983">What is the role of <span style="color: #396ea3;">@juan44_286567</span> in this comment?</label>
           <select id="commentWriterRole_d3c8f718-70d8-4fb1-bd67-4688f84bf983" name="commentWriterRole_d3c8f718-70d8-4fb1-bd67-4688f84bf983" onChange="updateQuestion4Options(this.value, 'd3c8f718-70d8-4fb1-bd67-4688f84bf983')">
             <option value="">Select an option</option>
           </select>
@@ -2122,20 +2293,19 @@ body, html {
   </div>
 
   <div class="comment">
-    <h3><span style="color: grey;">@undefined</span>: You'll never know what poverty is unless you experience eating once or twice a day and don't know if there's a food coming the next day.stop talking about poverty if you got fed with a silver spoon.</h3>
+    <h3><span style="color: #2eddb2;">@andrew13_748247</span>: You'll never know what poverty is unless you experience eating once or twice a day and don't know if there's a food coming the next day.stop talking about poverty if you got fed with a silver spoon.</h3>
     <div class="question-container" id="question1_d146d08e-b049-415b-a4f9-357ed689db63" style="margin-bottom: 0px; padding: 5px;">
       <div class="question">
-        <label for="Cyberbullying_d146d08e-b049-415b-a4f9-357ed689db63">Is there cyberbullying (even if in defense of the victim)?</label>
+        <label for="Cyberbullying_d146d08e-b049-415b-a4f9-357ed689db63">Is there cyberbullying (even if in defense of the victim or if the victim is defending themself)?</label>
         <select id="Cyberbullying_d146d08e-b049-415b-a4f9-357ed689db63" name="Cyberbullying_d146d08e-b049-415b-a4f9-357ed689db63" onChange="toggleQuestions(this.value, 'd146d08e-b049-415b-a4f9-357ed689db63')">
           <option value="">Select an option</option>
-          <option value="1">Yes</option>
           <option value="0">No</option>
+          <option value="1">Yes</option>
         </select>
       </div>
     </div>
 
-    <div class="question-container" id="question2_d146d08e-b049-415b-a4f9-357ed689db63" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question">
+<div class="question-container" id="question2_d146d08e-b049-415b-a4f9-357ed689db63" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question">
         <label for="severityOfCyberbullying_d146d08e-b049-415b-a4f9-357ed689db63">What is the severity?</label>
         <select id="severityOfCyberbullying_d146d08e-b049-415b-a4f9-357ed689db63" name="severityOfCyberbullying_d146d08e-b049-415b-a4f9-357ed689db63">
           <option value="">Select an option</option>
@@ -2146,8 +2316,7 @@ body, html {
       </div>
     </div>
 
-    <div class="selected-options-container" id="selectedOptionsContainer_d146d08e-b049-415b-a4f9-357ed689db63">
-      <div class="question-container" id="question3_d146d08e-b049-415b-a4f9-357ed689db63">
+<div class="selected-options-container" id="selectedOptionsContainer_d146d08e-b049-415b-a4f9-357ed689db63" style="display: none;">      <div class="question-container" id="question3_d146d08e-b049-415b-a4f9-357ed689db63">
         <div class="question">
           <label for="topic_d146d08e-b049-415b-a4f9-357ed689db63">What is the topic?</label>
           <button type="button" onclick="toggleDropdown('dropdown_d146d08e-b049-415b-a4f9-357ed689db63')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
@@ -2196,10 +2365,9 @@ body, html {
         </div>
       </div>
     </div>
-    <div class="question-container" id="question4_d146d08e-b049-415b-a4f9-357ed689db63" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="question-container" id="question4_d146d08e-b049-415b-a4f9-357ed689db63" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
         <div style="flex: 1; margin-right: 10px;">
-          <label for="commentWriterRole_d146d08e-b049-415b-a4f9-357ed689db63">What is the role of <span style="color: grey;">@undefined</span> in this comment?</label>
+          <label for="commentWriterRole_d146d08e-b049-415b-a4f9-357ed689db63">What is the role of <span style="color: #2eddb2;">@andrew13_748247</span> in this comment?</label>
           <select id="commentWriterRole_d146d08e-b049-415b-a4f9-357ed689db63" name="commentWriterRole_d146d08e-b049-415b-a4f9-357ed689db63" onChange="updateQuestion4Options(this.value, 'd146d08e-b049-415b-a4f9-357ed689db63')">
             <option value="">Select an option</option>
           </select>
@@ -2214,20 +2382,19 @@ body, html {
   </div>
 
   <div class="comment">
-    <h3><span style="color: grey;">@undefined</span>: He's actually promoting poverty for cutting the unemployment benefits and not supporting increasing the minimum wage.poverty???</h3>
+    <h3><span style="color: #2eddb2;">@andrew13_748247</span>: He's actually promoting poverty for cutting the unemployment benefits and not supporting increasing the minimum wage.poverty???</h3>
     <div class="question-container" id="question1_6056af95-d4ff-4c87-acb3-af9e6bcc38ac" style="margin-bottom: 0px; padding: 5px;">
       <div class="question">
-        <label for="Cyberbullying_6056af95-d4ff-4c87-acb3-af9e6bcc38ac">Is there cyberbullying (even if in defense of the victim)?</label>
+        <label for="Cyberbullying_6056af95-d4ff-4c87-acb3-af9e6bcc38ac">Is there cyberbullying (even if in defense of the victim or if the victim is defending themself)?</label>
         <select id="Cyberbullying_6056af95-d4ff-4c87-acb3-af9e6bcc38ac" name="Cyberbullying_6056af95-d4ff-4c87-acb3-af9e6bcc38ac" onChange="toggleQuestions(this.value, '6056af95-d4ff-4c87-acb3-af9e6bcc38ac')">
           <option value="">Select an option</option>
-          <option value="1">Yes</option>
           <option value="0">No</option>
+          <option value="1">Yes</option>
         </select>
       </div>
     </div>
 
-    <div class="question-container" id="question2_6056af95-d4ff-4c87-acb3-af9e6bcc38ac" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question">
+<div class="question-container" id="question2_6056af95-d4ff-4c87-acb3-af9e6bcc38ac" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question">
         <label for="severityOfCyberbullying_6056af95-d4ff-4c87-acb3-af9e6bcc38ac">What is the severity?</label>
         <select id="severityOfCyberbullying_6056af95-d4ff-4c87-acb3-af9e6bcc38ac" name="severityOfCyberbullying_6056af95-d4ff-4c87-acb3-af9e6bcc38ac">
           <option value="">Select an option</option>
@@ -2238,8 +2405,7 @@ body, html {
       </div>
     </div>
 
-    <div class="selected-options-container" id="selectedOptionsContainer_6056af95-d4ff-4c87-acb3-af9e6bcc38ac">
-      <div class="question-container" id="question3_6056af95-d4ff-4c87-acb3-af9e6bcc38ac">
+<div class="selected-options-container" id="selectedOptionsContainer_6056af95-d4ff-4c87-acb3-af9e6bcc38ac" style="display: none;">      <div class="question-container" id="question3_6056af95-d4ff-4c87-acb3-af9e6bcc38ac">
         <div class="question">
           <label for="topic_6056af95-d4ff-4c87-acb3-af9e6bcc38ac">What is the topic?</label>
           <button type="button" onclick="toggleDropdown('dropdown_6056af95-d4ff-4c87-acb3-af9e6bcc38ac')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
@@ -2288,10 +2454,9 @@ body, html {
         </div>
       </div>
     </div>
-    <div class="question-container" id="question4_6056af95-d4ff-4c87-acb3-af9e6bcc38ac" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="question-container" id="question4_6056af95-d4ff-4c87-acb3-af9e6bcc38ac" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
         <div style="flex: 1; margin-right: 10px;">
-          <label for="commentWriterRole_6056af95-d4ff-4c87-acb3-af9e6bcc38ac">What is the role of <span style="color: grey;">@undefined</span> in this comment?</label>
+          <label for="commentWriterRole_6056af95-d4ff-4c87-acb3-af9e6bcc38ac">What is the role of <span style="color: #2eddb2;">@andrew13_748247</span> in this comment?</label>
           <select id="commentWriterRole_6056af95-d4ff-4c87-acb3-af9e6bcc38ac" name="commentWriterRole_6056af95-d4ff-4c87-acb3-af9e6bcc38ac" onChange="updateQuestion4Options(this.value, '6056af95-d4ff-4c87-acb3-af9e6bcc38ac')">
             <option value="">Select an option</option>
           </select>
@@ -2306,20 +2471,19 @@ body, html {
   </div>
 
   <div class="comment">
-    <h3><span style="color: grey;">@undefined</span>: Those fancy shoes he is wearing would probably feed a family of 4 for a month. What an ass!</h3>
+    <h3><span style="color: #396ea3;">@juan44_286567</span>: Those fancy shoes he is wearing would probably feed a family of 4 for a month. What an ass!</h3>
     <div class="question-container" id="question1_b03f03ad-71e1-4d16-bc98-9c3d462df3f5" style="margin-bottom: 0px; padding: 5px;">
       <div class="question">
-        <label for="Cyberbullying_b03f03ad-71e1-4d16-bc98-9c3d462df3f5">Is there cyberbullying (even if in defense of the victim)?</label>
+        <label for="Cyberbullying_b03f03ad-71e1-4d16-bc98-9c3d462df3f5">Is there cyberbullying (even if in defense of the victim or if the victim is defending themself)?</label>
         <select id="Cyberbullying_b03f03ad-71e1-4d16-bc98-9c3d462df3f5" name="Cyberbullying_b03f03ad-71e1-4d16-bc98-9c3d462df3f5" onChange="toggleQuestions(this.value, 'b03f03ad-71e1-4d16-bc98-9c3d462df3f5')">
           <option value="">Select an option</option>
-          <option value="1">Yes</option>
           <option value="0">No</option>
+          <option value="1">Yes</option>
         </select>
       </div>
     </div>
 
-    <div class="question-container" id="question2_b03f03ad-71e1-4d16-bc98-9c3d462df3f5" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question">
+<div class="question-container" id="question2_b03f03ad-71e1-4d16-bc98-9c3d462df3f5" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question">
         <label for="severityOfCyberbullying_b03f03ad-71e1-4d16-bc98-9c3d462df3f5">What is the severity?</label>
         <select id="severityOfCyberbullying_b03f03ad-71e1-4d16-bc98-9c3d462df3f5" name="severityOfCyberbullying_b03f03ad-71e1-4d16-bc98-9c3d462df3f5">
           <option value="">Select an option</option>
@@ -2330,8 +2494,7 @@ body, html {
       </div>
     </div>
 
-    <div class="selected-options-container" id="selectedOptionsContainer_b03f03ad-71e1-4d16-bc98-9c3d462df3f5">
-      <div class="question-container" id="question3_b03f03ad-71e1-4d16-bc98-9c3d462df3f5">
+<div class="selected-options-container" id="selectedOptionsContainer_b03f03ad-71e1-4d16-bc98-9c3d462df3f5" style="display: none;">      <div class="question-container" id="question3_b03f03ad-71e1-4d16-bc98-9c3d462df3f5">
         <div class="question">
           <label for="topic_b03f03ad-71e1-4d16-bc98-9c3d462df3f5">What is the topic?</label>
           <button type="button" onclick="toggleDropdown('dropdown_b03f03ad-71e1-4d16-bc98-9c3d462df3f5')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
@@ -2380,10 +2543,9 @@ body, html {
         </div>
       </div>
     </div>
-    <div class="question-container" id="question4_b03f03ad-71e1-4d16-bc98-9c3d462df3f5" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="question-container" id="question4_b03f03ad-71e1-4d16-bc98-9c3d462df3f5" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
         <div style="flex: 1; margin-right: 10px;">
-          <label for="commentWriterRole_b03f03ad-71e1-4d16-bc98-9c3d462df3f5">What is the role of <span style="color: grey;">@undefined</span> in this comment?</label>
+          <label for="commentWriterRole_b03f03ad-71e1-4d16-bc98-9c3d462df3f5">What is the role of <span style="color: #396ea3;">@juan44_286567</span> in this comment?</label>
           <select id="commentWriterRole_b03f03ad-71e1-4d16-bc98-9c3d462df3f5" name="commentWriterRole_b03f03ad-71e1-4d16-bc98-9c3d462df3f5" onChange="updateQuestion4Options(this.value, 'b03f03ad-71e1-4d16-bc98-9c3d462df3f5')">
             <option value="">Select an option</option>
           </select>
@@ -2398,20 +2560,19 @@ body, html {
   </div>
 
   <div class="comment">
-    <h3><span style="color: grey;">@undefined</span>: The irony.. 'Poor' people, worrying.. Yet have Internet access. 😆</h3>
+    <h3><span style="color: #b5d9f4;">@dmcfarland_326131</span>: The irony.. 'Poor' people, worrying.. Yet have Internet access. 😆</h3>
     <div class="question-container" id="question1_a20c6e48-bb5c-4aa6-a748-b4d1159dc65c" style="margin-bottom: 0px; padding: 5px;">
       <div class="question">
-        <label for="Cyberbullying_a20c6e48-bb5c-4aa6-a748-b4d1159dc65c">Is there cyberbullying (even if in defense of the victim)?</label>
+        <label for="Cyberbullying_a20c6e48-bb5c-4aa6-a748-b4d1159dc65c">Is there cyberbullying (even if in defense of the victim or if the victim is defending themself)?</label>
         <select id="Cyberbullying_a20c6e48-bb5c-4aa6-a748-b4d1159dc65c" name="Cyberbullying_a20c6e48-bb5c-4aa6-a748-b4d1159dc65c" onChange="toggleQuestions(this.value, 'a20c6e48-bb5c-4aa6-a748-b4d1159dc65c')">
           <option value="">Select an option</option>
-          <option value="1">Yes</option>
           <option value="0">No</option>
+          <option value="1">Yes</option>
         </select>
       </div>
     </div>
 
-    <div class="question-container" id="question2_a20c6e48-bb5c-4aa6-a748-b4d1159dc65c" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question">
+<div class="question-container" id="question2_a20c6e48-bb5c-4aa6-a748-b4d1159dc65c" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question">
         <label for="severityOfCyberbullying_a20c6e48-bb5c-4aa6-a748-b4d1159dc65c">What is the severity?</label>
         <select id="severityOfCyberbullying_a20c6e48-bb5c-4aa6-a748-b4d1159dc65c" name="severityOfCyberbullying_a20c6e48-bb5c-4aa6-a748-b4d1159dc65c">
           <option value="">Select an option</option>
@@ -2422,8 +2583,7 @@ body, html {
       </div>
     </div>
 
-    <div class="selected-options-container" id="selectedOptionsContainer_a20c6e48-bb5c-4aa6-a748-b4d1159dc65c">
-      <div class="question-container" id="question3_a20c6e48-bb5c-4aa6-a748-b4d1159dc65c">
+<div class="selected-options-container" id="selectedOptionsContainer_a20c6e48-bb5c-4aa6-a748-b4d1159dc65c" style="display: none;">      <div class="question-container" id="question3_a20c6e48-bb5c-4aa6-a748-b4d1159dc65c">
         <div class="question">
           <label for="topic_a20c6e48-bb5c-4aa6-a748-b4d1159dc65c">What is the topic?</label>
           <button type="button" onclick="toggleDropdown('dropdown_a20c6e48-bb5c-4aa6-a748-b4d1159dc65c')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
@@ -2472,10 +2632,9 @@ body, html {
         </div>
       </div>
     </div>
-    <div class="question-container" id="question4_a20c6e48-bb5c-4aa6-a748-b4d1159dc65c" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="question-container" id="question4_a20c6e48-bb5c-4aa6-a748-b4d1159dc65c" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
         <div style="flex: 1; margin-right: 10px;">
-          <label for="commentWriterRole_a20c6e48-bb5c-4aa6-a748-b4d1159dc65c">What is the role of <span style="color: grey;">@undefined</span> in this comment?</label>
+          <label for="commentWriterRole_a20c6e48-bb5c-4aa6-a748-b4d1159dc65c">What is the role of <span style="color: #b5d9f4;">@dmcfarland_326131</span> in this comment?</label>
           <select id="commentWriterRole_a20c6e48-bb5c-4aa6-a748-b4d1159dc65c" name="commentWriterRole_a20c6e48-bb5c-4aa6-a748-b4d1159dc65c" onChange="updateQuestion4Options(this.value, 'a20c6e48-bb5c-4aa6-a748-b4d1159dc65c')">
             <option value="">Select an option</option>
           </select>
@@ -2490,20 +2649,19 @@ body, html {
   </div>
 
   <div class="comment">
-    <h3><span style="color: grey;">@undefined</span>: Why we do not have leaders with proper education, someone that studied philosophy, anthropology, history, why anyone is power cares to make the world a better place? Why? I cannot understand why the obvious is so misinterpreted. It is good to help people that have less independent of waft they do with it. Why Wall Mart that make billions a year pay so little to the employees that they gave to go on food stamps? Profit is the unpaid wages to the employees. I cannot understand only 5% of money existent is in circulation. Why people instead of share the joy holds to a fictitious number that only holds power and no love ? Why? I cannot undress  that ignorance and corruption is turning US not better and comparable to the most corrupted countries in the world, why is that ok? Why we cannot just be good and see and do what is good for the masses instead of only benefiting the 1%. Why politicians like the crazy New Jersey Governor are in politics? They just want money and glory.very sad</h3>
+    <h3><span style="color: #b1cfed;">@jesusharris_892697</span>: Why we do not have leaders with proper education, someone that studied philosophy, anthropology, history, why anyone is power cares to make the world a better place? Why? I cannot understand why the obvious is so misinterpreted. It is good to help people that have less independent of waft they do with it. Why Wall Mart that make billions a year pay so little to the employees that they gave to go on food stamps? Profit is the unpaid wages to the employees. I cannot understand only 5% of money existent is in circulation. Why people instead of share the joy holds to a fictitious number that only holds power and no love ? Why? I cannot undress  that ignorance and corruption is turning US not better and comparable to the most corrupted countries in the world, why is that ok? Why we cannot just be good and see and do what is good for the masses instead of only benefiting the 1%. Why politicians like the crazy New Jersey Governor are in politics? They just want money and glory.very sad</h3>
     <div class="question-container" id="question1_81981ccd-3bd0-409e-b339-ad89e442225b" style="margin-bottom: 0px; padding: 5px;">
       <div class="question">
-        <label for="Cyberbullying_81981ccd-3bd0-409e-b339-ad89e442225b">Is there cyberbullying (even if in defense of the victim)?</label>
+        <label for="Cyberbullying_81981ccd-3bd0-409e-b339-ad89e442225b">Is there cyberbullying (even if in defense of the victim or if the victim is defending themself)?</label>
         <select id="Cyberbullying_81981ccd-3bd0-409e-b339-ad89e442225b" name="Cyberbullying_81981ccd-3bd0-409e-b339-ad89e442225b" onChange="toggleQuestions(this.value, '81981ccd-3bd0-409e-b339-ad89e442225b')">
           <option value="">Select an option</option>
-          <option value="1">Yes</option>
           <option value="0">No</option>
+          <option value="1">Yes</option>
         </select>
       </div>
     </div>
 
-    <div class="question-container" id="question2_81981ccd-3bd0-409e-b339-ad89e442225b" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question">
+<div class="question-container" id="question2_81981ccd-3bd0-409e-b339-ad89e442225b" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question">
         <label for="severityOfCyberbullying_81981ccd-3bd0-409e-b339-ad89e442225b">What is the severity?</label>
         <select id="severityOfCyberbullying_81981ccd-3bd0-409e-b339-ad89e442225b" name="severityOfCyberbullying_81981ccd-3bd0-409e-b339-ad89e442225b">
           <option value="">Select an option</option>
@@ -2514,8 +2672,7 @@ body, html {
       </div>
     </div>
 
-    <div class="selected-options-container" id="selectedOptionsContainer_81981ccd-3bd0-409e-b339-ad89e442225b">
-      <div class="question-container" id="question3_81981ccd-3bd0-409e-b339-ad89e442225b">
+<div class="selected-options-container" id="selectedOptionsContainer_81981ccd-3bd0-409e-b339-ad89e442225b" style="display: none;">      <div class="question-container" id="question3_81981ccd-3bd0-409e-b339-ad89e442225b">
         <div class="question">
           <label for="topic_81981ccd-3bd0-409e-b339-ad89e442225b">What is the topic?</label>
           <button type="button" onclick="toggleDropdown('dropdown_81981ccd-3bd0-409e-b339-ad89e442225b')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
@@ -2564,10 +2721,9 @@ body, html {
         </div>
       </div>
     </div>
-    <div class="question-container" id="question4_81981ccd-3bd0-409e-b339-ad89e442225b" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="question-container" id="question4_81981ccd-3bd0-409e-b339-ad89e442225b" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
         <div style="flex: 1; margin-right: 10px;">
-          <label for="commentWriterRole_81981ccd-3bd0-409e-b339-ad89e442225b">What is the role of <span style="color: grey;">@undefined</span> in this comment?</label>
+          <label for="commentWriterRole_81981ccd-3bd0-409e-b339-ad89e442225b">What is the role of <span style="color: #b1cfed;">@jesusharris_892697</span> in this comment?</label>
           <select id="commentWriterRole_81981ccd-3bd0-409e-b339-ad89e442225b" name="commentWriterRole_81981ccd-3bd0-409e-b339-ad89e442225b" onChange="updateQuestion4Options(this.value, '81981ccd-3bd0-409e-b339-ad89e442225b')">
             <option value="">Select an option</option>
           </select>
@@ -2582,20 +2738,19 @@ body, html {
   </div>
 
   <div class="comment">
-    <h3><span style="color: grey;">@undefined</span>: Paul Ryan has a agenda and it is to keep protecting and benefiting the rich and eliminating the poor. I have a better solution if you give support and education to the poor. They will no longer be poor. Rich people that is the solution to it. Do you think killing the poor and not giving food health care education and proper living is the solution? Just help - you call yourself Christians but I do not understand what crazy interpretation allows you corrupt selfish people sleep in peace at night? Paul Ryan is the worst thing that could happen to the world. He would probably start another war for profit. We have to go independent - that is solution.</h3>
+    <h3><span style="color: #b1cfed;">@jesusharris_892697</span>: Paul Ryan has a agenda and it is to keep protecting and benefiting the rich and eliminating the poor. I have a better solution if you give support and education to the poor. They will no longer be poor. Rich people that is the solution to it. Do you think killing the poor and not giving food health care education and proper living is the solution? Just help - you call yourself Christians but I do not understand what crazy interpretation allows you corrupt selfish people sleep in peace at night? Paul Ryan is the worst thing that could happen to the world. He would probably start another war for profit. We have to go independent - that is solution.</h3>
     <div class="question-container" id="question1_e879c7ef-8f2b-4a11-9507-e0e2554b9407" style="margin-bottom: 0px; padding: 5px;">
       <div class="question">
-        <label for="Cyberbullying_e879c7ef-8f2b-4a11-9507-e0e2554b9407">Is there cyberbullying (even if in defense of the victim)?</label>
+        <label for="Cyberbullying_e879c7ef-8f2b-4a11-9507-e0e2554b9407">Is there cyberbullying (even if in defense of the victim or if the victim is defending themself)?</label>
         <select id="Cyberbullying_e879c7ef-8f2b-4a11-9507-e0e2554b9407" name="Cyberbullying_e879c7ef-8f2b-4a11-9507-e0e2554b9407" onChange="toggleQuestions(this.value, 'e879c7ef-8f2b-4a11-9507-e0e2554b9407')">
           <option value="">Select an option</option>
-          <option value="1">Yes</option>
           <option value="0">No</option>
+          <option value="1">Yes</option>
         </select>
       </div>
     </div>
 
-    <div class="question-container" id="question2_e879c7ef-8f2b-4a11-9507-e0e2554b9407" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question">
+<div class="question-container" id="question2_e879c7ef-8f2b-4a11-9507-e0e2554b9407" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question">
         <label for="severityOfCyberbullying_e879c7ef-8f2b-4a11-9507-e0e2554b9407">What is the severity?</label>
         <select id="severityOfCyberbullying_e879c7ef-8f2b-4a11-9507-e0e2554b9407" name="severityOfCyberbullying_e879c7ef-8f2b-4a11-9507-e0e2554b9407">
           <option value="">Select an option</option>
@@ -2606,8 +2761,7 @@ body, html {
       </div>
     </div>
 
-    <div class="selected-options-container" id="selectedOptionsContainer_e879c7ef-8f2b-4a11-9507-e0e2554b9407">
-      <div class="question-container" id="question3_e879c7ef-8f2b-4a11-9507-e0e2554b9407">
+<div class="selected-options-container" id="selectedOptionsContainer_e879c7ef-8f2b-4a11-9507-e0e2554b9407" style="display: none;">      <div class="question-container" id="question3_e879c7ef-8f2b-4a11-9507-e0e2554b9407">
         <div class="question">
           <label for="topic_e879c7ef-8f2b-4a11-9507-e0e2554b9407">What is the topic?</label>
           <button type="button" onclick="toggleDropdown('dropdown_e879c7ef-8f2b-4a11-9507-e0e2554b9407')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
@@ -2656,10 +2810,9 @@ body, html {
         </div>
       </div>
     </div>
-    <div class="question-container" id="question4_e879c7ef-8f2b-4a11-9507-e0e2554b9407" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="question-container" id="question4_e879c7ef-8f2b-4a11-9507-e0e2554b9407" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
         <div style="flex: 1; margin-right: 10px;">
-          <label for="commentWriterRole_e879c7ef-8f2b-4a11-9507-e0e2554b9407">What is the role of <span style="color: grey;">@undefined</span> in this comment?</label>
+          <label for="commentWriterRole_e879c7ef-8f2b-4a11-9507-e0e2554b9407">What is the role of <span style="color: #b1cfed;">@jesusharris_892697</span> in this comment?</label>
           <select id="commentWriterRole_e879c7ef-8f2b-4a11-9507-e0e2554b9407" name="commentWriterRole_e879c7ef-8f2b-4a11-9507-e0e2554b9407" onChange="updateQuestion4Options(this.value, 'e879c7ef-8f2b-4a11-9507-e0e2554b9407')">
             <option value="">Select an option</option>
           </select>
@@ -2674,20 +2827,19 @@ body, html {
   </div>
 
   <div class="comment">
-    <h3><span style="color: grey;">@undefined</span>: <span style="color: grey;">@marymarshall_722613</span> great fantastic point tks!</h3>
+    <h3><span style="color: #b1cfed;">@jesusharris_892697</span>: <span style="color: #3eb2bc;">@kimberly71_79925</span> great fantastic point tks!</h3>
     <div class="question-container" id="question1_43da9952-2af5-4a7e-b8a4-88f08824f2d6" style="margin-bottom: 0px; padding: 5px;">
       <div class="question">
-        <label for="Cyberbullying_43da9952-2af5-4a7e-b8a4-88f08824f2d6">Is there cyberbullying (even if in defense of the victim)?</label>
+        <label for="Cyberbullying_43da9952-2af5-4a7e-b8a4-88f08824f2d6">Is there cyberbullying (even if in defense of the victim or if the victim is defending themself)?</label>
         <select id="Cyberbullying_43da9952-2af5-4a7e-b8a4-88f08824f2d6" name="Cyberbullying_43da9952-2af5-4a7e-b8a4-88f08824f2d6" onChange="toggleQuestions(this.value, '43da9952-2af5-4a7e-b8a4-88f08824f2d6')">
           <option value="">Select an option</option>
-          <option value="1">Yes</option>
           <option value="0">No</option>
+          <option value="1">Yes</option>
         </select>
       </div>
     </div>
 
-    <div class="question-container" id="question2_43da9952-2af5-4a7e-b8a4-88f08824f2d6" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question">
+<div class="question-container" id="question2_43da9952-2af5-4a7e-b8a4-88f08824f2d6" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question">
         <label for="severityOfCyberbullying_43da9952-2af5-4a7e-b8a4-88f08824f2d6">What is the severity?</label>
         <select id="severityOfCyberbullying_43da9952-2af5-4a7e-b8a4-88f08824f2d6" name="severityOfCyberbullying_43da9952-2af5-4a7e-b8a4-88f08824f2d6">
           <option value="">Select an option</option>
@@ -2698,8 +2850,7 @@ body, html {
       </div>
     </div>
 
-    <div class="selected-options-container" id="selectedOptionsContainer_43da9952-2af5-4a7e-b8a4-88f08824f2d6">
-      <div class="question-container" id="question3_43da9952-2af5-4a7e-b8a4-88f08824f2d6">
+<div class="selected-options-container" id="selectedOptionsContainer_43da9952-2af5-4a7e-b8a4-88f08824f2d6" style="display: none;">      <div class="question-container" id="question3_43da9952-2af5-4a7e-b8a4-88f08824f2d6">
         <div class="question">
           <label for="topic_43da9952-2af5-4a7e-b8a4-88f08824f2d6">What is the topic?</label>
           <button type="button" onclick="toggleDropdown('dropdown_43da9952-2af5-4a7e-b8a4-88f08824f2d6')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
@@ -2748,10 +2899,9 @@ body, html {
         </div>
       </div>
     </div>
-    <div class="question-container" id="question4_43da9952-2af5-4a7e-b8a4-88f08824f2d6" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="question-container" id="question4_43da9952-2af5-4a7e-b8a4-88f08824f2d6" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
         <div style="flex: 1; margin-right: 10px;">
-          <label for="commentWriterRole_43da9952-2af5-4a7e-b8a4-88f08824f2d6">What is the role of <span style="color: grey;">@undefined</span> in this comment?</label>
+          <label for="commentWriterRole_43da9952-2af5-4a7e-b8a4-88f08824f2d6">What is the role of <span style="color: #b1cfed;">@jesusharris_892697</span> in this comment?</label>
           <select id="commentWriterRole_43da9952-2af5-4a7e-b8a4-88f08824f2d6" name="commentWriterRole_43da9952-2af5-4a7e-b8a4-88f08824f2d6" onChange="updateQuestion4Options(this.value, '43da9952-2af5-4a7e-b8a4-88f08824f2d6')">
             <option value="">Select an option</option>
           </select>
@@ -2766,20 +2916,19 @@ body, html {
   </div>
 
   <div class="comment">
-    <h3><span style="color: grey;">@undefined</span>: <span style="color: grey;">@alyssa80_347810</span> haha thanx but he's not the worst thing that could happen but him and his ilk need to cease breeding.</h3>
+    <h3><span style="color: #a764c9;">@carterjoshua_73503</span>: <span style="color: #b1cfed;">@jesusharris_892697</span> haha thanx but he's not the worst thing that could happen but him and his ilk need to cease breeding.</h3>
     <div class="question-container" id="question1_c4905d2e-7c3e-4bfb-b6d5-78bd5afa7aa3" style="margin-bottom: 0px; padding: 5px;">
       <div class="question">
-        <label for="Cyberbullying_c4905d2e-7c3e-4bfb-b6d5-78bd5afa7aa3">Is there cyberbullying (even if in defense of the victim)?</label>
+        <label for="Cyberbullying_c4905d2e-7c3e-4bfb-b6d5-78bd5afa7aa3">Is there cyberbullying (even if in defense of the victim or if the victim is defending themself)?</label>
         <select id="Cyberbullying_c4905d2e-7c3e-4bfb-b6d5-78bd5afa7aa3" name="Cyberbullying_c4905d2e-7c3e-4bfb-b6d5-78bd5afa7aa3" onChange="toggleQuestions(this.value, 'c4905d2e-7c3e-4bfb-b6d5-78bd5afa7aa3')">
           <option value="">Select an option</option>
-          <option value="1">Yes</option>
           <option value="0">No</option>
+          <option value="1">Yes</option>
         </select>
       </div>
     </div>
 
-    <div class="question-container" id="question2_c4905d2e-7c3e-4bfb-b6d5-78bd5afa7aa3" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question">
+<div class="question-container" id="question2_c4905d2e-7c3e-4bfb-b6d5-78bd5afa7aa3" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question">
         <label for="severityOfCyberbullying_c4905d2e-7c3e-4bfb-b6d5-78bd5afa7aa3">What is the severity?</label>
         <select id="severityOfCyberbullying_c4905d2e-7c3e-4bfb-b6d5-78bd5afa7aa3" name="severityOfCyberbullying_c4905d2e-7c3e-4bfb-b6d5-78bd5afa7aa3">
           <option value="">Select an option</option>
@@ -2790,8 +2939,7 @@ body, html {
       </div>
     </div>
 
-    <div class="selected-options-container" id="selectedOptionsContainer_c4905d2e-7c3e-4bfb-b6d5-78bd5afa7aa3">
-      <div class="question-container" id="question3_c4905d2e-7c3e-4bfb-b6d5-78bd5afa7aa3">
+<div class="selected-options-container" id="selectedOptionsContainer_c4905d2e-7c3e-4bfb-b6d5-78bd5afa7aa3" style="display: none;">      <div class="question-container" id="question3_c4905d2e-7c3e-4bfb-b6d5-78bd5afa7aa3">
         <div class="question">
           <label for="topic_c4905d2e-7c3e-4bfb-b6d5-78bd5afa7aa3">What is the topic?</label>
           <button type="button" onclick="toggleDropdown('dropdown_c4905d2e-7c3e-4bfb-b6d5-78bd5afa7aa3')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
@@ -2840,10 +2988,9 @@ body, html {
         </div>
       </div>
     </div>
-    <div class="question-container" id="question4_c4905d2e-7c3e-4bfb-b6d5-78bd5afa7aa3" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="question-container" id="question4_c4905d2e-7c3e-4bfb-b6d5-78bd5afa7aa3" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
         <div style="flex: 1; margin-right: 10px;">
-          <label for="commentWriterRole_c4905d2e-7c3e-4bfb-b6d5-78bd5afa7aa3">What is the role of <span style="color: grey;">@undefined</span> in this comment?</label>
+          <label for="commentWriterRole_c4905d2e-7c3e-4bfb-b6d5-78bd5afa7aa3">What is the role of <span style="color: #a764c9;">@carterjoshua_73503</span> in this comment?</label>
           <select id="commentWriterRole_c4905d2e-7c3e-4bfb-b6d5-78bd5afa7aa3" name="commentWriterRole_c4905d2e-7c3e-4bfb-b6d5-78bd5afa7aa3" onChange="updateQuestion4Options(this.value, 'c4905d2e-7c3e-4bfb-b6d5-78bd5afa7aa3')">
             <option value="">Select an option</option>
           </select>
@@ -2858,20 +3005,19 @@ body, html {
   </div>
 
   <div class="comment">
-    <h3><span style="color: grey;">@undefined</span>: Get your facts straight. ..</h3>
+    <h3><span style="color: #e899bc;">@brookscraig_271640</span>: Get your facts straight. ..</h3>
     <div class="question-container" id="question1_f0de1aad-e987-4d98-ac6e-c596320e9dba" style="margin-bottom: 0px; padding: 5px;">
       <div class="question">
-        <label for="Cyberbullying_f0de1aad-e987-4d98-ac6e-c596320e9dba">Is there cyberbullying (even if in defense of the victim)?</label>
+        <label for="Cyberbullying_f0de1aad-e987-4d98-ac6e-c596320e9dba">Is there cyberbullying (even if in defense of the victim or if the victim is defending themself)?</label>
         <select id="Cyberbullying_f0de1aad-e987-4d98-ac6e-c596320e9dba" name="Cyberbullying_f0de1aad-e987-4d98-ac6e-c596320e9dba" onChange="toggleQuestions(this.value, 'f0de1aad-e987-4d98-ac6e-c596320e9dba')">
           <option value="">Select an option</option>
-          <option value="1">Yes</option>
           <option value="0">No</option>
+          <option value="1">Yes</option>
         </select>
       </div>
     </div>
 
-    <div class="question-container" id="question2_f0de1aad-e987-4d98-ac6e-c596320e9dba" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question">
+<div class="question-container" id="question2_f0de1aad-e987-4d98-ac6e-c596320e9dba" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question">
         <label for="severityOfCyberbullying_f0de1aad-e987-4d98-ac6e-c596320e9dba">What is the severity?</label>
         <select id="severityOfCyberbullying_f0de1aad-e987-4d98-ac6e-c596320e9dba" name="severityOfCyberbullying_f0de1aad-e987-4d98-ac6e-c596320e9dba">
           <option value="">Select an option</option>
@@ -2882,8 +3028,7 @@ body, html {
       </div>
     </div>
 
-    <div class="selected-options-container" id="selectedOptionsContainer_f0de1aad-e987-4d98-ac6e-c596320e9dba">
-      <div class="question-container" id="question3_f0de1aad-e987-4d98-ac6e-c596320e9dba">
+<div class="selected-options-container" id="selectedOptionsContainer_f0de1aad-e987-4d98-ac6e-c596320e9dba" style="display: none;">      <div class="question-container" id="question3_f0de1aad-e987-4d98-ac6e-c596320e9dba">
         <div class="question">
           <label for="topic_f0de1aad-e987-4d98-ac6e-c596320e9dba">What is the topic?</label>
           <button type="button" onclick="toggleDropdown('dropdown_f0de1aad-e987-4d98-ac6e-c596320e9dba')" aria-label="Select topic(s) of cyberbullying">Select option(s)</button>
@@ -2932,10 +3077,9 @@ body, html {
         </div>
       </div>
     </div>
-    <div class="question-container" id="question4_f0de1aad-e987-4d98-ac6e-c596320e9dba" style="margin-bottom: 0px; padding: 5px;">
-      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="question-container" id="question4_f0de1aad-e987-4d98-ac6e-c596320e9dba" style="margin-bottom: 0px; padding: 5px; display: none;">      <div class="question" style="display: flex; justify-content: space-between; align-items: center;">
         <div style="flex: 1; margin-right: 10px;">
-          <label for="commentWriterRole_f0de1aad-e987-4d98-ac6e-c596320e9dba">What is the role of <span style="color: grey;">@undefined</span> in this comment?</label>
+          <label for="commentWriterRole_f0de1aad-e987-4d98-ac6e-c596320e9dba">What is the role of <span style="color: #e899bc;">@brookscraig_271640</span> in this comment?</label>
           <select id="commentWriterRole_f0de1aad-e987-4d98-ac6e-c596320e9dba" name="commentWriterRole_f0de1aad-e987-4d98-ac6e-c596320e9dba" onChange="updateQuestion4Options(this.value, 'f0de1aad-e987-4d98-ac6e-c596320e9dba')">
             <option value="">Select an option</option>
           </select>
@@ -2976,20 +3120,36 @@ body, html {
         questionContainer.classList.remove('invalid-question-container');
       }
 
-      const toggleButton = document.querySelector('.toggle-button');
+let instructionsRead = false;
+const instructions = document.querySelector('.instructions');
+const toggleButton = document.querySelector('.toggle-button');
 const content = document.querySelector('.content');
+const warningMessage = document.getElementById('warningMessage');
+const crowdForm = document.querySelector('crowd-form');
 
-// Add this line to show the content by default
+// Show warning and hide form initially
 content.classList.add('show');
+crowdForm.style.display = 'none';
 
 toggleButton.addEventListener('click', () => {
-  content.classList.toggle('show');
-  if (content.classList.contains('show')) {
-    toggleButton.textContent = 'Hide Instructions';
-  } else {
+  if (!instructionsRead) {
+    // First time clicking hide
+    instructionsRead = true;
+    instructions.classList.add('collapsed');
+    warningMessage.style.display = 'none';
+    crowdForm.style.display = 'block';
     toggleButton.textContent = 'Show Instructions';
+    content.classList.remove('show');
+  } else {
+    // Normal toggle behavior after first hide
+    content.classList.toggle('show');
+    toggleButton.textContent = content.classList.contains('show') 
+      ? 'Hide Instructions' 
+      : 'Show Instructions';
   }
 });
+
+// Update your existing validateForm function
 
   function toggleDropdown(id) {
     var dropdown = document.getElementById(id);
@@ -3070,8 +3230,24 @@ toggleButton.addEventListener('click', () => {
     }
   }
 
-  function validateForm() {
+
+function validateForm() {
+ if (!instructionsRead) {
+    alert("Please read the instructions and click 'Hide Instructions' before submitting.");
+    return false;
+  }
+
   let isValid = true;
+  
+  // Validate commitment question
+  const commitmentSelect = document.querySelector('select[id^="commitment_"]');
+  if (commitmentSelect.value === "") {
+    isValid = false;
+    markQuestionAsInvalid(commitmentSelect.closest('.question'));
+  } else {
+    markQuestionAsValid(commitmentSelect.closest('.question'));
+  }
+
   const comments = document.querySelectorAll('.comment');
 
   comments.forEach(comment => {
@@ -3082,6 +3258,7 @@ toggleButton.addEventListener('click', () => {
     const roleSelect = comment.querySelector('select[id="commentWriterRole_' + commentId + '"]');
     const severityOfRoleSelect = comment.querySelector('select[id="severityOfRole_' + commentId + '"]');
 
+    // Validate Cyberbullying field
     if (cyberbullyingSelect.value === "") {
       isValid = false;
       markQuestionAsInvalid(cyberbullyingSelect.closest('.question-container'));
@@ -3089,7 +3266,9 @@ toggleButton.addEventListener('click', () => {
       markQuestionAsValid(cyberbullyingSelect.closest('.question-container'));
     }
 
+    // If Cyberbullying is "Yes", validate severity, topic, and role
     if (cyberbullyingSelect.value === "1") {
+      // Validate Severity field
       if (severitySelect.value === "") {
         isValid = false;
         markQuestionAsInvalid(severitySelect.closest('.question-container'));
@@ -3097,9 +3276,9 @@ toggleButton.addEventListener('click', () => {
         markQuestionAsValid(severitySelect.closest('.question-container'));
       }
 
+      // Validate Topic selection
       const selectedTopics = Array.from(topicContainer.querySelectorAll('input[type="checkbox"]:checked'))
-        .map(cb => cb.value)
-        .filter(value => value !== "none");
+        .map(cb => cb.value);
       
       if (selectedTopics.length === 0) {
         isValid = false;
@@ -3108,19 +3287,30 @@ toggleButton.addEventListener('click', () => {
         markQuestionAsValid(topicContainer);
       }
 
+      // Validate Role field
       if (roleSelect.value === "") {
         isValid = false;
         markQuestionAsInvalid(roleSelect.closest('.question-container'));
       } else {
         markQuestionAsValid(roleSelect.closest('.question-container'));
       }
-    } else {
+    } else if (cyberbullyingSelect.value === "0") {
+      // If Cyberbullying is "No", only validate the Role field
+      if (roleSelect.value === "") {
+        isValid = false;
+        markQuestionAsInvalid(roleSelect.closest('.question-container'));
+      } else {
+        markQuestionAsValid(roleSelect.closest('.question-container'));
+      }
+      
+      // Reset severity and topic fields as they are not required
       severitySelect.value = "";
       topicContainer.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
         cb.checked = false;
       });
     }
 
+    // Conditional validation for Severity of Role if applicable
     if (roleSelect.value === "non_aggressive_defender") {
       if (!severityOfRoleSelect.value) {
         isValid = false;
@@ -3131,6 +3321,7 @@ toggleButton.addEventListener('click', () => {
     }
   });
 
+  // Validate Overall Session Assessment
   const overallQuestion = document.querySelector('select[id^="target_"]');
   if (overallQuestion.value === "") {
     isValid = false;
@@ -3146,35 +3337,42 @@ toggleButton.addEventListener('click', () => {
   return isValid;
 }
 
+
 function toggleQuestions(value, commentID) {
-  const displayStyle = value === "1" ? "block" : "none";
-  
-  // Get all relevant elements
   const severityDiv = document.getElementById("question2_" + commentID);
+  const selectedOptionsContainer = document.getElementById("selectedOptionsContainer_" + commentID);
   const topicDiv = document.getElementById("question3_" + commentID);
   const topicCheckboxes = topicDiv.querySelectorAll('input[type="checkbox"]');
   const roleSelect = document.getElementById("commentWriterRole_" + commentID);
   const severityContainer = document.getElementById("severityContainer_" + commentID);
   const severityOfRoleSelect = document.getElementById("severityOfRole_" + commentID);
+  const question4Container = document.getElementById("question4_" + commentID);
 
-  // Show/hide severity and topic sections
+  if (value === "") {
+    severityDiv.style.display = "none";
+    selectedOptionsContainer.style.display = "none";
+    question4Container.style.display = "none";
+    return;
+  }
+
+  question4Container.style.display = "block";
+  
+  const displayStyle = value === "1" ? "block" : "none";
   severityDiv.style.display = displayStyle;
   topicDiv.style.display = displayStyle;
+  selectedOptionsContainer.style.display = "flex";
+  selectedOptionsContainer.style.flexWrap = "wrap";
+  selectedOptionsContainer.style.gap = "5px";
 
-  // If cyberbullying is No (value === "0")
   if (value === "0") {
-    // Clear all topic checkboxes
     topicCheckboxes.forEach(checkbox => {
       checkbox.checked = false;
     });
     
-    // Clear any selected options display
-    const selectedOptionsContainer = document.getElementById("selectedOptionsContainer_" + commentID);
     const selectedSpans = selectedOptionsContainer.querySelectorAll('span');
     selectedSpans.forEach(span => span.remove());
   }
 
-  // Update role options
   roleSelect.innerHTML = "";
   if (value === "1") {
     roleSelect.options[roleSelect.options.length] = new Option("Select an option", "");
@@ -3182,14 +3380,13 @@ function toggleQuestions(value, commentID) {
     roleSelect.options[roleSelect.options.length] = new Option("Bully Assistant", "bully_assistant");
     roleSelect.options[roleSelect.options.length] = new Option("Aggressive Victim", "aggressive_victim");
     roleSelect.options[roleSelect.options.length] = new Option("Aggressive Defender of Victim", "aggressive_defender");
-    roleSelect.options[roleSelect.options.length] = new Option("Non-aggressive Defender of Victim", "non_aggressive_defender");
   } else {
     roleSelect.options[roleSelect.options.length] = new Option("Select an option", "");
     roleSelect.options[roleSelect.options.length] = new Option("Non-aggressive Victim", "non_aggressive_victim");
     roleSelect.options[roleSelect.options.length] = new Option("Passive Bystander", "passive_bystander");
+    roleSelect.options[roleSelect.options.length] = new Option("Non-aggressive Defender of Victim", "non_aggressive_defender");
   }
 
-  // Reset severity of role
   severityOfRoleSelect.innerHTML = "";
   severityContainer.style.display = "none";
 }
@@ -3224,7 +3421,7 @@ function toggleQuestions(value, commentID) {
         false
       );
       severityDropdown.options[severityDropdown.options.length] = new Option(
-        "Confronting a bully",
+        "Directly confronting a bully",
         "direct_to_the_bully"
       );
       severityDropdown.options[severityDropdown.options.length] = new Option(
@@ -3237,9 +3434,7 @@ function toggleQuestions(value, commentID) {
     }
   }
 
-document.addEventListener('DOMContentLoaded', function() {
-  setupEventListeners();
-});      </script>
+      </script>
                 </html>
               ]]></HTMLContent>
               <FrameHeight></FrameHeight>
