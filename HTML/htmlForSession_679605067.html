@@ -15,6 +15,22 @@
   box-sizing: border-box;
 }
 
+ .image-container {
+                width: 100%;
+                max-width: 300px;
+                height: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #f9f9f9;
+                border: 1px solid #ddd;
+            }
+            .image-container img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+            }
+
 body, html {
   width: 100%;
   font-family: Arial, Helvetica, sans-serif !important;
@@ -410,19 +426,19 @@ crowd-form.visible {
                   </select>
                 </div>
               </div>
-                <div id="fixed-post">
-                  <div class="post-text">
-                  <strong>
-                    <p><span style="color: #cc8514;">@vrodriguez_81206</span>: Gothic tribal leggings featuring @steven36_3131 ."</p>
-                    <strong>
-                  </div>
-                  <a id="imgModalOpener"><img src="../found_pictures/../found_pictures/382578864871548990.jpg" alt="[No Image Found for this Task]" style="width:100%;max-width:300px"></a>
-                  </div>
-                  <div id="myModal" class="modal">
-  <span class="modal-close">&times;</span>
-  <img class="modal-content" id="img01">
-</div>
                 
+              <div id="fixed-post">
+            <div class="post-text" style = "background: green">
+                <strong>
+                    <p><span style="color: #cc8514;">@vrodriguez_81206</span>: Gothic tribal leggings featuring @steven36_3131 ."</p>
+                </strong>
+            </div>
+            <div class="image-container">
+                <img src="../found_pictures/382578864871548990.jpg" alt="[No Image Found for this Task]"
+                     onerror="this.style.display='none';">
+            </div>
+        </div>
+        
   <div class="comment">
     <h3><span style="color: #55ede3;">@townsendmichelle_331481</span>: Cute</h3>
     <div class="question-container" id="question1_491c75b8-1287-410a-8530-e36aa2873adc" style="margin-bottom: 0px; padding: 5px;">

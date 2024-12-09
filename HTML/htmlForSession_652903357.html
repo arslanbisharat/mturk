@@ -15,6 +15,22 @@
   box-sizing: border-box;
 }
 
+ .image-container {
+                width: 100%;
+                max-width: 300px;
+                height: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #f9f9f9;
+                border: 1px solid #ddd;
+            }
+            .image-container img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+            }
+
 body, html {
   width: 100%;
   font-family: Arial, Helvetica, sans-serif !important;
@@ -410,19 +426,19 @@ crowd-form.visible {
                   </select>
                 </div>
               </div>
-                <div id="fixed-post">
-                  <div class="post-text">
-                  <strong>
-                    <p><span style="color: #9df74a;">@steven25_517222</span>: @stacey43_897933 shaking things up at @keith31_310941 #voodoonola.</p>
-                    <strong>
-                  </div>
-                  <a id="imgModalOpener"><img src="../found_pictures/../found_pictures/579878436789742591.jpg" alt="[No Image Found for this Task]" style="width:100%;max-width:300px"></a>
-                  </div>
-                  <div id="myModal" class="modal">
-  <span class="modal-close">&times;</span>
-  <img class="modal-content" id="img01">
-</div>
                 
+              <div id="fixed-post">
+            <div class="post-text" style = "background: green">
+                <strong>
+                    <p><span style="color: #9df74a;">@steven25_517222</span>: @stacey43_897933 shaking things up at @keith31_310941 #voodoonola.</p>
+                </strong>
+            </div>
+            <div class="image-container">
+                <img src="../found_pictures/579878436789742591.jpg" alt="[No Image Found for this Task]"
+                     onerror="this.style.display='none';">
+            </div>
+        </div>
+        
   <div class="comment">
     <h3><span style="color: #0a5fd6;">@andersonchristopher_895015</span>: I love one direction</h3>
     <div class="question-container" id="question1_b7fb5847-143a-49bc-83f2-336a96010b64" style="margin-bottom: 0px; padding: 5px;">

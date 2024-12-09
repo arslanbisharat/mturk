@@ -15,6 +15,22 @@
   box-sizing: border-box;
 }
 
+ .image-container {
+                width: 100%;
+                max-width: 300px;
+                height: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #f9f9f9;
+                border: 1px solid #ddd;
+            }
+            .image-container img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+            }
+
 body, html {
   width: 100%;
   font-family: Arial, Helvetica, sans-serif !important;
@@ -410,19 +426,19 @@ crowd-form.visible {
                   </select>
                 </div>
               </div>
-                <div id="fixed-post">
-                  <div class="post-text">
-                  <strong>
-                    <p><span style="color: #7d60ff;">@troy91_31917</span>: Inside the locker room with your NFC East Champions. #FlyEaglesFly</p>
-                    <strong>
-                  </div>
-                  <a id="imgModalOpener"><img src="../found_pictures/../found_pictures/622096710624740375.jpg" alt="[No Image Found for this Task]" style="width:100%;max-width:300px"></a>
-                  </div>
-                  <div id="myModal" class="modal">
-  <span class="modal-close">&times;</span>
-  <img class="modal-content" id="img01">
-</div>
                 
+              <div id="fixed-post">
+            <div class="post-text" style = "background: green">
+                <strong>
+                    <p><span style="color: #7d60ff;">@troy91_31917</span>: Inside the locker room with your NFC East Champions. #FlyEaglesFly</p>
+                </strong>
+            </div>
+            <div class="image-container">
+                <img src="../found_pictures/622096710624740375.jpg" alt="[No Image Found for this Task]"
+                     onerror="this.style.display='none';">
+            </div>
+        </div>
+        
   <div class="comment">
     <h3><span style="color: #a613c4;">@maureendurham_850120</span>: Lol im pretty sure u can tell. ? && umm ur such a kid. Dude all u talks about dicks. Ur probably like the guy from superbad. Drawing dicks all the time lol <span style="color: #66ccd6;">@ashleyjenkins_30903</span></h3>
     <div class="question-container" id="question1_31a8bb5d-886f-4518-ac5e-3c9cc3d24cb5" style="margin-bottom: 0px; padding: 5px;">

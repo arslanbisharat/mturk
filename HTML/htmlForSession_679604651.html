@@ -15,6 +15,22 @@
   box-sizing: border-box;
 }
 
+ .image-container {
+                width: 100%;
+                max-width: 300px;
+                height: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #f9f9f9;
+                border: 1px solid #ddd;
+            }
+            .image-container img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+            }
+
 body, html {
   width: 100%;
   font-family: Arial, Helvetica, sans-serif !important;
@@ -410,19 +426,19 @@ crowd-form.visible {
                   </select>
                 </div>
               </div>
-                <div id="fixed-post">
-                  <div class="post-text">
-                  <strong>
-                    <p><span style="color: #02cea9;">@stephenswendy_653551</span>: Another LA skate spot skate stopped."</p>
-                    <strong>
-                  </div>
-                  <a id="imgModalOpener"><img src="../found_pictures/../found_pictures/690911466047739640.jpg" alt="[No Image Found for this Task]" style="width:100%;max-width:300px"></a>
-                  </div>
-                  <div id="myModal" class="modal">
-  <span class="modal-close">&times;</span>
-  <img class="modal-content" id="img01">
-</div>
                 
+              <div id="fixed-post">
+            <div class="post-text" style = "background: green">
+                <strong>
+                    <p><span style="color: #02cea9;">@stephenswendy_653551</span>: Another LA skate spot skate stopped."</p>
+                </strong>
+            </div>
+            <div class="image-container">
+                <img src="../found_pictures/690911466047739640.jpg" alt="[No Image Found for this Task]"
+                     onerror="this.style.display='none';">
+            </div>
+        </div>
+        
   <div class="comment">
     <h3><span style="color: #e27197;">@dean88_689410</span>: Get a drill a use the right kind if bit</h3>
     <div class="question-container" id="question1_6382a541-252c-4d25-a6c6-40ab56950f3f" style="margin-bottom: 0px; padding: 5px;">

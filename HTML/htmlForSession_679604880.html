@@ -15,6 +15,22 @@
   box-sizing: border-box;
 }
 
+ .image-container {
+                width: 100%;
+                max-width: 300px;
+                height: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #f9f9f9;
+                border: 1px solid #ddd;
+            }
+            .image-container img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+            }
+
 body, html {
   width: 100%;
   font-family: Arial, Helvetica, sans-serif !important;
@@ -410,19 +426,19 @@ crowd-form.visible {
                   </select>
                 </div>
               </div>
-                <div id="fixed-post">
-                  <div class="post-text">
-                  <strong>
-                    <p><span style="color: #d6ed0b;">@dthompson_634524</span>: [no text was provided by the user of the original post]</p>
-                    <strong>
-                  </div>
-                  <a id="imgModalOpener"><img src="../found_pictures/../found_pictures/617883924295329632.jpg" alt="[No Image Found for this Task]" style="width:100%;max-width:300px"></a>
-                  </div>
-                  <div id="myModal" class="modal">
-  <span class="modal-close">&times;</span>
-  <img class="modal-content" id="img01">
-</div>
                 
+              <div id="fixed-post">
+            <div class="post-text" style = "background: green">
+                <strong>
+                    <p><span style="color: #d6ed0b;">@dthompson_634524</span>: [no text was provided by the user of the original post]</p>
+                </strong>
+            </div>
+            <div class="image-container">
+                <img src="../found_pictures/617883924295329632.jpg" alt="[No Image Found for this Task]"
+                     onerror="this.style.display='none';">
+            </div>
+        </div>
+        
   <div class="comment">
     <h3><span style="color: #e0d90f;">@xgarrett_291326</span>: Actually eating salad everyday is not wrong at all. Salad tastes good and is good for you. Sugar can be bad, but you can have it in proportion. You should read into things more before making a statement like that. And honestly, I worry for you because not all things on television are accurate. So please be careful what you write on social networks. Because you are someone to judge and criticise or as you say 'stating your opinion ' could get you into trouble.  happy holidays x</h3>
     <div class="question-container" id="question1_d74ece5b-d767-425f-a1ee-6f5a0fa17b70" style="margin-bottom: 0px; padding: 5px;">

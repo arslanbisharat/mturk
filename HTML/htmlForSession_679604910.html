@@ -15,6 +15,22 @@
   box-sizing: border-box;
 }
 
+ .image-container {
+                width: 100%;
+                max-width: 300px;
+                height: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #f9f9f9;
+                border: 1px solid #ddd;
+            }
+            .image-container img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+            }
+
 body, html {
   width: 100%;
   font-family: Arial, Helvetica, sans-serif !important;
@@ -410,19 +426,19 @@ crowd-form.visible {
                   </select>
                 </div>
               </div>
-                <div id="fixed-post">
-                  <div class="post-text">
-                  <strong>
-                    <p><span style="color: #d7f977;">@matthewdelgado_667301</span>: Do you like Miley? #bestscenes"</p>
-                    <strong>
-                  </div>
-                  <a id="imgModalOpener"><img src="../found_pictures/../found_pictures/581224317730589913.jpg" alt="[No Image Found for this Task]" style="width:100%;max-width:300px"></a>
-                  </div>
-                  <div id="myModal" class="modal">
-  <span class="modal-close">&times;</span>
-  <img class="modal-content" id="img01">
-</div>
                 
+              <div id="fixed-post">
+            <div class="post-text" style = "background: green">
+                <strong>
+                    <p><span style="color: #d7f977;">@matthewdelgado_667301</span>: Do you like Miley? #bestscenes"</p>
+                </strong>
+            </div>
+            <div class="image-container">
+                <img src="../found_pictures/581224317730589913.jpg" alt="[No Image Found for this Task]"
+                     onerror="this.style.display='none';">
+            </div>
+        </div>
+        
   <div class="comment">
     <h3><span style="color: #b5641e;">@joshuathompson_225824</span>: Hell yes, read my bio, she's my idol she's an amazin singer she lets out her personality instead of hiding it and she's unique she, doesn't want to be like everyone else and that's what makes her special. And all y'all haters need to stop hating on her cuz she's an amazing person n she's really bright so before u start talkin about her u should really look back at yourself n see all the mistakes u made. #teamMileyCyrus👅</h3>
     <div class="question-container" id="question1_08af825e-508c-4beb-9dbe-dce8dbc169a3" style="margin-bottom: 0px; padding: 5px;">

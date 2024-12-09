@@ -15,6 +15,22 @@
   box-sizing: border-box;
 }
 
+ .image-container {
+                width: 100%;
+                max-width: 300px;
+                height: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #f9f9f9;
+                border: 1px solid #ddd;
+            }
+            .image-container img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+            }
+
 body, html {
   width: 100%;
   font-family: Arial, Helvetica, sans-serif !important;
@@ -410,19 +426,19 @@ crowd-form.visible {
                   </select>
                 </div>
               </div>
-                <div id="fixed-post">
-                  <div class="post-text">
-                  <strong>
-                    <p><span style="color: #66ceff;">@emiller_63843</span>: Great Minds Think Alike !</p>
-                    <strong>
-                  </div>
-                  <a id="imgModalOpener"><img src="../found_pictures/../found_pictures/369228741043286525.jpg" alt="[No Image Found for this Task]" style="width:100%;max-width:300px"></a>
-                  </div>
-                  <div id="myModal" class="modal">
-  <span class="modal-close">&times;</span>
-  <img class="modal-content" id="img01">
-</div>
                 
+              <div id="fixed-post">
+            <div class="post-text" style = "background: green">
+                <strong>
+                    <p><span style="color: #66ceff;">@emiller_63843</span>: Great Minds Think Alike !</p>
+                </strong>
+            </div>
+            <div class="image-container">
+                <img src="../found_pictures/369228741043286525.jpg" alt="[No Image Found for this Task]"
+                     onerror="this.style.display='none';">
+            </div>
+        </div>
+        
   <div class="comment">
     <h3><span style="color: #f4b2bb;">@sherry78_756535</span>: <span style="color: #f9b1ae;">@tiffany16_22626</span> dude... It's not like he makes justin lay down and draw on him. Justin chooses to get them. He just does what justin wants. Don't blame him and selena obviously wasn't doing anything cause he was still getting them with her around. He convinced her to get her first one.and the news doesn't known what justin will do. Only he does so dont assume what you heard on the news is true.</h3>
     <div class="question-container" id="question1_0a7bbb10-7d8b-4350-9687-0d2bcfbb1c01" style="margin-bottom: 0px; padding: 5px;">

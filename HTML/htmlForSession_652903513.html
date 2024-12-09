@@ -15,6 +15,22 @@
   box-sizing: border-box;
 }
 
+ .image-container {
+                width: 100%;
+                max-width: 300px;
+                height: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #f9f9f9;
+                border: 1px solid #ddd;
+            }
+            .image-container img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+            }
+
 body, html {
   width: 100%;
   font-family: Arial, Helvetica, sans-serif !important;
@@ -410,19 +426,19 @@ crowd-form.visible {
                   </select>
                 </div>
               </div>
-                <div id="fixed-post">
-                  <div class="post-text">
-                  <strong>
-                    <p><span style="color: #70bbf4;">@jamesbrooks_502928</span>: Ready For The Warmth  Good Bye NYC @hfreeman_300946 #BellaBowl #TotalDivas</p>
-                    <strong>
-                  </div>
-                  <a id="imgModalOpener"><img src="../found_pictures/../found_pictures/646923922721882648.jpg" alt="[No Image Found for this Task]" style="width:100%;max-width:300px"></a>
-                  </div>
-                  <div id="myModal" class="modal">
-  <span class="modal-close">&times;</span>
-  <img class="modal-content" id="img01">
-</div>
                 
+              <div id="fixed-post">
+            <div class="post-text" style = "background: green">
+                <strong>
+                    <p><span style="color: #70bbf4;">@jamesbrooks_502928</span>: Ready For The Warmth  Good Bye NYC @hfreeman_300946 #BellaBowl #TotalDivas</p>
+                </strong>
+            </div>
+            <div class="image-container">
+                <img src="../found_pictures/646923922721882648.jpg" alt="[No Image Found for this Task]"
+                     onerror="this.style.display='none';">
+            </div>
+        </div>
+        
   <div class="comment">
     <h3><span style="color: #9db9ea;">@bsanchez_729548</span>: <span style="color: #0a54af;">@jonathanwilliams_778366</span> show us your pair of balls</h3>
     <div class="question-container" id="question1_1c2ae3af-6138-43de-ac63-f3c1e1174312" style="margin-bottom: 0px; padding: 5px;">

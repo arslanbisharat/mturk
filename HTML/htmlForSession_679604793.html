@@ -15,6 +15,22 @@
   box-sizing: border-box;
 }
 
+ .image-container {
+                width: 100%;
+                max-width: 300px;
+                height: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #f9f9f9;
+                border: 1px solid #ddd;
+            }
+            .image-container img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+            }
+
 body, html {
   width: 100%;
   font-family: Arial, Helvetica, sans-serif !important;
@@ -410,19 +426,19 @@ crowd-form.visible {
                   </select>
                 </div>
               </div>
-                <div id="fixed-post">
-                  <div class="post-text">
-                  <strong>
-                    <p><span style="color: #f2a265;">@daniel15_295527</span>: Building a collection of ancient history...12million year old shark tooth and a timeless meteorite floating all around the universe till it hit the earth at 150,000 mph 5000 years ago!"</p>
-                    <strong>
-                  </div>
-                  <a id="imgModalOpener"><img src="../found_pictures/../found_pictures/532154161446790886.jpg" alt="[No Image Found for this Task]" style="width:100%;max-width:300px"></a>
-                  </div>
-                  <div id="myModal" class="modal">
-  <span class="modal-close">&times;</span>
-  <img class="modal-content" id="img01">
-</div>
                 
+              <div id="fixed-post">
+            <div class="post-text" style = "background: green">
+                <strong>
+                    <p><span style="color: #f2a265;">@daniel15_295527</span>: Building a collection of ancient history...12million year old shark tooth and a timeless meteorite floating all around the universe till it hit the earth at 150,000 mph 5000 years ago!"</p>
+                </strong>
+            </div>
+            <div class="image-container">
+                <img src="../found_pictures/532154161446790886.jpg" alt="[No Image Found for this Task]"
+                     onerror="this.style.display='none';">
+            </div>
+        </div>
+        
   <div class="comment">
     <h3><span style="color: #5ff922;">@anthonyestrada_728223</span>: <span style="color: #fcb5f8;">@ballen_115828</span> your saying I'm a kid cos I am a velvet caterpillar. It's better to grow in knowledge and broaden your horizons than "GROW UP" knowing nothing while also believing everything</h3>
     <div class="question-container" id="question1_b87d25b6-f3e6-44a0-8064-3f783dff3a66" style="margin-bottom: 0px; padding: 5px;">

@@ -15,6 +15,22 @@
   box-sizing: border-box;
 }
 
+ .image-container {
+                width: 100%;
+                max-width: 300px;
+                height: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #f9f9f9;
+                border: 1px solid #ddd;
+            }
+            .image-container img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+            }
+
 body, html {
   width: 100%;
   font-family: Arial, Helvetica, sans-serif !important;
@@ -410,19 +426,19 @@ crowd-form.visible {
                   </select>
                 </div>
               </div>
-                <div id="fixed-post">
-                  <div class="post-text">
-                  <strong>
-                    <p><span style="color: #f9a7bc;">@hperkins_85406</span>: Mo hardware: Rivera named AL Comeback Player of the Year and Marvin Miller Man of the Year on Monday."</p>
-                    <strong>
-                  </div>
-                  <a id="imgModalOpener"><img src="../found_pictures/../found_pictures/582186964504575641.jpg" alt="[No Image Found for this Task]" style="width:100%;max-width:300px"></a>
-                  </div>
-                  <div id="myModal" class="modal">
-  <span class="modal-close">&times;</span>
-  <img class="modal-content" id="img01">
-</div>
                 
+              <div id="fixed-post">
+            <div class="post-text" style = "background: green">
+                <strong>
+                    <p><span style="color: #f9a7bc;">@hperkins_85406</span>: Mo hardware: Rivera named AL Comeback Player of the Year and Marvin Miller Man of the Year on Monday."</p>
+                </strong>
+            </div>
+            <div class="image-container">
+                <img src="../found_pictures/582186964504575641.jpg" alt="[No Image Found for this Task]"
+                     onerror="this.style.display='none';">
+            </div>
+        </div>
+        
   <div class="comment">
     <h3><span style="color: #6bf9a6;">@tracylee_126974</span>: Ironically i wish he would be the "Comeback" player of the year next year.</h3>
     <div class="question-container" id="question1_b7f0b333-e35f-4b88-a950-bc68f71d1311" style="margin-bottom: 0px; padding: 5px;">

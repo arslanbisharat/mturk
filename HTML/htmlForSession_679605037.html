@@ -15,6 +15,22 @@
   box-sizing: border-box;
 }
 
+ .image-container {
+                width: 100%;
+                max-width: 300px;
+                height: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #f9f9f9;
+                border: 1px solid #ddd;
+            }
+            .image-container img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+            }
+
 body, html {
   width: 100%;
   font-family: Arial, Helvetica, sans-serif !important;
@@ -410,19 +426,19 @@ crowd-form.visible {
                   </select>
                 </div>
               </div>
-                <div id="fixed-post">
-                  <div class="post-text">
-                  <strong>
-                    <p><span style="color: #72ea76;">@qsoto_462955</span>: Thank you @hamiltonjennifer_542331 @shannonmoore_944459 @christinewatson_898377  @ashleecurry_134065 @trankyle_358369 @xcobb_335705 @erik65_769373 @samantha47_563980"</p>
-                    <strong>
-                  </div>
-                  <a id="imgModalOpener"><img src="../found_pictures/../found_pictures/297870458577749712.jpg" alt="[No Image Found for this Task]" style="width:100%;max-width:300px"></a>
-                  </div>
-                  <div id="myModal" class="modal">
-  <span class="modal-close">&times;</span>
-  <img class="modal-content" id="img01">
-</div>
                 
+              <div id="fixed-post">
+            <div class="post-text" style = "background: green">
+                <strong>
+                    <p><span style="color: #72ea76;">@qsoto_462955</span>: Thank you @hamiltonjennifer_542331 @shannonmoore_944459 @christinewatson_898377  @ashleecurry_134065 @trankyle_358369 @xcobb_335705 @erik65_769373 @samantha47_563980"</p>
+                </strong>
+            </div>
+            <div class="image-container">
+                <img src="../found_pictures/297870458577749712.jpg" alt="[No Image Found for this Task]"
+                     onerror="this.style.display='none';">
+            </div>
+        </div>
+        
   <div class="comment">
     <h3><span style="color: #9df495;">@zclark_365467</span>: Happy birthday! You deserve an amazing one</h3>
     <div class="question-container" id="question1_282e845e-09e5-4a4c-abe0-20816cff1430" style="margin-bottom: 0px; padding: 5px;">

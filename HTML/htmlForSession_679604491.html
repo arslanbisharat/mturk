@@ -15,6 +15,22 @@
   box-sizing: border-box;
 }
 
+ .image-container {
+                width: 100%;
+                max-width: 300px;
+                height: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #f9f9f9;
+                border: 1px solid #ddd;
+            }
+            .image-container img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+            }
+
 body, html {
   width: 100%;
   font-family: Arial, Helvetica, sans-serif !important;
@@ -410,19 +426,19 @@ crowd-form.visible {
                   </select>
                 </div>
               </div>
-                <div id="fixed-post">
-                  <div class="post-text">
-                  <strong>
-                    <p><span style="color: #6d71c6;">@ryan15_676012</span>: o I wish I had a boyfriend. So we could cuddle while watching scary movies. but instead I'm here alone watching scary movies while having a threesome with my blanket and pillow woW -teya "</p>
-                    <strong>
-                  </div>
-                  <a id="imgModalOpener"><img src="../found_pictures/../found_pictures/424891471670705991.jpg" alt="[No Image Found for this Task]" style="width:100%;max-width:300px"></a>
-                  </div>
-                  <div id="myModal" class="modal">
-  <span class="modal-close">&times;</span>
-  <img class="modal-content" id="img01">
-</div>
                 
+              <div id="fixed-post">
+            <div class="post-text" style = "background: green">
+                <strong>
+                    <p><span style="color: #6d71c6;">@ryan15_676012</span>: o I wish I had a boyfriend. So we could cuddle while watching scary movies. but instead I'm here alone watching scary movies while having a threesome with my blanket and pillow woW -teya "</p>
+                </strong>
+            </div>
+            <div class="image-container">
+                <img src="../found_pictures/424891471670705991.jpg" alt="[No Image Found for this Task]"
+                     onerror="this.style.display='none';">
+            </div>
+        </div>
+        
   <div class="comment">
     <h3><span style="color: #bde271;">@sara54_948708</span>: Same</h3>
     <div class="question-container" id="question1_705e9ca3-c54f-433e-b509-481d4837dc8c" style="margin-bottom: 0px; padding: 5px;">

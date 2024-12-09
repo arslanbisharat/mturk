@@ -15,6 +15,22 @@
   box-sizing: border-box;
 }
 
+ .image-container {
+                width: 100%;
+                max-width: 300px;
+                height: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #f9f9f9;
+                border: 1px solid #ddd;
+            }
+            .image-container img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+            }
+
 body, html {
   width: 100%;
   font-family: Arial, Helvetica, sans-serif !important;
@@ -410,19 +426,19 @@ crowd-form.visible {
                   </select>
                 </div>
               </div>
-                <div id="fixed-post">
-                  <div class="post-text">
-                  <strong>
-                    <p><span style="color: #7acddd;">@matthew69_515970</span>: The first three tricks of my winning run filmed by @agonzalez_170064 @daniel86_906208 #dewtour #streetstyle"</p>
-                    <strong>
-                  </div>
-                  <a id="imgModalOpener"><img src="../found_pictures/../found_pictures/567331403164228942.jpg" alt="[No Image Found for this Task]" style="width:100%;max-width:300px"></a>
-                  </div>
-                  <div id="myModal" class="modal">
-  <span class="modal-close">&times;</span>
-  <img class="modal-content" id="img01">
-</div>
                 
+              <div id="fixed-post">
+            <div class="post-text" style = "background: green">
+                <strong>
+                    <p><span style="color: #7acddd;">@matthew69_515970</span>: The first three tricks of my winning run filmed by @agonzalez_170064 @daniel86_906208 #dewtour #streetstyle"</p>
+                </strong>
+            </div>
+            <div class="image-container">
+                <img src="../found_pictures/567331403164228942.jpg" alt="[No Image Found for this Task]"
+                     onerror="this.style.display='none';">
+            </div>
+        </div>
+        
   <div class="comment">
     <h3><span style="color: #681ace;">@frostbrandon_345378</span>: Lovely❤️</h3>
     <div class="question-container" id="question1_3b04aab6-9656-4d4b-bdf8-2ed406a3e8d2" style="margin-bottom: 0px; padding: 5px;">

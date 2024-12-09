@@ -15,6 +15,22 @@
   box-sizing: border-box;
 }
 
+ .image-container {
+                width: 100%;
+                max-width: 300px;
+                height: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #f9f9f9;
+                border: 1px solid #ddd;
+            }
+            .image-container img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+            }
+
 body, html {
   width: 100%;
   font-family: Arial, Helvetica, sans-serif !important;
@@ -410,19 +426,19 @@ crowd-form.visible {
                   </select>
                 </div>
               </div>
-                <div id="fixed-post">
-                  <div class="post-text">
-                  <strong>
-                    <p><span style="color: #20f7d7;">@jenniferrivera_285202</span>: @ypowell_63529 is the most attractive male human being in the entire world. and his wife is perfect too. I want to secretly wish they will divorce so I can make him my boyfriend, but they are perfect so I'll just drool from afar  #perfectman #iwantyourbody #iwantyourwifesbodytoo #shemightactuallybehotterthanyou , #butidkthatshardtobeat"</p>
-                    <strong>
-                  </div>
-                  <a id="imgModalOpener"><img src="../found_pictures/../found_pictures/736573659328634902.jpg" alt="[No Image Found for this Task]" style="width:100%;max-width:300px"></a>
-                  </div>
-                  <div id="myModal" class="modal">
-  <span class="modal-close">&times;</span>
-  <img class="modal-content" id="img01">
-</div>
                 
+              <div id="fixed-post">
+            <div class="post-text" style = "background: green">
+                <strong>
+                    <p><span style="color: #20f7d7;">@jenniferrivera_285202</span>: @ypowell_63529 is the most attractive male human being in the entire world. and his wife is perfect too. I want to secretly wish they will divorce so I can make him my boyfriend, but they are perfect so I'll just drool from afar  #perfectman #iwantyourbody #iwantyourwifesbodytoo #shemightactuallybehotterthanyou , #butidkthatshardtobeat"</p>
+                </strong>
+            </div>
+            <div class="image-container">
+                <img src="../found_pictures/736573659328634902.jpg" alt="[No Image Found for this Task]"
+                     onerror="this.style.display='none';">
+            </div>
+        </div>
+        
   <div class="comment">
     <h3><span style="color: #1fe1ef;">@websterkrista_551437</span>: You can marry me :)</h3>
     <div class="question-container" id="question1_e3f5b2a9-eb27-44b6-88fd-3c80409745ce" style="margin-bottom: 0px; padding: 5px;">

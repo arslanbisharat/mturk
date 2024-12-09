@@ -15,6 +15,22 @@
   box-sizing: border-box;
 }
 
+ .image-container {
+                width: 100%;
+                max-width: 300px;
+                height: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #f9f9f9;
+                border: 1px solid #ddd;
+            }
+            .image-container img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+            }
+
 body, html {
   width: 100%;
   font-family: Arial, Helvetica, sans-serif !important;
@@ -410,19 +426,19 @@ crowd-form.visible {
                   </select>
                 </div>
               </div>
-                <div id="fixed-post">
-                  <div class="post-text">
-                  <strong>
-                    <p><span style="color: #f9dd52;">@laceywatkins_796291</span>: Fuck this dude if anyone has any respect for artist in the tattoo industry and this guy ask to get tattooed kicking in the fucking mouth for me this chump didn't pay me for a days worth of work and then had his mom called here and said he was sue me like a bitch ... His Loss ok I'm happy now goodmorning !!! Ha ha</p>
-                    <strong>
-                  </div>
-                  <a id="imgModalOpener"><img src="../found_pictures/../found_pictures/357323418115637400.jpg" alt="[No Image Found for this Task]" style="width:100%;max-width:300px"></a>
-                  </div>
-                  <div id="myModal" class="modal">
-  <span class="modal-close">&times;</span>
-  <img class="modal-content" id="img01">
-</div>
                 
+              <div id="fixed-post">
+            <div class="post-text" style = "background: green">
+                <strong>
+                    <p><span style="color: #f9dd52;">@laceywatkins_796291</span>: Fuck this dude if anyone has any respect for artist in the tattoo industry and this guy ask to get tattooed kicking in the fucking mouth for me this chump didn't pay me for a days worth of work and then had his mom called here and said he was sue me like a bitch ... His Loss ok I'm happy now goodmorning !!! Ha ha</p>
+                </strong>
+            </div>
+            <div class="image-container">
+                <img src="../found_pictures/357323418115637400.jpg" alt="[No Image Found for this Task]"
+                     onerror="this.style.display='none';">
+            </div>
+        </div>
+        
   <div class="comment">
     <h3><span style="color: #9cbf00;">@ibryant_554633</span>: Fuck that</h3>
     <div class="question-container" id="question1_9b4ad7ad-2bf3-41f0-85ec-523bb2b3ca48" style="margin-bottom: 0px; padding: 5px;">

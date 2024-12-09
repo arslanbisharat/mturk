@@ -15,6 +15,22 @@
   box-sizing: border-box;
 }
 
+ .image-container {
+                width: 100%;
+                max-width: 300px;
+                height: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #f9f9f9;
+                border: 1px solid #ddd;
+            }
+            .image-container img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+            }
+
 body, html {
   width: 100%;
   font-family: Arial, Helvetica, sans-serif !important;
@@ -410,19 +426,19 @@ crowd-form.visible {
                   </select>
                 </div>
               </div>
-                <div id="fixed-post">
-                  <div class="post-text">
-                  <strong>
-                    <p><span style="color: #c18bf9;">@plee_803713</span>: At halftime, the #Texans lead the Colts 21-3. Keenum is 9/17 208 yds & 3 TDs. Johnson has 7 rec. for 190 yds & 3 TD. The Texans have arrived.</p>
-                    <strong>
-                  </div>
-                  <a id="imgModalOpener"><img src="../found_pictures/../found_pictures/581444175343636788.jpg" alt="[No Image Found for this Task]" style="width:100%;max-width:300px"></a>
-                  </div>
-                  <div id="myModal" class="modal">
-  <span class="modal-close">&times;</span>
-  <img class="modal-content" id="img01">
-</div>
                 
+              <div id="fixed-post">
+            <div class="post-text" style = "background: green">
+                <strong>
+                    <p><span style="color: #c18bf9;">@plee_803713</span>: At halftime, the #Texans lead the Colts 21-3. Keenum is 9/17 208 yds & 3 TDs. Johnson has 7 rec. for 190 yds & 3 TD. The Texans have arrived.</p>
+                </strong>
+            </div>
+            <div class="image-container">
+                <img src="../found_pictures/581444175343636788.jpg" alt="[No Image Found for this Task]"
+                     onerror="this.style.display='none';">
+            </div>
+        </div>
+        
   <div class="comment">
     <h3><span style="color: #dd6d35;">@acostajames_232330</span>: Bullock sucks</h3>
     <div class="question-container" id="question1_5ebbccfc-ebfa-4a66-bd67-cefc9a653544" style="margin-bottom: 0px; padding: 5px;">

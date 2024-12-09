@@ -15,6 +15,22 @@
   box-sizing: border-box;
 }
 
+ .image-container {
+                width: 100%;
+                max-width: 300px;
+                height: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #f9f9f9;
+                border: 1px solid #ddd;
+            }
+            .image-container img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+            }
+
 body, html {
   width: 100%;
   font-family: Arial, Helvetica, sans-serif !important;
@@ -410,19 +426,19 @@ crowd-form.visible {
                   </select>
                 </div>
               </div>
-                <div id="fixed-post">
-                  <div class="post-text">
-                  <strong>
-                    <p><span style="color: #2bb5b5;">@sharoncaldwell_49887</span>: @ashley72_457253 @kathrynevans_907977 @opreston_379366 @destinyscott_481382 @clara_420149 girls in @gina88_638832 @rhodesjason_53551"</p>
-                    <strong>
-                  </div>
-                  <a id="imgModalOpener"><img src="../found_pictures/../found_pictures/183191810533923689.jpg" alt="[No Image Found for this Task]" style="width:100%;max-width:300px"></a>
-                  </div>
-                  <div id="myModal" class="modal">
-  <span class="modal-close">&times;</span>
-  <img class="modal-content" id="img01">
-</div>
                 
+              <div id="fixed-post">
+            <div class="post-text" style = "background: green">
+                <strong>
+                    <p><span style="color: #2bb5b5;">@sharoncaldwell_49887</span>: @ashley72_457253 @kathrynevans_907977 @opreston_379366 @destinyscott_481382 @clara_420149 girls in @gina88_638832 @rhodesjason_53551"</p>
+                </strong>
+            </div>
+            <div class="image-container">
+                <img src="../found_pictures/183191810533923689.jpg" alt="[No Image Found for this Task]"
+                     onerror="this.style.display='none';">
+            </div>
+        </div>
+        
   <div class="comment">
     <h3><span style="color: #a914ce;">@grayshannon_320886</span>: The first girl on the left looks like shit. Thats not sexy</h3>
     <div class="question-container" id="question1_fc6c8e43-f7ff-43a1-8201-f1a381ff661d" style="margin-bottom: 0px; padding: 5px;">

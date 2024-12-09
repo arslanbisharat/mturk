@@ -15,6 +15,22 @@
   box-sizing: border-box;
 }
 
+ .image-container {
+                width: 100%;
+                max-width: 300px;
+                height: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #f9f9f9;
+                border: 1px solid #ddd;
+            }
+            .image-container img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+            }
+
 body, html {
   width: 100%;
   font-family: Arial, Helvetica, sans-serif !important;
@@ -410,19 +426,19 @@ crowd-form.visible {
                   </select>
                 </div>
               </div>
-                <div id="fixed-post">
-                  <div class="post-text">
-                  <strong>
-                    <p><span style="color: #ef70d4;">@claudiarose_304443</span>: We still in this.....court side with @mbuchanan_756795, acting up! #sprintpostup"</p>
-                    <strong>
-                  </div>
-                  <a id="imgModalOpener"><img src="../found_pictures/../found_pictures/680011559996590301.jpg" alt="[No Image Found for this Task]" style="width:100%;max-width:300px"></a>
-                  </div>
-                  <div id="myModal" class="modal">
-  <span class="modal-close">&times;</span>
-  <img class="modal-content" id="img01">
-</div>
                 
+              <div id="fixed-post">
+            <div class="post-text" style = "background: green">
+                <strong>
+                    <p><span style="color: #ef70d4;">@claudiarose_304443</span>: We still in this.....court side with @mbuchanan_756795, acting up! #sprintpostup"</p>
+                </strong>
+            </div>
+            <div class="image-container">
+                <img src="../found_pictures/680011559996590301.jpg" alt="[No Image Found for this Task]"
+                     onerror="this.style.display='none';">
+            </div>
+        </div>
+        
   <div class="comment">
     <h3><span style="color: #c97808;">@karen91_447665</span>: This <span style="color: #d8cb3e;">@fharvey_780525</span></h3>
     <div class="question-container" id="question1_0168d36e-e274-404c-9f2d-aa5444603bd0" style="margin-bottom: 0px; padding: 5px;">

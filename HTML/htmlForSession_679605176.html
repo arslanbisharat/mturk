@@ -15,6 +15,22 @@
   box-sizing: border-box;
 }
 
+ .image-container {
+                width: 100%;
+                max-width: 300px;
+                height: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #f9f9f9;
+                border: 1px solid #ddd;
+            }
+            .image-container img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+            }
+
 body, html {
   width: 100%;
   font-family: Arial, Helvetica, sans-serif !important;
@@ -410,19 +426,19 @@ crowd-form.visible {
                   </select>
                 </div>
               </div>
-                <div id="fixed-post">
-                  <div class="post-text">
-                  <strong>
-                    <p><span style="color: #f8f9a4;">@ashleysmith_735845</span>: The 12's came out strong to meet Marshawn Lynch today at Alderwood Mall @dberry_209499 had 350 people in line at 7am! If you're coming from far away we are already over capacity. Thanks for all the support! #12thman"</p>
-                    <strong>
-                  </div>
-                  <a id="imgModalOpener"><img src="../found_pictures/../found_pictures/732594362580967514.jpg" alt="[No Image Found for this Task]" style="width:100%;max-width:300px"></a>
-                  </div>
-                  <div id="myModal" class="modal">
-  <span class="modal-close">&times;</span>
-  <img class="modal-content" id="img01">
-</div>
                 
+              <div id="fixed-post">
+            <div class="post-text" style = "background: green">
+                <strong>
+                    <p><span style="color: #f8f9a4;">@ashleysmith_735845</span>: The 12's came out strong to meet Marshawn Lynch today at Alderwood Mall @dberry_209499 had 350 people in line at 7am! If you're coming from far away we are already over capacity. Thanks for all the support! #12thman"</p>
+                </strong>
+            </div>
+            <div class="image-container">
+                <img src="../found_pictures/732594362580967514.jpg" alt="[No Image Found for this Task]"
+                     onerror="this.style.display='none';">
+            </div>
+        </div>
+        
   <div class="comment">
     <h3><span style="color: #e88494;">@richard93_263813</span>: Tight</h3>
     <div class="question-container" id="question1_350365e9-9038-461f-8525-ed69d8a48de1" style="margin-bottom: 0px; padding: 5px;">
